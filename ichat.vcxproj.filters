@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Form Files">
@@ -43,12 +43,6 @@
     <ClCompile Include="mainwindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_mainwindow.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_mainwindow.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="mainwindow.h">
@@ -56,13 +50,19 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="debug\moc_mainwindow.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="release\moc_mainwindow.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClInclude Include="ui_mainwindow.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
     <CustomBuild Include="mainwindow.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="GeneratedFiles\ui_mainwindow.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
