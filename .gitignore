@@ -1,4 +1,5 @@
 debug/
 x64/
 *.opensdf
+*.suo
 *.sdf
