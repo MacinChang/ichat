@@ -13,26 +13,31 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
     logindialog.cpp \
     mainpanel.cpp \
     userlistitem.cpp \
     chatwindow.cpp \
-    addwindow.cpp
+    addwindow.cpp \
+    userinfo.cpp \
+    groupinfo.cpp
 
-HEADERS  += mainwindow.h \
+HEADERS  += \
     logindialog.h \
     mainpanel.h \
     userlistitem.h \
     chatwindow.h \
-    addwindow.h
+    addwindow.h \
+    userinfo.h \
+    groupinfo.h
 
-FORMS    += mainwindow.ui \
+FORMS    += \
     logindialog.ui \
     mainpanel.ui \
     userlistitem.ui \
     chatwindow.ui \
-    addwindow.ui
+    addwindow.ui \
+    userinfo.ui \
+    groupinfo.ui
 
 RESOURCES += \
     resource.qrc
