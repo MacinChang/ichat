@@ -16,10 +16,10 @@ public:
     ~UserListItem();
 signals:
     void clicked();
-public:
+public slots:
     virtual void mousePressEventSlot();
 protected:
-    void mousePressEvent(QMouseEvent *e);
+    void mousePressEvent(QMouseEvent *);
 private:
     Ui::UserListItem *ui;
 };
