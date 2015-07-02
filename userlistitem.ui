@@ -52,15 +52,23 @@
     <string/>
    </property>
    <property name="pixmap">
+<<<<<<< HEAD
     <pixmap resource="resource.qrc">:/head.jpg</pixmap>
+=======
+    <pixmap>:/head.jpg</pixmap>
+>>>>>>> master
    </property>
    <property name="scaledContents">
     <bool>true</bool>
    </property>
   </widget>
  </widget>
+<<<<<<< HEAD
  <resources>
   <include location="resource.qrc"/>
  </resources>
+=======
+ <resources/>
+>>>>>>> master
  <connections/>
 </ui>

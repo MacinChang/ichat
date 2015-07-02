@@ -35,4 +35,8 @@ FORMS    += mainwindow.ui \
     addwindow.ui
 
 RESOURCES += \
+<<<<<<< HEAD
     resource.qrc
+=======
+    resource.qrc
+>>>>>>> master

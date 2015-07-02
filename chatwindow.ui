@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version='1.0'?>
 <ui version="4.0">
  <class>ChatWindow</class>
@@ -5,6 +6,12 @@
   <property name="frameShadow">
    <enum>QFrame::Raised</enum>
   </property>
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ChatWindow</class>
+ <widget class="QFrame" name="ChatWindow">
+>>>>>>> master
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -13,6 +20,7 @@
     <height>300</height>
    </rect>
   </property>
+<<<<<<< HEAD
   <property name="frameShape">
    <enum>QFrame::StyledPanel</enum>
   </property>
@@ -20,4 +28,18 @@
    <string>Frame</string>
   </property>
  </widget>
+=======
+  <property name="windowTitle">
+   <string>Frame</string>
+  </property>
+  <property name="frameShape">
+   <enum>QFrame::StyledPanel</enum>
+  </property>
+  <property name="frameShadow">
+   <enum>QFrame::Raised</enum>
+  </property>
+ </widget>
+ <resources/>
+ <connections/>
+>>>>>>> master
 </ui>
