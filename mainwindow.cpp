@@ -6,6 +6,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+	this->setWindowTitle("iChat");
+	ui->pushButton->setText(QStringLiteral("µÇÂ¼"));
+	//ui->lineEdit;
 }
 
 MainWindow::~MainWindow()
