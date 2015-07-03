@@ -2,6 +2,7 @@
 #include "mainpanel.h"
 #include "userinfo.h"
 #include "groupinfo.h"
+#include "friendinfo.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])
@@ -11,8 +12,9 @@ int main(int argc, char *argv[])
     MainPanel mp;
     UserInfo usrInfo;
     GroupInfo groInfo;
+    FriendInfo frInfo;
  if(ld.exec() == QDialog::Accepted){
-      groInfo.show();
+    groInfo.show();
         return a.exec();
     }else{
         return 0;

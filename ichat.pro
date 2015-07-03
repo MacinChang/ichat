@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     chatwindow.cpp \
     addwindow.cpp \
     userinfo.cpp \
-    groupinfo.cpp
+    groupinfo.cpp \
+    friendinfo.cpp
 
 HEADERS  += \
     logindialog.h \
@@ -28,7 +29,8 @@ HEADERS  += \
     chatwindow.h \
     addwindow.h \
     userinfo.h \
-    groupinfo.h
+    groupinfo.h \
+    friendinfo.h
 
 FORMS    += \
     logindialog.ui \
@@ -37,7 +39,8 @@ FORMS    += \
     chatwindow.ui \
     addwindow.ui \
     userinfo.ui \
-    groupinfo.ui
+    groupinfo.ui \
+    friendinfo.ui
 
 RESOURCES += \
     resource.qrc
