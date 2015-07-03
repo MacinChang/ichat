@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
     GroupInfo groInfo;
     FriendInfo frInfo;
  if(ld.exec() == QDialog::Accepted){
-    groInfo.show();
+    usrInfo.show();
         return a.exec();
     }else{
         return 0;

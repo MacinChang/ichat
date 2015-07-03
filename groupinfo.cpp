@@ -19,6 +19,7 @@ GroupInfo::GroupInfo(QWidget *parent) :
     ui->AnnounceEdit->setText(tr("明天上交数学作业"));
     ui->IntroEdit->setText(tr("本群用于班内同学学习交流"));
     ui->NameEdit->setText(tr("四年四班"));
+
     //设置为只读
     ui->AnnounceEdit->setReadOnly(true);
     ui->IntroEdit->setReadOnly(true);
