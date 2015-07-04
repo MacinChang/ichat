@@ -4,8 +4,8 @@
 #include "ui_mainpanel.h"
 #include <QDesktopWidget>
 
-MainPanel::MainPanel(QWidget *parent) :
-    QFrame(parent),
+MainPanel::MainPanel(QString acc, QWidget *parent) :
+    QFrame(parent),myAccount(acc),
     ui(new Ui::MainPanel)
 {
 
