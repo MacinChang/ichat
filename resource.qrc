@@ -2,5 +2,18 @@
     <qresource prefix="/images">
         <file>head.jpg</file>
         <file>head.png</file>
+        <file>image/add.png</file>
+        <file>image/ai4572.png</file>
+        <file>image/head.jpg</file>
+        <file>image/ichat.png</file>
+        <file>image/iChatin.png</file>
+        <file>image/LoginBtn.png</file>
+        <file>image/main.png</file>
+        <file>image/qqin.png</file>
+        <file>image/未标题-2.png</file>
+        <file>image/friendBtn.png</file>
+        <file>image/groupBtn.png</file>
+        <file>image/leave.png</file>
+        <file>image/online.png</file>
     </qresource>
 </RCC>

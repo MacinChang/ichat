@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT       += network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -18,8 +19,8 @@ SOURCES += main.cpp\
     chatwindow.cpp \
     addwindow.cpp \
     useritem.cpp \
-    mylistwidget.cpp \
-    grouplistwidget.cpp
+    renamedialog.cpp \
+    deleteconfirmdialog.cpp
 
 HEADERS  += \
     logindialog.h \
@@ -27,15 +28,17 @@ HEADERS  += \
     chatwindow.h \
     addwindow.h \
     useritem.h \
-    mylistwidget.h \
-    grouplistwidget.h
+    renamedialog.h \
+    deleteconfirmdialog.h
 
 FORMS    += \
     logindialog.ui \
     mainpanel.ui \
     chatwindow.ui \
     addwindow.ui \
-    useritem.ui
+    useritem.ui \
+    renamedialog.ui \
+    deleteconfirmdialog.ui
 
 RESOURCES += \
     resource.qrc

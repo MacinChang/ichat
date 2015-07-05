@@ -17,7 +17,10 @@ public:
 
 private slots:
     void on_headBtn_clicked();
+    void on_comboBox_changed(const QString & text);
 
+signals:
+    void comboBoxCurrentIndexChanged(const QString & text);
 
 private:
     Ui::UserItem *ui;
