@@ -5,7 +5,7 @@
 #include "QMouseEvent"
 #include "QMenu"
 #include "QAction"
-#include "mylistwidgetitem.h"
+
 
 
 class MyListWidget : public QListWidget
@@ -23,7 +23,7 @@ private:
     QAction *deleteAction;
     QAction *modifyAction;
 signals:
-    //void itemClicked( MyListWidgetItem *item );
+
 
 public slots:
     void on_chatAction_triggered();

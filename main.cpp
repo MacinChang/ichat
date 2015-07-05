@@ -6,7 +6,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     LoginDialog loginDlg;
-    MainPanel mainDlg;
+    MainPanel *mainDlg = new MainPanel("123");
     /*if(loginDlg.exec() == QDialog::Accepted){
         mainDlg.show();
         return a.exec();
@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
     else{
         return 0;
     }*/
-    mainDlg.show();
+    mainDlg->show();
     return a.exec();
 
 }

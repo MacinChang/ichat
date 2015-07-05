@@ -17,6 +17,7 @@ UserItem::~UserItem()
     delete ui;
 }
 
+//单击头像打开个人资料修改界面
 void UserItem::on_headBtn_clicked()
 {
     //打开修改个人资料界面**************

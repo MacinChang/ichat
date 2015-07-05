@@ -5,11 +5,10 @@
 #include <QDesktopWidget>
 #include "mylistwidget.h"
 #include "QListWidget"
-#include "mylistwidgetitem.h"
 #include "grouplistwidget.h"
 
-MainPanel::MainPanel(QWidget *parent) :
-    QFrame(parent),
+MainPanel::MainPanel(QString account, QWidget *parent) :
+    QFrame(parent),myAccount(account),
     ui(new Ui::MainPanel)
 {
     ui->setupUi(this);
@@ -27,47 +26,46 @@ MainPanel::MainPanel(QWidget *parent) :
     //添加自己头像
     myself = new UserItem(this);
 
+    /*
     //设置contactsListWidget 添加item
     contactsListWidget = new MyListWidget(this);
     contactsListWidget->setGeometry(1,110,241,329);
-    contactsListWidget->setViewMode(QListView::IconMode);
+    contactsListWidget->setViewMode(QListView::ListMode);
     contactsListWidget->setIconSize(QSize(50,50));
     contactsListWidget->setMovement(QListView::Static);
-    contactsListWidget->setSpacing(36);
+    //contactsListWidget->setSpacing(36);
     for(int i = 20;i!=0;i--){
         //好友头像设置
         QIcon icon("E:/PracticalTraining/git/head.png");
-        //好友昵称
-        QString name = "wendabei";
+        //好友账号
+        QString account = "wendabei";
         //创建item
-        MyListWidgetItem *item = new MyListWidgetItem(contactsListWidget);
-        item->setIcon(icon);
-        item->setText(name);
+        QListWidgetItem *item = new QListWidgetItem(icon,account);
         //添加item到list
         contactsListWidget->addItem(item);
     }
     //设置groupListWidget 添加item   并设为隐藏
     groupListWidget = new GroupListWidget(this);
     groupListWidget->setGeometry(1,110,241,329);
-    groupListWidget->setViewMode(QListView::IconMode);
+    groupListWidget->setViewMode(QListView::ListMode);
     groupListWidget->setIconSize(QSize(50,50));
     groupListWidget->setMovement(QListView::Static);
-    groupListWidget->setSpacing(36);
+    //groupListWidget->setSpacing(36);
     for(int i = 20;i!=0;i--){
-        //好友头像设置
+        //群头像设置
         QIcon icon("E:/PracticalTraining/git/head.png");
-        //好友昵称
-        QString name = QString("Group %1").arg(i);
+        //群号
+        QString account = QString("Group %1").arg(i);
         //创建item
-        MyListWidgetItem *item = new MyListWidgetItem(groupListWidget);
-        item->setIcon(icon);
-        item->setText(name);
+        QListWidgetItem *item = new QListWidgetItem(icon,account);
         //添加item到list
         groupListWidget->addItem(item);
     }
     groupListWidget->setVisible(false);
 
-    connect(contactsListWidget,SIGNAL(itemChanged(QListWidgetItem*)),this,SLOT(on_itemClicked(QListWidgetItem*)));
+    connect(contactsListWidget,SIGNAL(itemDoubleClicked(QListWidgetItem*)),this,SLOT(on_contactDoubleClicked(QListWidgetItem*)));
+    connect(groupListWidget,SIGNAL(itemDoubleClicked(QListWidgetItem*)),this,SLOT(on_groupDoubleClicked(QListWidgetItem*)));
+    */
 }
 
 MainPanel::~MainPanel()
@@ -75,6 +73,7 @@ MainPanel::~MainPanel()
     delete ui;
 }
 
+//以下三个函数实现窗口拖动
 void MainPanel::mousePressEvent(QMouseEvent *e)
 {
     if(e->button() == Qt::LeftButton){
@@ -103,54 +102,44 @@ void MainPanel::mouseReleaseEvent(QMouseEvent *e)
 }
 
 
-
+//按下添加好友按钮
 void MainPanel::on_btnAddContacts_clicked()
 {
     addDlg->show();
 }
 
+//显示联系人列表
 void MainPanel::on_btnContact_clicked()
 {
-    /*contactsListWidget->clear();
-    //显示联系人************
-    for(int i = 20;i!=0;i--){
-        //好友头像设置
-        QIcon icon("E:/PracticalTraining/git/head.png");
-        //好友昵称
-        QString name = "wendabei";
-        //创建item
-        MyListWidgetItem *item = new MyListWidgetItem(this);//(icon,name);
-        item->setIcon(icon);
-        item->setText(name);
-        //添加item到list
-        contactsListWidget->addItem(item);
-    }*/
-    groupListWidget->setVisible(false);
-    contactsListWidget->setVisible(true);
+
+    //groupListWidget->setVisible(false);
+    //contactsListWidget->setVisible(true);
 }
 
+//显示群列表
 void MainPanel::on_btnGroup_clicked()
 {
-    /*contactsListWidget->clear();
-    //显示群***********
-    for(int i = 20;i!=0;i--){
-        //好友头像设置
-        QIcon icon("E:/PracticalTraining/git/head.png");
-        //好友昵称
-        QString name = QString("Group %1").arg(i);
-        //创建item
-        MyListWidgetItem *item = new MyListWidgetItem(this);//(icon,name);
-        item->setIcon(icon);
-        item->setText(name);
-        //添加item到list
-        groupListWidget->addItem(item);
-    }*/
-    groupListWidget->setVisible(true);
-    contactsListWidget->setVisible(false);
+
+    //groupListWidget->setVisible(true);
+    //contactsListWidget->setVisible(false);
 }
 
+//双击联系人开始聊天
+void MainPanel::on_contactDoubleClicked(const QModelIndex &index)
+{
 
-void MainPanel::on_itemClicked(QListWidgetItem *item)
+    //私聊窗口
+}
+
+//双击群开始群聊
+void MainPanel::on_groupDoubleClicked(const QModelIndex &index)
+{
+
+    //群聊窗口
+}
+
+//弹出右键菜单
+void MainPanel::on_item_rightClicked(const QPoint &point)
 {
 
 }

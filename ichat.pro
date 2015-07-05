@@ -19,7 +19,6 @@ SOURCES += main.cpp\
     addwindow.cpp \
     useritem.cpp \
     mylistwidget.cpp \
-    mylistwidgetitem.cpp \
     grouplistwidget.cpp
 
 HEADERS  += \
@@ -29,7 +28,6 @@ HEADERS  += \
     addwindow.h \
     useritem.h \
     mylistwidget.h \
-    mylistwidgetitem.h \
     grouplistwidget.h
 
 FORMS    += \

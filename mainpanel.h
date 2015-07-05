@@ -6,7 +6,6 @@
 #include "useritem.h"
 #include "mylistwidget.h"
 #include "grouplistwidget.h"
-#include "mylistwidgetitem.h"
 namespace Ui {
 class MainPanel;
 }
@@ -16,7 +15,7 @@ class MainPanel : public QFrame
     Q_OBJECT
 
 public:
-    explicit MainPanel(QWidget *parent = 0);
+    explicit MainPanel(QString account,QWidget *parent = 0);
     ~MainPanel();
     void mousePressEvent(QMouseEvent *e);
     void mouseMoveEvent(QMouseEvent *e);
@@ -30,8 +29,10 @@ private slots:
     void on_btnGroup_clicked();
 
 public slots:
-    //void emitMyItemClickedSignal(QListWidgetItem *item);
-    void on_itemClicked(QListWidgetItem *item);
+
+    void on_contactDoubleClicked(const QModelIndex &index);
+    void on_groupDoubleClicked(const QModelIndex &index);
+    void on_item_rightClicked(const QPoint &point);
 
 private:
     Ui::MainPanel *ui;
@@ -40,6 +41,8 @@ private:
     MyListWidget *contactsListWidget;
     GroupListWidget *groupListWidget;
     QPoint dragPosition;
+public:
+    QString myAccount;
 
 };
 
