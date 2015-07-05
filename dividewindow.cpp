@@ -66,6 +66,8 @@ void DivideWindow::replyFinished(QNetworkReply *reply){
     //QVariant codeV = reply->attribute(QNetworkRequest::RedirectionTargetAttribute);
     QString  res = vRes.toString();
     if(res == "true"){
+        this->close();
+        afw = new AddFinishedWindow();
         afw->show();
     }
 }
