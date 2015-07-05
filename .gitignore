@@ -6,5 +6,5 @@ x64/
 ichat.pro.user
 *.pro.user.*
 Makefile
-*.debug
+*.Debug
 *.Release
