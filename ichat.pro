@@ -13,26 +13,36 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
     logindialog.cpp \
     mainpanel.cpp \
     userlistitem.cpp \
     chatwindow.cpp \
-    addwindow.cpp
+    addwindow.cpp \
+    additems.cpp \
+    dividewindow.cpp \
+    confirmwindow.cpp
 
-HEADERS  += mainwindow.h \
+HEADERS  += \
     logindialog.h \
     mainpanel.h \
     userlistitem.h \
     chatwindow.h \
-    addwindow.h
+    addwindow.h \
+    additems.h \
+    dividewindow.h \
+    confirmwindow.h
 
-FORMS    += mainwindow.ui \
+FORMS    += \
     logindialog.ui \
     mainpanel.ui \
     userlistitem.ui \
     chatwindow.ui \
-    addwindow.ui
+    addwindow.ui \
+    additems.ui \
+    dividewindow.ui \
+    confirmwindow.ui
 
 RESOURCES += \
     resource.qrc
+QT  += network
+QT  += script

@@ -1,5 +1,11 @@
 <RCC>
     <qresource prefix="/">
-        <file>head.jpg</file>
+        <file>resource/feeling.png</file>
+        <file>resource/head.jpg</file>
+        <file>resource/shake.png</file>
+        <file>resource/yuyin.png</file>
+        <file>resource/sepic.png</file>
+        <file>resource/Bg.png</file>
+        <file>resource/his.png</file>
     </qresource>
 </RCC>

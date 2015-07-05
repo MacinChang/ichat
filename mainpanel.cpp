@@ -3,7 +3,7 @@
 #include "addwindow.h"
 #include "ui_mainpanel.h"
 #include <QDesktopWidget>
-
+#include <QMouseEvent>
 MainPanel::MainPanel(QWidget *parent) :
     QFrame(parent),
     ui(new Ui::MainPanel)
@@ -41,6 +41,7 @@ MainPanel::~MainPanel()
 
 void MainPanel::on_btnAdd_clicked()
 {
-    AddWindow aw;
-    aw.show();
+    aw=new AddWindow();
+    aw->show();
 }
+
