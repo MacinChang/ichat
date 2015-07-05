@@ -1,5 +1,8 @@
 #include "logindialog.h"
 #include "mainpanel.h"
+#include "userinfo.h"
+#include "groupinfo.h"
+#include "friendinfo.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])
