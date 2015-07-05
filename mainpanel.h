@@ -22,6 +22,7 @@ private:
     Ui::MainPanel *ui;
     QString myAccount;
     AddWindow* aw;
+
 };
 
 #endif // MAINPANEL_H
