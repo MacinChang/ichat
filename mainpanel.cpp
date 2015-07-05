@@ -3,9 +3,10 @@
 #include "addwindow.h"
 #include "ui_mainpanel.h"
 #include <QDesktopWidget>
-#include <QMouseEvent>
-MainPanel::MainPanel(QWidget *parent) :
-    QFrame(parent),
+
+
+MainPanel::MainPanel(QString acc, QWidget *parent) :
+    QFrame(parent),myAccount(acc),
     ui(new Ui::MainPanel)
 {
 

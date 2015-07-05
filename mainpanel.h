@@ -12,7 +12,7 @@ class MainPanel : public QFrame
     Q_OBJECT
 
 public:
-    explicit MainPanel(QWidget *parent = 0);
+    explicit MainPanel(QString acc,QWidget *parent = 0);
     ~MainPanel();
 
 private slots:
@@ -21,6 +21,7 @@ private slots:
 private:
     Ui::MainPanel *ui;
     AddWindow* aw;
+    QString myAccount;
 };
 
 #endif // MAINPANEL_H

@@ -7,5 +7,12 @@
         <file>resource/sepic.png</file>
         <file>resource/Bg.png</file>
         <file>resource/his.png</file>
+        <file>head.jpg</file>
+        <file>Image/add.png</file>
+        <file>Image/head.jpg</file>
+        <file>Image/ichat.png</file>
+        <file>Image/iChatin.png</file>
+        <file>Image/LoginBtn.png</file>
+        <file>Image/main.png</file>
     </qresource>
 </RCC>
