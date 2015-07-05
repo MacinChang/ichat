@@ -42,7 +42,7 @@ MainPanel::~MainPanel()
 
 void MainPanel::on_btnAdd_clicked()
 {
-    aw=new AddWindow();
+    aw=new AddWindow(myAccount);
     aw->show();
 }
 

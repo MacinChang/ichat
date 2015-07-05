@@ -12,7 +12,7 @@ class MainPanel : public QFrame
     Q_OBJECT
 
 public:
-    explicit MainPanel(QString acc,QWidget *parent = 0);
+    explicit MainPanel(QString acc, QWidget *parent = 0);
     ~MainPanel();
 
 private slots:

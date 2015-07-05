@@ -13,9 +13,10 @@ class AddWindow;
 class AddWindow : public QFrame
 {
     Q_OBJECT
-
+private:
+    QString myAccount;
 public:
-    explicit AddWindow(QWidget *parent = 0);
+    explicit AddWindow(QString acc, QWidget *parent = 0);
     ~AddWindow();
     void imgPathToHtml(QString &path);
     QString str;

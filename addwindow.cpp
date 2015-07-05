@@ -3,8 +3,8 @@
 #include "QtScript/QScriptValue"
 #include "QtScript/QScriptEngine"
 #include "QtScript/QScriptValueIterator"
-AddWindow::AddWindow(QWidget *parent) :
-    QFrame(parent),
+AddWindow::AddWindow(QString myAccount, QWidget *parent) :
+    QFrame(parent), myAccount(myAccount),
     ui(new Ui::AddWindow)
 {
     ui->setupUi(this);
@@ -112,6 +112,6 @@ void AddWindow::headPressEventSlot()
 //添加好友
 void AddWindow::on_pushButton_2_clicked()
 {
-    cw=new confirmWindow(str);
+    cw=new confirmWindow(str, myAccount);
     cw->show();
 }
