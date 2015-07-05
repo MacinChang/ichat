@@ -3,3 +3,8 @@ x64/
 *.opensdf
 *.suo
 *.sdf
+ichat.pro.user
+*.pro.user.*
+Makefile
+*.Debug
+*.Release
