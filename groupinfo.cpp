@@ -15,6 +15,7 @@ GroupInfo::GroupInfo(QWidget *parent) :
     ui->setupUi(this);
     setWindowFlags(windowFlags()& ~Qt::WindowMaximizeButtonHint);
     setFixedSize(this->width(), this->height());
+
     //从服务端获取群资料并显示
     ui->AnnounceEdit->setText(tr("明天上交数学作业"));
     ui->IntroEdit->setText(tr("本群用于班内同学学习交流"));
@@ -91,6 +92,7 @@ void GroupInfo::on_CloseButton_clicked()
 
 void GroupInfo::on_GroupFaceBtn_clicked()
 {
+    //保存头像修改并上传到服务器
     QString fileName = QFileDialog::getOpenFileName(this);
     if(fileName!=NULL){
       QPixmap qpx(fileName);

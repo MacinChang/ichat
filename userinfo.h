@@ -2,6 +2,9 @@
 #define USERINFO_H
 
 #include <QDialog>
+#include <qpoint.h>
+#include <QNetworkReply>
+#include <QNetworkRequest>
 
 namespace Ui {
 class UserInfo;
@@ -13,6 +16,9 @@ class UserInfo : public QDialog
 
 public:
     explicit UserInfo(QWidget *parent = 0);
+    void mouseMoveEvent(QMouseEvent*event);
+    void mousePressEvent(QMouseEvent*event);
+    void mouseReleaseEvent(QMouseEvent*event);
     ~UserInfo();
 
 private slots:
@@ -21,15 +27,31 @@ private slots:
 
     void on_CloseButton_clicked();\
 
-    void SaveChange();
-
     void on_EditButton_clicked();
 
     void on_FaceButton_clicked();
 
+    void finishedSlot(QNetworkReply*);
+
+    void uploadfinishedSlot(QNetworkReply*);
+
+    void on_HomeP_activated();
+
+    void on_HomeC_activated();
+
+    void on_LocalP_activated();
+
+    void on_LocalC_activated();
+
+    void on_MonthCombo_activated();
+
 private:
     Ui::UserInfo *ui;
-    QString preY,preM,preD;
+    QString preY,preM,preD,preHP,preHC,preHL,preLP,preLC,preLL,preSex;
+    QStringList hp,hc1,hc2,ha1,ha2,ha3,ha4,lp,lc1,lc2,la1,la2,la3,la4;
+    QPoint dragPosition;
+    QString account;
+    QNetworkAccessManager *manager1,*manager2;
 
 };
 
