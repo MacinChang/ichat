@@ -1,6 +1,6 @@
 #ifndef USERLISTITEM_H
 #define USERLISTITEM_H
-
+#include "chatwindow.h"
 #include <QWidget>
 #include <QMouseEvent>
 namespace Ui {
@@ -22,6 +22,7 @@ protected:
     void mousePressEvent(QMouseEvent *);
 private:
     Ui::UserListItem *ui;
+    ChatWindow* cw;
 };
 
 #endif // USERLISTITEM_H

@@ -1,6 +1,6 @@
 #ifndef MAINPANEL_H
 #define MAINPANEL_H
-
+#include "addwindow.h"
 #include <QFrame>
 
 namespace Ui {
@@ -21,6 +21,7 @@ private slots:
 private:
     Ui::MainPanel *ui;
     QString myAccount;
+    AddWindow* aw;
 };
 
 #endif // MAINPANEL_H

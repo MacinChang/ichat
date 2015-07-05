@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
+<<<<<<< HEAD
 <!-- Written by QtCreator 3.4.1, 2015-07-05T01:07:33. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
   <value type="QByteArray">{bd722c43-0504-46bb-8da6-5921d2d82411}</value>
+=======
+<!-- Written by QtCreator 3.4.1, 2015-07-04T23:42:23. -->
+<qtcreator>
+ <data>
+  <variable>EnvironmentId</variable>
+  <value type="QByteArray">{3c487c29-9256-4828-ab82-cb6be7dd631a}</value>
+>>>>>>> origin/test
  </data>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -228,7 +236,11 @@
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">ichat</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">ichat2</value>
+<<<<<<< HEAD
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:G:/program/git/git/ichat.pro</value>
+=======
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:F:/qiyi/shixunyo/ichat.pro</value>
+>>>>>>> origin/test
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments"></value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">ichat.pro</value>
     <value type="bool" key="Qt4ProjectManager.Qt4RunConfiguration.UseDyldImageSuffix">false</value>
