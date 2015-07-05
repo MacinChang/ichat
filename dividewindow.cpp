@@ -3,8 +3,8 @@
 #include "QtScript/QScriptValue"
 #include "QtScript/QScriptEngine"
 #include "QtScript/QScriptValueIterator"
-DivideWindow::DivideWindow(QString data,QWidget *parent) :
-    QDialog(parent),re(data),
+DivideWindow::DivideWindow(QString myAccount, QString verifyInfo, QString data,QWidget *parent) :
+    QDialog(parent),re(data), myAccount(myAccount), verifyInfo(verifyInfo),
     ui(new Ui::DivideWindow)
 {
     ui->setupUi(this);
@@ -33,6 +33,8 @@ DivideWindow::DivideWindow(QString data,QWidget *parent) :
     it.next();it.next();it.next();
     QString location=it.value().toString();
     ui->label_6->setText("所在地  "+location);
+    nam = new QNetworkAccessManager(this);
+    QObject::connect(nam, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
 }
 
 DivideWindow::~DivideWindow()
@@ -47,7 +49,23 @@ void DivideWindow::on_pushButton_2_clicked()
 
 void DivideWindow::on_pushButton_clicked()
 {
-    QString remark=ui->lineEdit->text();
+    QByteArray remark=ui->lineEdit->text().toLocal8Bit();
+    QString s = ui->label_2->text();
+    QByteArray to = ui->label_2->text().toLocal8Bit();
+    QByteArray from  = myAccount.toLocal8Bit();
+    QByteArray info = verifyInfo.toLocal8Bit();
+    QUrl url("http://182.92.69.19/ichat-server/public/user/add-contact");
+    //QByteArray append("account=66666&password=changsha");
+    QByteArray append("from=" + from + "&to=" + to + "&info=" + info + "&remark=" + remark);
+    QNetworkReply* reply = nam->post(QNetworkRequest(url), append);
     //发送添加好友消息
 
+}
+void DivideWindow::replyFinished(QNetworkReply *reply){
+    QVariant vRes = reply->readAll();
+    //QVariant codeV = reply->attribute(QNetworkRequest::RedirectionTargetAttribute);
+    QString  res = vRes.toString();
+    if(res == "true"){
+        afw->show();
+    }
 }

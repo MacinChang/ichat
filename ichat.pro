@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     addwindow.cpp \
     additems.cpp \
     dividewindow.cpp \
-    confirmwindow.cpp
+    confirmwindow.cpp \
+    addfinishedwindow.cpp
 
 HEADERS  += \
     logindialog.h \
@@ -30,7 +31,8 @@ HEADERS  += \
     addwindow.h \
     additems.h \
     dividewindow.h \
-    confirmwindow.h
+    confirmwindow.h \
+    addfinishedwindow.h
 
 FORMS    += \
     logindialog.ui \
@@ -40,7 +42,8 @@ FORMS    += \
     addwindow.ui \
     additems.ui \
     dividewindow.ui \
-    confirmwindow.ui
+    confirmwindow.ui \
+    addfinishedwindow.ui
 
 RESOURCES += \
     resource.qrc

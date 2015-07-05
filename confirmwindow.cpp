@@ -3,7 +3,7 @@
 #include "QtScript/QScriptValue"
 #include "QtScript/QScriptEngine"
 #include "QtScript/QScriptValueIterator"
-confirmWindow::confirmWindow(QString myAccount, QString data,QWidget *parent) :
+confirmWindow::confirmWindow(QString data, QString myAccount, QWidget *parent) :
     QDialog(parent),receivedData(data), myAccount(myAccount),
     ui(new Ui::confirmWindow)
 {
@@ -34,8 +34,6 @@ confirmWindow::confirmWindow(QString myAccount, QString data,QWidget *parent) :
     it.next();it.next();it.next();
     QString location=it.value().toString();
     ui->label_6->setText("所在地  "+location);
-    nam = new QNetworkAccessManager(this);
-    QObject::connect(nam, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
 }
 
 confirmWindow::~confirmWindow()
@@ -46,15 +44,12 @@ confirmWindow::~confirmWindow()
 
 void confirmWindow::on_pushButton_clicked()
 {
-    QByteArray info =ui->textBrowser->toPlainText().toLocal8Bit();//获取验证信息
-    QByteArray from = myAccount.toLocal8Bit();
-   // QByteArray to =
-    dw=new DivideWindow(receivedData);
+    QString info =ui->textBrowser->toPlainText();//获取验证信息
+    dw=new DivideWindow(myAccount, info, receivedData);
     dw->show();
+    this->close();
 }
-void confirmWindow::replyFinished(QNetworkReply *){
 
-}
 
 void confirmWindow::on_pushButton_2_clicked()
 {
