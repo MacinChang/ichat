@@ -7,6 +7,8 @@
 #include "QMenu"
 #include "renamedialog.h"
 #include "deleteconfirmdialog.h"
+#include "QDebug"
+#include "newgroupdialog.h"
 
 
 
@@ -18,15 +20,60 @@ MainPanel::MainPanel(QString account, QWidget *parent) :
     dragPosition = QPoint(-1,-1);
     this->setFixedSize(this->size());
 
-    //移动主窗口的位置
+    //主窗口相关设置
     QRect deskRect = QApplication::desktop()->availableGeometry();
     this->move(deskRect.right()-350,30);
-
-    //取消标题栏
     this->setWindowFlags(Qt::FramelessWindowHint);
+    QIcon winIcon("E:/PracticalTraining/git/image/ichat.png");
+    this->setWindowIcon(winIcon);
+    this->setWindowTitle("iChat");
+
+    //添加self
+    myself = new UserItem(this);
+    myself->setGeometry(33,54,240,70);
+    myself->show();
+    myState = "online";
+    connect(myself,SIGNAL(comboBoxCurrentIndexChanged(const QString)),this,SLOT(on_comboBox_changed(const QString)));
 
     //添加好友窗口初始化
     addDlg = new AddWindow();
+
+
+    //联系人TreeView
+    contactTreeView = new QTreeView(this);
+    contactTreeView->setGeometry(1,152,297,395);
+    contactTreeView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    contactTreeView->setContextMenuPolicy(Qt::CustomContextMenu);
+    contactTreeView->setHeaderHidden(true);
+    contactTreeView->setEditTriggers(0);
+    //联系人model
+    contactModel = new QStandardItemModel(contactTreeView);
+    contactTreeView->setModel(contactModel);
+    //关联右键点击槽
+    connect(contactTreeView,SIGNAL(customContextMenuRequested(const QPoint)),this,SLOT(on_contact_rightClicked(const QPoint)));
+    //关联双击槽
+    connect(contactTreeView,SIGNAL(doubleClicked(const QModelIndex)),this,SLOT(on_contact_doubleClicked(const QModelIndex)));
+
+    contactTreeView->show();
+
+
+
+    //群TreeView
+    groupTreeView = new QTreeView(this);
+    groupTreeView->hide();
+    groupTreeView->setGeometry(1,152,297,395);
+    groupTreeView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    groupTreeView->setContextMenuPolicy(Qt::CustomContextMenu);
+    groupTreeView->setHeaderHidden(true);
+    groupTreeView->setEditTriggers(0);
+    //群model
+    groupModel = new QStandardItemModel(groupTreeView);
+    groupTreeView->setModel(groupModel);
+    //关联右键点击槽
+    connect(groupTreeView,SIGNAL(customContextMenuRequested(const QPoint)),this,SLOT(on_group_rightClicked(const QPoint)));
+    //关联双击槽
+    connect(groupTreeView,SIGNAL(doubleClicked(const QModelIndex)),this,SLOT(on_group_doubleClicked(const QModelIndex)));
+
 
     //请求数据
     manager = new QNetworkAccessManager(this);
@@ -35,74 +82,6 @@ MainPanel::MainPanel(QString account, QWidget *parent) :
     QByteArray usr = myAccount.toLocal8Bit();
     QByteArray append("account="+usr);
     QNetworkReply* reply = manager->post(QNetworkRequest(url), append);
-
-    //添加自己头像
-    myself = new UserItem(this);
-    myself->setGeometry(33,54,240,70);
-    myState = "online";
-    connect(myself,SIGNAL(comboBoxCurrentIndexChanged(const QString)),this,SLOT(on_comboBox_changed(const QString)));
-
-    //联系人TreeView
-    contactTreeView = new QTreeView(this);
-    contactTreeView->setGeometry(1,152,297,395);
-    contactTreeView->setContextMenuPolicy(Qt::CustomContextMenu);
-    contactTreeView->setHeaderHidden(true);
-    contactTreeView->setEditTriggers(0);
-    //联系人model
-    contactModel = new QStandardItemModel(contactTreeView);
-    contactTreeView->setModel(contactModel);
-    contactModel->setHorizontalHeaderLabels((QStringList()<<QStringLiteral("Number")<<QStringLiteral("Name")<<QStringLiteral("Signature")));
-
-    //添加分组信息、联系人信息********
-    QStandardItem *group1 = new QStandardItem("group1");
-    contactModel->appendRow(group1);
-    QStandardItem *group2 = new QStandardItem("group2");
-    contactModel->appendRow(group2);
-
-    QIcon icon("E:/PracticalTraining/git/head.png");
-    QString acc = "123";
-    QStandardItem *contactTestAcc1 = new QStandardItem(icon,acc);
-    QStandardItem *contactTest1 = new QStandardItem("name");
-    group1->appendRow(contactTestAcc1);
-    group1->setChild(0,1,contactTest1);
-
-    acc = "456";
-    QStandardItem *contactTestAcc2 = new QStandardItem(icon,acc);
-    QStandardItem *contactTest2 = new QStandardItem("name");
-    group2->appendRow(contactTestAcc2);
-    group2->setChild(0,1,contactTest2);
-
-
-    //关联右键点击槽
-    connect(contactTreeView,SIGNAL(customContextMenuRequested(const QPoint)),this,SLOT(on_contact_rightClicked(const QPoint)));
-    //关联双击槽
-    connect(contactTreeView,SIGNAL(doubleClicked(const QModelIndex)),this,SLOT(on_contact_doubleClicked(const QModelIndex)));
-
-
-    //群TreeView
-    groupTreeView = new QTreeView(this);
-    groupTreeView->hide();
-    groupTreeView->setGeometry(1,152,297,395);
-    groupTreeView->setContextMenuPolicy(Qt::CustomContextMenu);
-    groupTreeView->setHeaderHidden(true);
-    groupTreeView->setEditTriggers(0);
-    //群model
-    groupModel = new QStandardItemModel(groupTreeView);
-    groupTreeView->setModel(groupModel);
-    groupModel->setHorizontalHeaderLabels((QStringList()<<QStringLiteral("Number")<<QStringLiteral("GroupName")));
-
-    //添加群信息**************
-    //QIcon icon("E:/PracticalTraining/git/head.png");
-    QString groupNum = "123";
-    QStandardItem *groupTest = new QStandardItem(icon,groupNum);
-    QStandardItem *groupName = new QStandardItem("name");
-    groupModel->appendRow(groupTest);
-    groupModel->setItem(0,1,groupName);
-
-    //关联右键点击槽
-    connect(groupTreeView,SIGNAL(customContextMenuRequested(const QPoint)),this,SLOT(on_group_rightClicked(const QPoint)));
-    //关联双击槽
-    connect(groupTreeView,SIGNAL(doubleClicked(const QModelIndex)),this,SLOT(on_group_doubleClicked(const QModelIndex)));
 }
 
 MainPanel::~MainPanel()
@@ -163,8 +142,169 @@ void MainPanel::on_btnGroup_clicked()
 //接收数据，处理数据
 void MainPanel::replyFinished(QNetworkReply *reply)
 {
+    class_id.clear();
+    contactModel->clear();
+    contactModel->setHorizontalHeaderLabels(QStringList()<<QStringLiteral("account")<<QStringLiteral("name")<<QStringLiteral("signature"));
+    groupModel->clear();
+    groupModel->setHorizontalHeaderLabels(QStringList()<<QStringLiteral("group number")<<QStringLiteral("group name"));
     QVariant vRes = reply->readAll();
     QString res = vRes.toString();
+
+    //解析字符串
+    int leftIndex,rightIndex;
+    QString selfInfo = res.left(res.indexOf("contact"));
+    res = res.mid(res.indexOf("classname"));
+    //解析self
+     //name
+    leftIndex = selfInfo.indexOf("nickname")+11;
+    rightIndex = selfInfo.indexOf("head")-4;
+    myName = selfInfo.mid(leftIndex,rightIndex-leftIndex+1);
+     //signature
+    leftIndex = selfInfo.indexOf("signature")+12;
+    rightIndex = selfInfo.indexOf("}")-2;
+    mySignature = selfInfo.mid(leftIndex,rightIndex-leftIndex+1);
+     //head****************
+    QIcon myHead("E:/PracticalTraining/git/head.png");
+
+    //修改个人信息
+    myself->setName(myName);
+    myself->setSignature(mySignature);
+    myself->setHead(myHead);
+
+
+    //解析添加分组、联系人
+    while(res.indexOf("classname") != -1){
+        //i用来记录分组中好友个数
+        int i = 0;
+        //解析分组
+        leftIndex = res.indexOf("classname")+12;
+        rightIndex = res.indexOf("class_id")-4;
+        QString className =  res.mid(leftIndex,rightIndex-leftIndex+1);
+        //添加分组信息
+        QStandardItem *group = new QStandardItem(className);
+        contactModel->appendRow(group);
+        //记录分组id
+        leftIndex = res.indexOf("class_id")+11;
+        rightIndex = res.indexOf("contact")-4;
+        QString idTest = res.mid(leftIndex,rightIndex-leftIndex+1);
+        class_id.append(idTest);
+        //解析联系人
+        leftIndex = res.indexOf("contact");
+        rightIndex = res.indexOf("classname",20);
+
+        //如果是最后一个分组
+        QString contactsInfo;
+        if(rightIndex == -1){
+            contactsInfo = res.mid(leftIndex);
+        }
+        //不是最后一个分组
+        else{
+            contactsInfo = res.mid(leftIndex,rightIndex-leftIndex);
+        }
+        //分组中还有联系人
+        while(contactsInfo.indexOf("account") != -1){
+            //account
+            leftIndex = contactsInfo.indexOf("account")+10;
+            rightIndex = contactsInfo.indexOf("nickname")-4;
+            QString contactAcc = contactsInfo.mid(leftIndex,rightIndex-leftIndex+1);
+            //nickname
+            leftIndex = contactsInfo.indexOf("nickname")+11;
+            rightIndex = contactsInfo.indexOf("head")-4;
+            QString contactNick = contactsInfo.mid(leftIndex,rightIndex-leftIndex+1);
+            //signature
+            leftIndex = contactsInfo.indexOf("signature")+12;
+            rightIndex = contactsInfo.indexOf("state")-4;
+            QString contactSign = contactsInfo.mid(leftIndex,rightIndex-leftIndex+1);
+            //remaik
+            leftIndex = contactsInfo.indexOf("remark")+9;
+            rightIndex = contactsInfo.indexOf("\"",leftIndex)-1;
+            QString contactRemark = contactsInfo.mid(leftIndex,rightIndex-leftIndex+1);
+            //state
+            leftIndex = contactsInfo.indexOf("state")+8;
+            QString test = contactsInfo.mid(leftIndex,1);
+            if(test == "1"){
+                QString contactState = "online";
+            }
+            else{
+                QString contactState = "leave";
+            }
+            //head**************根据state设置彩色灰色
+            QIcon contactHead("E:/PracticalTraining/git/head.png");
+            //添加联系人
+            group->appendRow(new QStandardItem(contactHead,contactAcc));
+            if(contactRemark == "null"){
+                group->setChild(i,1,new QStandardItem(contactNick));
+            }
+            else{
+                group->setChild(i,1,new QStandardItem(contactRemark));
+            }
+            group->setChild(i,2,new QStandardItem(contactSign));
+
+            leftIndex = contactsInfo.indexOf("remark")+5;
+            contactsInfo = contactsInfo.mid(leftIndex);
+            i++;
+        }
+        leftIndex = res.indexOf("classname",20);
+        if(leftIndex == -1){
+            break;
+        }
+        else{
+            res = res.mid(leftIndex);
+        }
+    }
+    //群***********
+}
+
+//删除好友reply
+void MainPanel::delReplyFinished(QNetworkReply *reply)
+{
+    QVariant vRes = reply->readAll();
+    QString res = vRes.toString();
+
+    QUrl url("http://182.92.69.19/ichat-server/public/user/load-panel");
+    QByteArray usr = myAccount.toLocal8Bit();
+    QByteArray append("account="+usr);
+    manager->post(QNetworkRequest(url), append);
+}
+
+//修改备注reply
+void MainPanel::remarkReplyFinished(QNetworkReply *reply)
+{
+
+}
+
+//修改状态reply
+void MainPanel::stateReplyFinished(QNetworkReply *reply)
+{
+
+}
+
+//修改分组名reply
+void MainPanel::renGroupReplyFinished(QNetworkReply *reply)
+{
+    QVariant vRes = reply->readAll();
+    QString res = vRes.toString();
+}
+
+//删除分组reply
+void MainPanel::delGroupReplyFinished(QNetworkReply *reply)
+{
+    QUrl url("http://182.92.69.19/ichat-server/public/user/load-panel");
+    QByteArray usr = myAccount.toLocal8Bit();
+    QByteArray append("account="+usr);
+    manager->post(QNetworkRequest(url), append);
+}
+
+//新建分组reply
+void MainPanel::newGroupReplyFinished(QNetworkReply *reply)
+{
+    QVariant vRes = reply->readAll();
+    QString res = vRes.toString();
+
+    QUrl url("http://182.92.69.19/ichat-server/public/user/load-panel");
+    QByteArray usr = myAccount.toLocal8Bit();
+    QByteArray append("account="+usr);
+    manager->post(QNetworkRequest(url), append);
 }
 
 //双击联系人开始聊天
@@ -185,31 +325,35 @@ void MainPanel::on_group_doubleClicked(const QModelIndex &index)
 void MainPanel::on_contact_rightClicked(const QPoint &point)
 {
     QMenu *popMenu = new QMenu();
-    QModelIndex index = contactTreeView->currentIndex();
-    QString test = index.sibling(index.row(),1).data().toString();
-    //右键点击分组
-    if(test == ""){
-        //默认分组不能删除
-        if(index.row() == 0){
-            popMenu->addAction(QString("Rename group"), this, SLOT(on_fenzuAction_reName()));
-        }
-        else{
-            popMenu->addAction(QString("Rename group"), this, SLOT(on_fenzuAction_reName()));
-            popMenu->addAction(QString("Delete group"), this, SLOT(on_fenzuAction_delete()));
-        }
-        popMenu->exec(QCursor::pos());
-
+    //QModelIndex index = contactTreeView->currentIndex();
+    QModelIndex index = contactTreeView->indexAt(point);
+    if(!index.isValid()){
+        popMenu->addAction(QString("New group"), this, SLOT(on_Action_newGroup()));
     }
-    //右键点击联系人
     else{
-        QString account = contactModel->data(index).toString();
-        popMenu->addAction(QString("Chat"), this, SLOT(on_cAction_chat()));
-        popMenu->addAction(QString("Scan information"), this, SLOT(on_cAction_scanInfo()));
-        popMenu->addAction(QString("Modify name"), this, SLOT(on_cAction_reName()));
-        popMenu->addAction(QString("Modify group"), this, SLOT(on_cAction_reGroup()));
-        popMenu->addAction(QString("Delete"), this, SLOT(on_cAction_delete()));
-        popMenu->exec(QCursor::pos());
+        QString test = index.sibling(index.row(),1).data().toString();
+        //右键点击分组
+        if(test == ""){
+            //默认分组不能删除
+            if(index.row() == 0){
+                popMenu->addAction(QString("Rename group"), this, SLOT(on_fenzuAction_reName()));
+            }
+            else{
+                popMenu->addAction(QString("Rename group"), this, SLOT(on_fenzuAction_reName()));
+                popMenu->addAction(QString("Delete group"), this, SLOT(on_fenzuAction_delete()));
+            }
+        }
+        //右键点击联系人
+        else{
+            QString account = contactModel->data(index).toString();
+            popMenu->addAction(QString("Chat"), this, SLOT(on_cAction_chat()));
+            popMenu->addAction(QString("Scan information"), this, SLOT(on_cAction_scanInfo()));
+            popMenu->addAction(QString("Modify name"), this, SLOT(on_cAction_reName()));
+            popMenu->addAction(QString("Modify group"), this, SLOT(on_cAction_reGroup()));
+            popMenu->addAction(QString("Delete"), this, SLOT(on_cAction_delete()));
+        }
     }
+    popMenu->exec(QCursor::pos());
 
 }
 
@@ -229,7 +373,16 @@ void MainPanel::receiveGroupRename(QString name)
 {
     QModelIndex index = contactTreeView->currentIndex();
     contactModel->setData(index,name);
-    //上传到服务器***************
+    //上传到服务器
+    QNetworkAccessManager *renGroupManager = new QNetworkAccessManager(this);
+    QObject::connect(renGroupManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(renGroupReplyFinished(QNetworkReply*)));
+    QUrl url("http://182.92.69.19/ichat-server/public/user/set-classname");
+    QByteArray usr = myAccount.toLocal8Bit();
+    QByteArray id = class_id.at(index.row()).toLocal8Bit();
+    QByteArray rem = name.toLocal8Bit();
+    QByteArray append("account="+usr+"&class_id="+id+"&classname="+rem);
+    renGroupManager->post(QNetworkRequest(url), append);
+
 }
 //具体修改备注名
 void MainPanel::receiveContactRename(QString name)
@@ -237,7 +390,28 @@ void MainPanel::receiveContactRename(QString name)
     QModelIndex index = contactTreeView->currentIndex();
     QModelIndex contactIndex = index.parent().child(index.row(),1);
     contactModel->setData(contactIndex,name);
-    //上传到服务器***************
+
+    QNetworkAccessManager *renameManager = new QNetworkAccessManager(this);
+    QObject::connect(renameManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(remarkReplyFinished(QNetworkReply*)));
+    QUrl url("http://182.92.69.19/ichat-server/public/user/set-remark");
+    QByteArray usr = myAccount.toLocal8Bit();
+    QByteArray con = index.data().toString().toLocal8Bit();
+    QByteArray rem = name.toLocal8Bit();
+    QByteArray append("user_id="+usr+"&contact_id="+con+"&remark="+rem);
+    renameManager->post(QNetworkRequest(url), append);
+
+}
+
+//具体新建分组*****************
+void MainPanel::receiveNewGroup(QString newGroup)
+{
+    QNetworkAccessManager *newGroupManager = new QNetworkAccessManager(this);
+    QObject::connect(newGroupManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(newGroupReplyFinished(QNetworkReply*)));
+    QUrl url("http://182.92.69.19/ichat-server/public/user/new-class");
+    QByteArray usr = myAccount.toLocal8Bit();
+    QByteArray className = newGroup.toLocal8Bit();
+    QByteArray append("account="+usr+"&classname="+className);
+    newGroupManager->post(QNetworkRequest(url), append);
 }
 
 //在线状态改变
@@ -245,6 +419,27 @@ void MainPanel::on_comboBox_changed(const QString &text)
 {
     myState = text;
     //上传到服务器******************
+    QNetworkAccessManager *stateManager = new QNetworkAccessManager(this);
+    QObject::connect(stateManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(stateReplyFinished(QNetworkReply*)));
+    QUrl url("http://182.92.69.19/ichat-server/public/user/set-remark");
+    QByteArray usr = myAccount.toLocal8Bit();
+    QByteArray sta;
+    if(text == "online"){
+        sta = "1";
+    }
+    else{
+        sta = "0";
+    }
+    QByteArray append("account="+usr+"&state="+sta);
+    stateManager->post(QNetworkRequest(url), append);
+}
+
+//新建分组
+void MainPanel::on_Action_newGroup()
+{
+    NewGroupDialog *nDlg = new NewGroupDialog;
+    connect(nDlg,SIGNAL(sendData(QString)),this,SLOT(receiveNewGroup(QString)));
+    nDlg->exec();
 }
 
 
@@ -259,17 +454,18 @@ void MainPanel::on_fenzuAction_reName()
 //弹出确定删除分组对话框
 void MainPanel::on_fenzuAction_delete()
 {
+    QModelIndex index = contactTreeView->currentIndex();
     DeleteConfirmDialog *dDlg = new DeleteConfirmDialog;
     if(dDlg->exec() == QDialog::Accepted){
-        QModelIndex defaultGroup = contactModel->index(0,0);
         QModelIndex deleteGroup = contactTreeView->currentIndex();
-        QModelIndex aChild = deleteGroup.child(0,0);
-        /*
-        while(aChild.isValid()){
-            //aChild送给default，aChild = deleteGroup.child(0,0)******************
-        }
-        */
-        contactModel->removeRow(deleteGroup.row());
+        //上传到服务器***********************
+        QNetworkAccessManager *delGroupManager = new QNetworkAccessManager(this);
+        QObject::connect(delGroupManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(delGroupReplyFinished(QNetworkReply*)));
+        QUrl url("http://182.92.69.19/ichat-server/public/user/del-class");
+        QByteArray usr = myAccount.toLocal8Bit();
+        QByteArray classid = class_id.at(index.row()).toLocal8Bit();
+        QByteArray append("account="+usr+"&class_id="+classid);
+        delGroupManager->post(QNetworkRequest(url), append);
     }
 }
 //私聊
@@ -297,6 +493,11 @@ void MainPanel::on_cAction_reName()
 void MainPanel::on_cAction_reGroup()
 {
     QModelIndex index = contactTreeView->currentIndex();
+
+
+
+
+
 }
 //删除好友
 void MainPanel::on_cAction_delete()
@@ -307,7 +508,15 @@ void MainPanel::on_cAction_delete()
         QString account = contactModel->data(index).toString();
         QStandardItem *parent = contactModel->item(index.parent().row());
         parent->removeRow(index.row());
-        //上传到服务器*********************
+        //上传到服务器
+        QNetworkAccessManager *delManager = new QNetworkAccessManager(this);
+        QObject::connect(delManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(delReplyFinished(QNetworkReply*)));
+        QUrl url("http://182.92.69.19/ichat-server/public/user/del-contact");
+        QByteArray con = account.toLocal8Bit();
+        QByteArray usr = myAccount.toLocal8Bit();
+        QByteArray append("user_id="+usr+"&contact_id="+con);
+        delManager->post(QNetworkRequest(url), append);
+
     }
 
 }
@@ -339,8 +548,8 @@ void MainPanel::on_gAction_quit()
 }
 
 
-
+//最小化
 void MainPanel::on_minBtn_clicked()
 {
-    //this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowSystemMenuHint | Qt::WindowMinimizeButtonHint);
+    this->showMinimized();
 }

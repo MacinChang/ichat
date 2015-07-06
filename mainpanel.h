@@ -9,6 +9,7 @@
 #include "QMouseEvent"
 #include "QNetworkRequest"
 #include "QNetworkReply"
+#include "QVector"
 
 namespace Ui {
 class MainPanel;
@@ -37,13 +38,25 @@ private slots:
 public slots:
 
     void replyFinished(QNetworkReply *reply);
+    void delReplyFinished(QNetworkReply *reply);
+    void remarkReplyFinished(QNetworkReply *reply);
+    void stateReplyFinished(QNetworkReply *reply);
+    void renGroupReplyFinished(QNetworkReply *reply);
+    void delGroupReplyFinished(QNetworkReply *reply);
+    void newGroupReplyFinished(QNetworkReply *reply);
+
     void on_contact_doubleClicked(const QModelIndex &index);
     void on_group_doubleClicked(const QModelIndex &index);
     void on_contact_rightClicked(const QPoint &point);
     void on_group_rightClicked(const QPoint &point);
+
     void receiveGroupRename(QString name);
     void receiveContactRename(QString name);
+    void receiveNewGroup(QString newGroup);
+
     void on_comboBox_changed(const QString & text);
+
+    void on_Action_newGroup();
 
     void on_fenzuAction_reName();
     void on_fenzuAction_delete();
@@ -65,10 +78,13 @@ private:
     QPoint dragPosition;
     QStandardItemModel *contactModel,*groupModel;
     QTreeView *contactTreeView,*groupTreeView;
-    QString myState;
     QNetworkAccessManager *manager;
+    QVector<QString> class_id;
 public:
     QString myAccount;
+    QString myName;
+    QString mySignature;
+    QString myState;
 
 };
 

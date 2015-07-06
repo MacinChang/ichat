@@ -7,10 +7,7 @@ UserItem::UserItem(QWidget *parent) :
     ui(new Ui::UserItem)
 {
     ui->setupUi(this);
-    QPixmap image("E:/PracticalTraining/git/head.png");
-    ui->headBtn->setIcon(QIcon(image));
-    ui->nameLabel->setText("MyName");
-    ui->signLabel->setText("MySignature");
+
 
     //设置comboBox
     QIcon onlineIcon("E:/PracticalTraining/git/image/online.png");
@@ -25,6 +22,21 @@ UserItem::UserItem(QWidget *parent) :
 UserItem::~UserItem()
 {
     delete ui;
+}
+
+void UserItem::setName(QString name)
+{
+    ui->nameLabel->setText(name);
+}
+
+void UserItem::setSignature(QString sign)
+{
+    ui->signLabel->setText(sign);
+}
+
+void UserItem::setHead(QIcon head)
+{
+    ui->headBtn->setIcon(head);
 }
 
 //单击头像打开个人资料修改界面

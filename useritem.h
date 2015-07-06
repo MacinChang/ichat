@@ -14,6 +14,10 @@ class UserItem : public QWidget
 public:
     explicit UserItem(QWidget *parent = 0);
     ~UserItem();
+    void setName(QString name);
+    void setSignature(QString sign);
+    void setHead(QIcon head);
+
 
 private slots:
     void on_headBtn_clicked();

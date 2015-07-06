@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     addwindow.cpp \
     useritem.cpp \
     renamedialog.cpp \
-    deleteconfirmdialog.cpp
+    deleteconfirmdialog.cpp \
+    newgroupdialog.cpp
 
 HEADERS  += \
     logindialog.h \
@@ -29,7 +30,8 @@ HEADERS  += \
     addwindow.h \
     useritem.h \
     renamedialog.h \
-    deleteconfirmdialog.h
+    deleteconfirmdialog.h \
+    newgroupdialog.h
 
 FORMS    += \
     logindialog.ui \
@@ -38,7 +40,8 @@ FORMS    += \
     addwindow.ui \
     useritem.ui \
     renamedialog.ui \
-    deleteconfirmdialog.ui
+    deleteconfirmdialog.ui \
+    newgroupdialog.ui
 
 RESOURCES += \
     resource.qrc
