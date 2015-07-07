@@ -1,6 +1,6 @@
 #ifndef USERITEM_H
 #define USERITEM_H
-
+#include "userinfo.h"
 #include <QWidget>
 
 namespace Ui {
@@ -17,6 +17,7 @@ public:
     void setName(QString name);
     void setSignature(QString sign);
     void setHead(QIcon head);
+    void setAccount(QString myAccount);
 
 
 private slots:
@@ -28,6 +29,8 @@ signals:
 
 private:
     Ui::UserItem *ui;
+    QString myAccount;
+    UserInfo *self;
 };
 
 #endif // USERITEM_H

@@ -10,6 +10,8 @@
 #include "QDebug"
 #include "newgroupdialog.h"
 
+
+QVector<FriendInfo*> MainPanel::fis;
 QPixmap convertToGray(QImage image){
 
     int w,h;
@@ -33,14 +35,19 @@ MainPanel::MainPanel(QString account, QWidget *parent) :
     ui(new Ui::MainPanel)
 {
     ui->setupUi(this);
+
     dragPosition = QPoint(-1,-1);
     this->setFixedSize(this->size());
-
+    receiveUdpSocket = new QUdpSocket(this);
+    connect(receiveUdpSocket, SIGNAL(readyRead()),this, SLOT(receiveData()));
+    QByteArray self = myAccount.toLocal8Bit();
+    QByteArray data("{\"user_id\":" + self + ",\"u\":\"receive\"}");
+    receiveUdpSocket->writeDatagram(data.data(), data.size(), QHostAddress("182.92.69.19"), 10008);
     //主窗口相关设置
     QRect deskRect = QApplication::desktop()->availableGeometry();
     this->move(deskRect.right()-350,30);
     this->setWindowFlags(Qt::FramelessWindowHint);
-    QIcon winIcon(":/images/image/ichat.png");
+    QIcon winIcon("\\Image\\ichat.png");
     this->setWindowIcon(winIcon);
     this->setWindowTitle("iChat");
 
@@ -52,11 +59,12 @@ MainPanel::MainPanel(QString account, QWidget *parent) :
     connect(myself,SIGNAL(comboBoxCurrentIndexChanged(const QString)),this,SLOT(on_comboBox_changed(const QString)));
 
     //添加好友窗口初始化
-    addDlg = new AddWindow();
+    addDlg = new AddWindow(myAccount);
     //修改分组窗口初始化
     changeDlg = new ChangeGroupDialog(this);
     changeDlg->hide();
     connect(changeDlg,SIGNAL(changeBtn_clicked(QString)),this,SLOT(on_group_changed(QString)));
+
 
 
     //联系人TreeView
@@ -131,6 +139,83 @@ void MainPanel::mouseMoveEvent(QMouseEvent *e)
 
 }
 
+void MainPanel::receiveData(){
+    QByteArray data;
+    //while(receiveUdp)
+    while(receiveUdpSocket->hasPendingDatagrams()){
+            data.resize(receiveUdpSocket->pendingDatagramSize());
+            QHostAddress addr;
+            quint16 port;
+            receiveUdpSocket->readDatagram(data.data(), data.size(), &addr, &port);
+        }
+    //QString str = data.data();
+    checkMessage(data.data());
+    //ui->textBrowser_2->setText(str);
+    QByteArray self = myAccount.toLocal8Bit();
+    QByteArray datas("{\"user_id\":" + self + ",\"u\":\"receive\"}");
+    receiveUdpSocket->writeDatagram(datas.data(), datas .size(), QHostAddress("182.92.69.19"), 10008);
+
+}
+void MainPanel::checkMessage(QString msg){
+    QVector<MsgNode> messages;
+    QString x = "Nine pineapples";
+    QString y = x.mid(5, 4);            // y == "pine"
+    QString z = x.mid(5);               // z == "pineapples"
+    int p = msg.indexOf("{", 0);
+    while(p != -1){
+        int q = msg.indexOf("}", p + 1);
+        QString t = msg.mid(p, q - p + 1);
+        QJsonParseError error;
+        QJsonDocument document = QJsonDocument::fromJson(t.toUtf8(), &error);
+        if(error.error == QJsonParseError::NoError){
+            QVariantMap map = document.toVariant().toMap();
+            MsgNode temp;
+            temp.contact = map["user_id"].toString();
+            temp.time = map["time"].toString();
+            temp.content = map["content"].toString();
+            messages.push_back(temp);
+        }
+        p = msg.indexOf("{", q);
+    }
+    QVector<MsgNode> temp;
+    temp.push_back(messages[0]);
+    for(int i = 1; i < messages.size(); i++){
+        if(messages[i].contact != temp[0].contact){
+            bool flag = false;
+            for(int j = 0; j < cws.size(); j++){
+                if(cws[j]->getContactAccount() == temp[0].contact){
+                    cws[j]->receiveMessage(temp);
+                    flag = true;
+                    break;
+                }
+            }
+            if(!flag){
+             cws.push_back(new ChatWindow(myAccount, temp[0].contact));
+             cws[cws.size() - 1]->show();
+            }
+            temp.clear();
+            temp.push_back(messages[i]);
+        }else{
+            temp.push_back(messages[i]);
+        }
+    }
+    if(!temp.empty()){
+        bool flag = false;
+        for(int j = 0; j < cws.size(); j++){
+            if(cws[j]->getContactAccount() == temp[0].contact){
+                cws[j]->receiveMessage(temp);
+                flag = true;
+                break;
+            }
+        }
+        if(!flag){
+         cws.push_back(new ChatWindow(myAccount, temp[0].contact));
+         cws[cws.size() - 1]->receiveMessage(temp);
+         cws[cws.size() - 1]->show();
+        }
+    }
+
+}
 void MainPanel::mouseReleaseEvent(QMouseEvent *e)
 {
     if(e->button() == Qt::LeftButton){
@@ -215,6 +300,7 @@ void MainPanel::replyFinished(QNetworkReply *reply)
    // myHead = QIcon(head);
 
     //修改个人信息
+    myself->setAccount(myAccount);
     myself->setName(myName);
     myself->setSignature(mySignature);
     myself->setHead(myHead);
@@ -277,6 +363,7 @@ void MainPanel::replyFinished(QNetworkReply *reply)
             else{
                 QString contactState = "leave";
             }
+            //head**************根据state设置彩色灰色
             //head
             leftIndex = contactsInfo.indexOf("head")+7;
             rightIndex = contactsInfo.indexOf("level")-4;
@@ -304,8 +391,7 @@ void MainPanel::replyFinished(QNetworkReply *reply)
             else{
                 contactHead = QIcon(QPixmap(convertToGray(head1)));
             }
-
-
+            
             //添加联系人
             group->appendRow(new QStandardItem(contactHead,contactAcc));
             if(contactRemark == "null"){
@@ -586,8 +672,21 @@ void MainPanel::on_fenzuAction_delete()
 void MainPanel::on_cAction_chat()
 {
     QModelIndex index = contactTreeView->currentIndex();
-    QString account = contactModel->data(index).toString();
+    QString contactAccount = contactModel->data(index).toString();
     //打开私聊窗口******************
+    bool flag = false;
+    //判断是否已经打开
+    for(int i = 0; i < cws.size(); i++){
+        if(cws[i]->getContactAccount() == contactAccount){
+            cws[i]->setAttribute(Qt::WA_KeyboardFocusChange);
+            flag = true;
+        }
+    }
+    if(!flag){
+        cws.push_back(new ChatWindow(myAccount, contactAccount));
+        cws[cws.size() - 1]->show();
+    }
+
 }
 //查看资料
 void MainPanel::on_cAction_scanInfo()
@@ -595,6 +694,25 @@ void MainPanel::on_cAction_scanInfo()
     QModelIndex index = contactTreeView->currentIndex();
     QString account = contactModel->data(index).toString();
     //打开查看资料窗口*******************
+    bool flag = false;
+    int size = fis.size();
+    for(int i = 0; i < size; i++){
+        if(fis[i]->getAccount() == "-1"){
+            fis.remove(i);
+            size--;
+            continue;
+        }
+        if(fis[i]->getAccount() == account){
+            fis[i]->setAttribute(Qt::WA_KeyboardFocusChange);
+            flag = true;
+            break;
+        }
+    }
+    if(!flag){
+        fis.push_back(new FriendInfo(account));
+        fis[fis.size() - 1]->show();
+    }
+
 }
 //弹出修改备注名窗口
 void MainPanel::on_cAction_reName()

@@ -4,13 +4,22 @@
 #include <QFrame>
 #include "addwindow.h"
 #include "useritem.h"
-#include "QStandardItemModel"
-#include "QTreeView"
-#include "QMouseEvent"
-#include "QNetworkRequest"
-#include "QNetworkReply"
-#include "QVector"
+#include "chatwindow.h"
+#include "friendinfo.h"
+#include "msgnode.h"
+#include <QStandardItemModel>
+#include <QTreeView>
+#include <QMouseEvent>
+#include <QNetworkRequest>
+#include <QNetworkReply>
+#include <QVector>
+#include <QUdpSocket>
+#include <QJsonDocument>
+#include <QJsonParseError>
+#include <QJsonObject>
+#include <QJsonArray>
 #include "changegroupdialog.h"
+
 
 namespace Ui {
 class MainPanel;
@@ -26,6 +35,7 @@ public:
     void mousePressEvent(QMouseEvent *e);
     void mouseMoveEvent(QMouseEvent *e);
     void mouseReleaseEvent(QMouseEvent *e);
+    void checkMessage(QString msg);
 
 private slots:
     void on_btnAddContacts_clicked();
@@ -77,6 +87,8 @@ public slots:
     void on_gAction_modify();
     void on_gAction_quit();
 
+    void  receiveData();
+
 private:
     Ui::MainPanel *ui;
     AddWindow *addDlg;
@@ -87,13 +99,19 @@ private:
     QTreeView *contactTreeView,*groupTreeView;
     QNetworkAccessManager *manager;
     QVector<QString> class_id;
+
+    QVector <ChatWindow*> cws;
+    QUdpSocket *receiveUdpSocket;
+    FriendInfo *selfFI;
+
 public:
     QString myAccount;
     QIcon myHead;
     QString myName;
     QString mySignature;
     QString myState;
-
+public:
+    static QVector<FriendInfo*> fis;
 };
 
 #endif // MAINPANEL_H
