@@ -7,13 +7,16 @@
 #include <QJsonObject>
 #include <QScriptEngine>
 #include <QScriptValueIterator>
-
-
+#include <QtGui>
+#include <QDrag>
+#include <Level.h>
 
 bool flag=false;  //全局旗子用来判断资料是否保存
 bool flagClose = false;
+
+
 UserInfo::UserInfo(QString account, QWidget *parent) :
-    QDialog(parent), account(account),
+    QDialog(parent),myaccount(account),
     ui(new Ui::UserInfo)
 {
 
@@ -26,18 +29,20 @@ UserInfo::UserInfo(QString account, QWidget *parent) :
     //从服务器端获取用户信息
         manager1 = new QNetworkAccessManager(this);  //获取信息的manager
         manager2 = new QNetworkAccessManager(this);   //发送信息的manager
+        manager3 = new QNetworkAccessManager(this);     //修改头像的manager
         QObject::connect(manager1, SIGNAL(finished(QNetworkReply*)),
                    this, SLOT(finishedSlot(QNetworkReply*)));
           QUrl url("http://182.92.69.19/ichat-server/public/user/get-info");
-          QByteArray temp = account.toLocal8Bit();
-          QByteArray append("account=" + temp);
+          QByteArray MyAccount = myaccount.toLocal8Bit();
+          QByteArray append("account="+MyAccount);
 
           QNetworkReply* reply = manager1->post(QNetworkRequest(url),append);
      //向服务器端发送改变后的用户信息
           QObject::connect(manager2, SIGNAL(finished(QNetworkReply*)),
                     this, SLOT(uploadfinishedSlot(QNetworkReply*)));
-
-
+     //向服务器端发送改变后的头像
+          QObject::connect(manager3, SIGNAL(finished(QNetworkReply*)),
+                    this, SLOT(faceuploadfinishedsolt(QNetworkReply*)));
      //为下拉列表提供选项
      int month;
     for(int year=1900;year<=2015;year++){
@@ -92,6 +97,8 @@ UserInfo::UserInfo(QString account, QWidget *parent) :
 
 
     //设置信息为只读，按了修改资料的按钮后设为可编辑
+    //其中等级，账号不可修改
+   // ui->LvList->setEnabled(false);
     ui->NameEdit->setReadOnly(true);
     ui->SignEdit->setReadOnly(true);
     ui->AgeEdit->setReadOnly(true);
@@ -116,19 +123,45 @@ UserInfo::~UserInfo()
     delete ui;
 }
 
+//从本地选择头像修改
+void UserInfo::on_FaceButton_clicked(){
+   QByteArray ba;
+   QBuffer   buf(&ba);
+   QByteArray MyAccount = myaccount.toLocal8Bit();
+   QString fileName = QFileDialog::getOpenFileName(this);
+   if(fileName!=NULL){
+   QImage img(fileName);
+   ui->FaceButton->setIcon(QPixmap::fromImage(img));
+   //将图片转成base64编码
+   img.save(&buf,"JPG");
+   QByteArray cc = qCompress(ba,1);
+   QByteArray hh = cc.toBase64();
+   QString faceCode(hh);
+   //上传到服务器时 +号会莫名其妙消失，先将它们都替换成- 获取的时候再转成 +
+   int j = faceCode.indexOf('+');
+   while(j!=-1){
+       faceCode[j] = '-';
+       j = faceCode.indexOf('+');
+   }
+
+   //qDebug()<<faceCode;
+   QByteArray head = faceCode.toLocal8Bit();
+   //qDebug()<<head;
+   //上传到服务器
+   QUrl url("http://182.92.69.19/ichat-server/public/user/set-head");
+   QByteArray append("account="+MyAccount+"&head="+head);
+   QNetworkReply* reply = manager3->post(QNetworkRequest(url),append);
+      }
+  }
 
 //按下保存资料按钮，执行保存操作，并将编辑框和保存按钮设为不可用
 void UserInfo::on_SaveButton_clicked(){
-    QByteArray account,nickname,signature,level,gender,age,phone,hometown,location,birth;
+    QByteArray account,nickname,signature,gender,age,phone,hometown,location,birth;
     QString sex,home,local,birthday,BirthYear,BirthMonth,BirthDate;
-    QString sign,name;
     int HomeP,HomeC,HomeL,LocalP,LocalC,LocalL;
-      sign   = ui->SignEdit->text();
-      name   =ui->NameEdit->text();
       account = (ui->AccountList->text()).toLocal8Bit();
       nickname = (ui->NameEdit->text()).toLocal8Bit();
       signature =  (ui->SignEdit->text()).toLocal8Bit();
-      level     =  (ui->lvLabel->text()).toLocal8Bit();
       sex    =  QString::number(ui->SexCombo->currentIndex());
       gender = sex.toLocal8Bit();
       age    = (ui->AgeEdit->text()).toLocal8Bit();
@@ -150,7 +183,7 @@ void UserInfo::on_SaveButton_clicked(){
       birth      = birthday.toLocal8Bit();
       QUrl url("http://182.92.69.19/ichat-server/public/user/set-info");
       QByteArray append("account="+account+"&nickname="+nickname+"&signature="+signature+
-                        "&level="+level+"&gender="+gender+"&age="+age+"&phone="+phone+
+                      "&gender="+gender+"&age="+age+"&phone="+phone+
                         "&home="+hometown+"&location="+location+"&birth="+birth);
       QNetworkReply* reply = manager2->post(QNetworkRequest(url),append);
 
@@ -224,16 +257,6 @@ void UserInfo::on_EditButton_clicked(){
 }
 
 
- //从本地选择头像修改
-void UserInfo::on_FaceButton_clicked(){
-
- QString fileName = QFileDialog::getOpenFileName(this);
- if(fileName!=NULL){
-   QPixmap qpx(fileName);
-   ui->FaceButton->setIcon(qpx);
- }
-}
-
 
 
 //服务器接收的槽函数
@@ -258,12 +281,54 @@ void UserInfo::finishedSlot(QNetworkReply *reply){
         //显示在资料卡上
     ui->AccountList->setText(usrInfo[1]);   //账号
     ui->NameEdit->setText(usrInfo[2]);   //昵称
-    //ui->FaceButton
-    ui->SignEdit->setText(usrInfo[4]);     //签名
-    ui->lvLabel->setText(usrInfo[5]);       //等级
-    ui->SexCombo->setCurrentIndex(usrInfo[6].toInt());   //性别
-    ui->AgeEdit->setText(usrInfo[7]);      //年龄
-    ui->PhoneEdit->setText(usrInfo[8]);    //电话
+
+     //头像
+    QByteArray head,face;
+    QString str(usrInfo[3]);
+    int j = str.indexOf('-');
+    while(j!=-1){
+        str[j] = '+';
+        j = str.indexOf('-');
+    }
+    head = QByteArray::fromBase64(str.toLatin1());
+    face = qUncompress(head);
+    QImage img;
+    img.loadFromData(face);
+    ui->FaceButton->setIcon(QPixmap::fromImage(img));
+
+    //签名
+    ui->SignEdit->setText(usrInfo[4]);
+
+    //等级
+    Level lv;        //等级
+    lv.LoadLevel(usrInfo[5]);
+    int sunN,moonN,starN;
+     sunN = lv.sun;
+     moonN = lv.moon;
+     starN = lv.star;
+    QListWidgetItem *sun[3],*moon[3],*star[3];
+    for(int i=0;i<3;i++){
+        sun[i] = new QListWidgetItem(QIcon(":/images/image/sun.png"),"");
+        moon[i] = new QListWidgetItem(QIcon(":/images/image/moon.png"),"");
+        star[i] = new QListWidgetItem(QIcon(":/images/image/star.png"),"");
+    }
+    for(int i=0;i<sunN;i++){
+        ui->LvList->addItem(sun[i]);
+    }
+    for(int i=0;i<moonN;i++){
+       ui->LvList->addItem(moon[i]);
+    }
+    for(int i=0;i<starN;i++){
+        ui->LvList->addItem(star[i]);
+    }
+
+   //性别
+    ui->SexCombo->setCurrentIndex(usrInfo[6].toInt());
+    //年龄
+    ui->AgeEdit->setText(usrInfo[7]);
+    //电话
+    ui->PhoneEdit->setText(usrInfo[8]);
+    //故乡和所在地
     int home,homeP,homeC,homeL,local,localP,localC,localL,homePx,homePy,localPx,localPy;
     home = usrInfo[9].toInt();
     homeP=home/100;
@@ -277,8 +342,8 @@ void UserInfo::finishedSlot(QNetworkReply *reply){
     localC=localPx/10;
     localPy=localPx-localC*10;
     localL=localPy;
-    ui->HomeP->setCurrentIndex(homeP);      //故乡
-    ui->LocalP->setCurrentIndex(localP);    //所在地
+    ui->HomeP->setCurrentIndex(homeP);
+    ui->LocalP->setCurrentIndex(localP);
    if(ui->HomeP->currentText()=="海南"){
        ui->HomeC->clear();
        ui->HomeC->addItems(hc1);
@@ -342,8 +407,8 @@ void UserInfo::finishedSlot(QNetworkReply *reply){
            ui->LocalL->setCurrentIndex(localL);
        }
     }
-
-   QStringList birthlist = usrInfo[11].split("-"); //生日
+    //生日
+   QStringList birthlist = usrInfo[11].split("-");
    ui->YearCombo->setCurrentIndex(birthlist[0].toInt()-1900);
    ui->MonthCombo->setCurrentIndex((birthlist[1].toInt())-1);
    ui->DateCombo->setCurrentIndex((birthlist[2].toInt())-1);
@@ -388,7 +453,15 @@ void UserInfo::finishedSlot(QNetworkReply *reply){
         this->close();
     }
 
-  }
+ }
+
+ //头像修改成功后的槽函数
+ void UserInfo::faceuploadfinishedsolt(QNetworkReply *)
+ {
+     QMessageBox::information(this, QObject::tr("提示"),
+                               QObject::tr("修改头像成功"),
+                               QMessageBox::Yes);
+ }
 
 
 //移动窗口
@@ -422,7 +495,7 @@ void UserInfo::mouseMoveEvent(QMouseEvent *event){
 
 
 //修改故乡
-void UserInfo::on_HomeP_activated(/*const QString &arg1*/){
+void UserInfo::on_HomeP_activated(){
 
 
     if(ui->HomeP->currentText()=="海南"){
@@ -452,7 +525,7 @@ void UserInfo::on_HomeP_activated(/*const QString &arg1*/){
 }
 }
 
-void UserInfo::on_HomeC_activated(/*const QString &arg1*/)
+void UserInfo::on_HomeC_activated()
 {
 
     if(ui->HomeC->currentText()=="海口"){
@@ -492,7 +565,7 @@ void UserInfo::on_HomeC_activated(/*const QString &arg1*/)
 
 
 //修改所在地
-void UserInfo::on_LocalP_activated(/*const QString &arg1*/)
+void UserInfo::on_LocalP_activated()
 {
 
     if(ui->LocalP->currentText()=="湖北"){
@@ -522,7 +595,7 @@ void UserInfo::on_LocalP_activated(/*const QString &arg1*/)
 }
 }
 
-void UserInfo::on_LocalC_activated(/*const QString &arg1*/)
+void UserInfo::on_LocalC_activated()
 {
 
     if(ui->LocalC->currentText()=="武汉"){
@@ -559,7 +632,7 @@ void UserInfo::on_LocalC_activated(/*const QString &arg1*/)
     }
 
 }
-
+ //根据选择的月份判断天数
 void UserInfo::on_MonthCombo_activated()
 {
     int month;
@@ -581,4 +654,9 @@ void UserInfo::on_MonthCombo_activated()
     }
         }
 
+}
+     //最小化
+void UserInfo::on_pushButton_clicked()
+{
+   this->showMinimized();
 }

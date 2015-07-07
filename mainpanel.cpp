@@ -47,7 +47,7 @@ MainPanel::MainPanel(QString account, QWidget *parent) :
     QRect deskRect = QApplication::desktop()->availableGeometry();
     this->move(deskRect.right()-350,30);
     this->setWindowFlags(Qt::FramelessWindowHint);
-    QIcon winIcon("\\Image\\ichat.png");
+    QIcon winIcon(":/images/image/ichat.png");
     this->setWindowIcon(winIcon);
     this->setWindowTitle("iChat");
 
@@ -138,7 +138,13 @@ void MainPanel::mouseMoveEvent(QMouseEvent *e)
     e->accept();
 
 }
-
+void MainPanel::mouseReleaseEvent(QMouseEvent *e)
+{
+    if(e->button() == Qt::LeftButton){
+        dragPosition = QPoint(-1,-1);
+        e->accept();
+    }
+}
 void MainPanel::receiveData(){
     QByteArray data;
     //while(receiveUdp)
@@ -215,13 +221,6 @@ void MainPanel::checkMessage(QString msg){
         }
     }
 
-}
-void MainPanel::mouseReleaseEvent(QMouseEvent *e)
-{
-    if(e->button() == Qt::LeftButton){
-        dragPosition = QPoint(-1,-1);
-        e->accept();
-    }
 }
 
 
