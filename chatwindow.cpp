@@ -11,16 +11,39 @@ ChatWindow::ChatWindow(QWidget *parent) :
     m_animation = new QPropertyAnimation(this,"pos");
     UserListItem *myitem = new UserListItem(this);
     myitem->move(5, 5);
+    //sender = new QUdpSocket(this);
+    //connect(sender, SIGNAL(readyRead()),this, SLOT(readBackData()));
+    receiveUdpSocket = new QUdpSocket(this);
+    connect(receiveUdpSocket, SIGNAL(readyRead()),this, SLOT(receiveData()));
 }
+
 
 ChatWindow::~ChatWindow()
 {
     delete ui;
 }
 
+void ChatWindow::receiveData(){
+    QByteArray data;
+    //while(receiveUdp)
+    while(receiveUdpSocket->hasPendingDatagrams()){
+            data.resize(receiveUdpSocket->pendingDatagramSize());
+            QHostAddress addr;
+            quint16 port;
+            receiveUdpSocket->readDatagram(data.data(), data.size(), &addr, &port);
+        }
+    QString str = data.data();
+    ui->textBrowser_2->setText(str);
+    QByteArray self = "12345";
+    QByteArray datas("{\"user_id\":" + self + ",\"u\":\"receive\"}");
+    receiveUdpSocket->writeDatagram(datas.data(), datas .size(), QHostAddress::LocalHost, 10008);
+}
 
 void ChatWindow::on_pushButton_clicked()
 {
+    QByteArray self = "12345";
+    QByteArray data("{\"user_id\":" + self + ",\"u\":\"receive\"}");
+    receiveUdpSocket->writeDatagram(data.data(), data.size(), QHostAddress::LocalHost, 10008);
     //获取系统现在的时间并设置显示格式
     QDateTime current_date_time = QDateTime::currentDateTime();
     QString current_date = current_date_time.toString("hh:mm:ss");
@@ -76,7 +99,15 @@ void ChatWindow::ShakeAnimation()
     m_animation->setKeyValueAt(0.7,pos + QPoint(-8,0));
     m_animation->setKeyValueAt(0.8,pos + QPoint(0,6));
     m_animation->setKeyValueAt(0.9,pos + QPoint(4,2));
+    m_animation->setKeyValueAt(1.0,pos + QPoint(-5,-5));
+    m_animation->setKeyValueAt(1.1,pos + QPoint(0,-5));
+    m_animation->setKeyValueAt(1.2,pos + QPoint(5,0));
+    m_animation->setKeyValueAt(1.3,pos + QPoint(6,1));
+    m_animation->setKeyValueAt(1.4,pos + QPoint(7,-7));
+    m_animation->setKeyValueAt(1.5,pos + QPoint(-6,6));
+    m_animation->setKeyValueAt(1.6,pos + QPoint(-8,0));
+    m_animation->setKeyValueAt(1.7,pos + QPoint(0,6));
+    m_animation->setKeyValueAt(1.8,pos + QPoint(4,2));
     m_animation->setEndValue(pos);
     m_animation->start();
 }
-
