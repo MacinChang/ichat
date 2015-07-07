@@ -4,4 +4,7 @@ x64/
 *.suo
 *.sdf
 *.pro.user
+Makefile
+*.Debug
+*.Release
 
