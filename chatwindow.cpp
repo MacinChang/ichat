@@ -1,6 +1,5 @@
 #include "chatwindow.h"
 #include "ui_chatwindow.h"
-#include "userlistitem.h"
 #include <qdatetime.h>
 #include "QFileDialog"
 #include "QPixmap"
@@ -15,8 +14,8 @@ ChatWindow::ChatWindow(QString selfAccount, QString contactAccount, QWidget *par
     ui->setupUi(this);
     m_animation = new QPropertyAnimation(this,"pos");
     //添加好友头像，昵称和个性签名
-    UserListItem *myitem = new UserListItem(this);
-    myitem->move(5, 5);
+    //UserListItem *myitem = new UserListItem(this);
+    //myitem->move(5, 5);
     //发送信息槽函数绑定
     sendUdpSocket = new QUdpSocket(this);
     connect(sendUdpSocket, SIGNAL(readyRead()), this, SLOT(readBackData()));

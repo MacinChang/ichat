@@ -189,6 +189,7 @@ void FriendInfo::finishedSlot(QNetworkReply *reply)
     }
     for(int i=0;i<sunN;i++){
         ui->LvList->addItem(sun[i]);
+
     }
     for(int i=0;i<moonN;i++){
        ui->LvList->addItem(moon[i]);
