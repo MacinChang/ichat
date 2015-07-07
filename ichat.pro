@@ -7,6 +7,7 @@
 QT       += core gui
 QT       += network
 QT       += script
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = ichat
@@ -25,7 +26,11 @@ SOURCES += main.cpp\
     addfinishedwindow.cpp \
     userinfo.cpp \
     groupinfo.cpp \
-    friendinfo.cpp
+    friendinfo.cpp \
+    useritem.cpp \
+    renamedialog.cpp \
+    deleteconfirmdialog.cpp \
+    newgroupdialog.cpp
 
 HEADERS  += \
     logindialog.h \
@@ -39,7 +44,12 @@ HEADERS  += \
     addfinishedwindow.h \
     userinfo.h \
     groupinfo.h \
-    friendinfo.h
+    friendinfo.h \
+    useritem.h \
+    renamedialog.h \
+    deleteconfirmdialog.h \
+    newgroupdialog.h
+
 
 FORMS    += \
     logindialog.ui \
@@ -53,9 +63,12 @@ FORMS    += \
     addfinishedwindow.ui \
     userinfo.ui \
     groupinfo.ui \
-    friendinfo.ui
+    friendinfo.ui \
+    useritem.ui \
+    renamedialog.ui \
+    deleteconfirmdialog.ui \
+    newgroupdialog.ui
 
 RESOURCES += \
     resource.qrc
-QT  += network
-QT  += script
+

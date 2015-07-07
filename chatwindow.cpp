@@ -17,7 +17,6 @@ ChatWindow::ChatWindow(QWidget *parent) :
     connect(receiveUdpSocket, SIGNAL(readyRead()),this, SLOT(receiveData()));
 }
 
-
 ChatWindow::~ChatWindow()
 {
     delete ui;

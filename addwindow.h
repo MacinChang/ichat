@@ -1,11 +1,13 @@
 #ifndef ADDWINDOW_H
 #define ADDWINDOW_H
+
 #include "QtNetwork/QNetworkReply"
 #include "QtNetwork/QNetworkRequest"
 #include <QFrame>
 #include <QMouseEvent>
 #include "additems.h"
 #include "confirmwindow.h"
+
 namespace Ui {
 class AddWindow;
 }
@@ -13,6 +15,7 @@ class AddWindow;
 class AddWindow : public QFrame
 {
     Q_OBJECT
+
 private:
     QString myAccount;
 public:
@@ -33,6 +36,7 @@ private slots:
     void on_pushButton_2_clicked();
 signals:
     void clicked();
+
 };
 
 #endif // ADDWINDOW_H

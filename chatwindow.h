@@ -1,5 +1,6 @@
 #ifndef CHATWINDOW_H
 #define CHATWINDOW_H
+
 #include <QMouseEvent>
 #include <QFrame>
 #include "QPropertyAnimation"

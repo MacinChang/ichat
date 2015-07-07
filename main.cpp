@@ -9,17 +9,16 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    LoginDialog ld;
-    ChatWindow cw;
-    cw.setWindowTitle("receive");
-    cw.show();
-    //ld.show();
-    /*if (ld.exec() == QDialog::Accepted)
-        {
-           w = new MainPanel(account1);
-           w->show();
-           return a.exec();
-        }
-    else return 0;*/
+    //LoginDialog loginDlg;
+    MainPanel *mainDlg = new MainPanel("66666");
+    /*if(loginDlg.exec() == QDialog::Accepted){
+        mainDlg.show();
+        return a.exec();
+    }
+    else{
+        return 0;
+    }*/
+    mainDlg->show();
     return a.exec();
+
 }

@@ -22,7 +22,6 @@ LoginDialog::~LoginDialog()
     delete ui;
 }
 
-
 void LoginDialog::on_pushButton_clicked()
 {
     QUrl url("http://182.92.69.19/ichat-server/public/user/login");
