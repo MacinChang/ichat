@@ -8,6 +8,7 @@ confirmWindow::confirmWindow(QString data, QString myAccount, QWidget *parent) :
     ui(new Ui::confirmWindow)
 {
     ui->setupUi(this);
+    this->setWindowFlags(Qt::FramelessWindowHint);
     setWindowFlags(windowFlags()& ~Qt::WindowMaximizeButtonHint);
     setFixedSize(this->width(), this->height());
     QScriptValue sc;

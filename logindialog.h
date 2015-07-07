@@ -1,7 +1,6 @@
 #ifndef LOGINDIALOG_H
 #define LOGINDIALOG_H
 
-#include <QMainWindow>
 #include <QDialog>
 #include <QNetworkReply>
 #include <QNetworkRequest>

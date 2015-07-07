@@ -8,6 +8,7 @@ DivideWindow::DivideWindow(QString myAccount, QString verifyInfo, QString data,Q
     ui(new Ui::DivideWindow)
 {
     ui->setupUi(this);
+    this->setWindowFlags(Qt::FramelessWindowHint);
     setWindowFlags(windowFlags()& ~Qt::WindowMaximizeButtonHint);
     setFixedSize(this->width(), this->height());
     QScriptValue sc;

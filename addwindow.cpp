@@ -8,11 +8,14 @@ AddWindow::AddWindow(QString myAccount, QWidget *parent) :
     ui(new Ui::AddWindow)
 {
     ui->setupUi(this);
+
     connect(this, SIGNAL(clicked()), this, SLOT(headPressEventSlot()));
+    ui->label->setText("<font color=white>请输入ichat号：</font>");
     ui->label_2->hide();
     ui->label_3->hide();
     ui->label_4->hide();
     ui->pushButton_2->hide();
+    this->setWindowFlags(Qt::FramelessWindowHint);
     setWindowFlags(windowFlags()& ~Qt::WindowMaximizeButtonHint);
     setFixedSize(this->width(), this->height());
     manager = new QNetworkAccessManager(this);
