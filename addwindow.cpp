@@ -10,7 +10,7 @@ AddWindow::AddWindow(QString myAccount, QWidget *parent) :
     ui->setupUi(this);
     connect(this, SIGNAL(clicked()), this, SLOT(headPressEventSlot()));
     ui->label_2->hide();
-    ui->label_3->hide();
+    ui->faceButton->hide();
     ui->label_4->hide();
     ui->pushButton_2->hide();
     setWindowFlags(windowFlags()& ~Qt::WindowMaximizeButtonHint);
@@ -65,7 +65,7 @@ void AddWindow::replyFinished(QNetworkReply *reply)
     {
         ui->textBrowser->clear();
         ui->label_2->hide();
-        ui->label_3->hide();
+        ui->faceButton->hide();
         ui->label_4->hide();
         ui->pushButton_2->hide();
         QString c="不存在该用户，请重新输入";
@@ -78,12 +78,24 @@ void AddWindow::replyFinished(QNetworkReply *reply)
         QString nickname=it.value().toString();
         ui->label_2->setText(nickname);
         it.next();
-        //头像处理还未添加
+        //头像处理
+        QByteArray head,face;
+        QString str(it.value().toString());
+        int j = str.indexOf('-');
+        while(j!=-1){
+            str[j] = '+';
+            j = str.indexOf('-');
+        }
+        head = QByteArray::fromBase64(str.toLatin1());
+        face = qUncompress(head);
+        QImage img;
+        img.loadFromData(face);
+        ui->faceButton->setIcon(QPixmap::fromImage(img));
         it.next();
         QString signature=it.value().toString();
         ui->label_4->setText(signature);
         ui->label_2->show();
-        ui->label_3->show();
+        ui->faceButton->show();
         ui->label_4->show();
         ui->pushButton_2->show();
     }
@@ -93,18 +105,9 @@ void AddWindow::replyFinished(QNetworkReply *reply)
     }*/
 }
 
-void AddWindow::mousePressEvent(QMouseEvent *e)
-{
-    QRect rect = ui->label_3->rect();
-    int x = e->x();
-    int y = e->y();
-    if(x > rect.left() && x < rect.right() && y > rect.top() && y < rect.bottom()){
-        emit clicked();
-    }
-}
 
 //显示资料卡
-void AddWindow::headPressEventSlot()
+void AddWindow::on_faceButton_clicked()
 {
 
 }

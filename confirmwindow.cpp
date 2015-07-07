@@ -23,7 +23,19 @@ confirmWindow::confirmWindow(QString data, QString myAccount, QWidget *parent) :
     QString nickname=it.value().toString();
     ui->label->setText(nickname);
     it.next();
-    //设置头像，以后再写
+    //设置头像
+    QByteArray head,face;
+    QString str(it.value().toString());
+    int j = str.indexOf('-');
+    while(j!=-1){
+        str[j] = '+';
+        j = str.indexOf('-');
+    }
+    head = QByteArray::fromBase64(str.toLatin1());
+    face = qUncompress(head);
+    QImage img;
+    img.loadFromData(face);
+    ui->faceButton->setIcon(QPixmap::fromImage(img));
     it.next();
     it.next();it.next();
     QString sex=it.value().toString();

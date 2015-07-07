@@ -190,7 +190,7 @@ void MainPanel::checkMessage(QString msg){
                 }
             }
             if(!flag){
-             cws.push_back(new ChatWindow(myAccount, temp[0].contact));
+             cws.push_back(new ChatWindow(myAccount, temp[0].contact,myName));
              cws[cws.size() - 1]->show();
             }
             temp.clear();
@@ -209,7 +209,7 @@ void MainPanel::checkMessage(QString msg){
             }
         }
         if(!flag){
-         cws.push_back(new ChatWindow(myAccount, temp[0].contact));
+         cws.push_back(new ChatWindow(myAccount, temp[0].contact,myName));
          cws[cws.size() - 1]->receiveMessage(temp);
          cws[cws.size() - 1]->show();
         }
@@ -683,7 +683,7 @@ void MainPanel::on_cAction_chat()
         }
     }
     if(!flag){
-        cws.push_back(new ChatWindow(myAccount, contactAccount));
+        cws.push_back(new ChatWindow(myAccount, contactAccount,myName));
         cws[cws.size() - 1]->show();
     }
 

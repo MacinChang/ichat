@@ -309,8 +309,8 @@ p, li { white-space: pre-wrap; }
   <widget class="QTextEdit" name="textEdit_2">
    <property name="geometry">
     <rect>
-     <x>200</x>
-     <y>0</y>
+     <x>140</x>
+     <y>230</y>
      <width>201</width>
      <height>31</height>
     </rect>
@@ -322,8 +322,8 @@ p, li { white-space: pre-wrap; }
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>210</x>
-     <y>8</y>
+     <x>150</x>
+     <y>240</y>
      <width>61</width>
      <height>16</height>
     </rect>
@@ -335,14 +335,114 @@ p, li { white-space: pre-wrap; }
   <widget class="QProgressBar" name="progressBar">
    <property name="geometry">
     <rect>
-     <x>270</x>
-     <y>5</y>
+     <x>220</x>
+     <y>235</y>
      <width>118</width>
      <height>23</height>
     </rect>
    </property>
    <property name="value">
     <number>0</number>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="faceButton">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>45</width>
+     <height>45</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>45</width>
+     <height>45</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="nameLabel">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>5</y>
+     <width>121</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="signalLabel">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>35</y>
+     <width>301</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="closeButton">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>0</y>
+     <width>30</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/Images/叉.png</normaloff>:/Images/叉.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>30</width>
+     <height>30</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="minButton">
+   <property name="geometry">
+    <rect>
+     <x>340</x>
+     <y>0</y>
+     <width>30</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/resource/min.png</normaloff>:/resource/min.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>30</width>
+     <height>30</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
    </property>
   </widget>
   <zorder>textBrowser_2</zorder>
@@ -362,6 +462,11 @@ p, li { white-space: pre-wrap; }
   <zorder>textEdit_2</zorder>
   <zorder>label</zorder>
   <zorder>progressBar</zorder>
+  <zorder>faceButton</zorder>
+  <zorder>nameLabel</zorder>
+  <zorder>signalLabel</zorder>
+  <zorder>closeButton</zorder>
+  <zorder>minButton</zorder>
  </widget>
  <resources>
   <include location="resource.qrc"/>
