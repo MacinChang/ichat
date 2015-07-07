@@ -15,7 +15,7 @@ class UserInfo : public QDialog
     Q_OBJECT
 
 public:
-    explicit UserInfo(QWidget *parent = 0);
+    explicit UserInfo(QString account,QWidget *parent = 0);
     void mouseMoveEvent(QMouseEvent*event);
     void mousePressEvent(QMouseEvent*event);
     void mouseReleaseEvent(QMouseEvent*event);
@@ -50,7 +50,7 @@ private:
     QString preY,preM,preD,preHP,preHC,preHL,preLP,preLC,preLL,preSex;
     QStringList hp,hc1,hc2,ha1,ha2,ha3,ha4,lp,lc1,lc2,la1,la2,la3,la4;
     QPoint dragPosition;
-    QString account;
+    QString myaccount;
     QNetworkAccessManager *manager1,*manager2;
 
 };
