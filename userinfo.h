@@ -14,7 +14,9 @@ class UserInfo : public QDialog
 {
     Q_OBJECT
 public:
+
     explicit UserInfo(QString myAccount, QWidget *parent = 0);
+
     void mouseMoveEvent(QMouseEvent*event);
     void mousePressEvent(QMouseEvent*event);
     void mouseReleaseEvent(QMouseEvent*event);

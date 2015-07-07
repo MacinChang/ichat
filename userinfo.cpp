@@ -12,6 +12,7 @@
 
 bool flag=false;  //全局旗子用来判断资料是否保存
 bool flagClose = false;
+
 UserInfo::UserInfo(QString account, QWidget *parent) :
     QDialog(parent), account(account),
     ui(new Ui::UserInfo)
@@ -29,6 +30,7 @@ UserInfo::UserInfo(QString account, QWidget *parent) :
         QObject::connect(manager1, SIGNAL(finished(QNetworkReply*)),
                    this, SLOT(finishedSlot(QNetworkReply*)));
           QUrl url("http://182.92.69.19/ichat-server/public/user/get-info");
+
           QByteArray temp = account.toLocal8Bit();
           QByteArray append("account=" + temp);
 
