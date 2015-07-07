@@ -10,9 +10,9 @@ UserItem::UserItem(QWidget *parent) :
 
 
     //设置comboBox
-    QIcon onlineIcon("E:/PracticalTraining/git/image/online.png");
+    QIcon onlineIcon(":/images/image/online.png");
     ui->comboBox->addItem(onlineIcon,"online");
-    QIcon leaveIcon("E:/PracticalTraining/git/image/leave.png");
+    QIcon leaveIcon(":/images/image/leave.png");
     ui->comboBox->addItem(leaveIcon,"leave");
     ui->comboBox->setIconSize(QSize(15,15));
 
