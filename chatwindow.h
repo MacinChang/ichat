@@ -63,6 +63,8 @@ private slots:
     void startTransfer();
     void updateClientProgress(qint64); //发送数据，更新进度条
     void displayError(QAbstractSocket::SocketError); //显示错误
+    void on_pushButton_2_clicked();
+
 private:
     QTcpSocket *tcpClient;
     QFile *localFile;

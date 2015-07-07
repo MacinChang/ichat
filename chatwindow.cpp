@@ -367,3 +367,8 @@ QPushButton *ChatWindow::custButton(QString str)
     return pushButton;
 }
 
+
+void ChatWindow::on_pushButton_2_clicked()
+{
+    this->close();
+}

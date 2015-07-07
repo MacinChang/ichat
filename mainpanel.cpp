@@ -170,7 +170,7 @@ void MainPanel::checkMessage(QString msg){
         if(error.error == QJsonParseError::NoError){
             QVariantMap map = document.toVariant().toMap();
             MsgNode temp;
-            temp.contact = map["contact_id"].toString();
+            temp.contact = map["user_id"].toString();
             temp.time = map["time"].toString();
             temp.content = map["content"].toString();
             messages.push_back(temp);
