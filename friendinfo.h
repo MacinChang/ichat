@@ -1,6 +1,5 @@
 #ifndef FRIENDINFO_H
 #define FRIENDINFO_H
-
 #include <QDialog>
 #include <QNetworkReply>
 #include <QNetworkRequest>
@@ -12,15 +11,19 @@ class FriendInfo;
 class FriendInfo : public QDialog
 {
     Q_OBJECT
-
+private:
+    QString account;
 public:
-    explicit FriendInfo(QWidget *parent = 0);
+    QString getAccount();
+    explicit FriendInfo(QString account, QWidget *parent = 0);
     ~FriendInfo();
 
 private slots:
     void finishedSlot(QNetworkReply*);
 
     void on_ConfirmButton_clicked();
+
+    void on_pushButton_clicked();
 
 private:
     Ui::FriendInfo *ui;

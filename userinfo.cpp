@@ -12,8 +12,8 @@
 
 bool flag=false;  //全局旗子用来判断资料是否保存
 bool flagClose = false;
-UserInfo::UserInfo(QWidget *parent) :
-    QDialog(parent),
+UserInfo::UserInfo(QString account, QWidget *parent) :
+    QDialog(parent), account(account),
     ui(new Ui::UserInfo)
 {
 
@@ -29,7 +29,8 @@ UserInfo::UserInfo(QWidget *parent) :
         QObject::connect(manager1, SIGNAL(finished(QNetworkReply*)),
                    this, SLOT(finishedSlot(QNetworkReply*)));
           QUrl url("http://182.92.69.19/ichat-server/public/user/get-info");
-          QByteArray append("account=66666");
+          QByteArray temp = account.toLocal8Bit();
+          QByteArray append("account=" + temp);
 
           QNetworkReply* reply = manager1->post(QNetworkRequest(url),append);
      //向服务器端发送改变后的用户信息

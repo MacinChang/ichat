@@ -5,6 +5,7 @@
 #include "addwindow.h"
 #include "useritem.h"
 #include "chatwindow.h"
+#include "friendinfo.h"
 #include "msgnode.h"
 #include <QStandardItemModel>
 #include <QTreeView>
@@ -95,12 +96,15 @@ private:
 
     QVector <ChatWindow*> cws;
     QUdpSocket *receiveUdpSocket;
+    FriendInfo *selfFI;
+
 public:
     QString myAccount;
     QString myName;
     QString mySignature;
     QString myState;
-
+public:
+    static QVector<FriendInfo*> fis;
 };
 
 #endif // MAINPANEL_H

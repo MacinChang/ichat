@@ -8,8 +8,8 @@
 #include <QScriptEngine>
 #include <QScriptValueIterator>
 
-FriendInfo::FriendInfo(QWidget *parent) :
-    QDialog(parent),
+FriendInfo::FriendInfo(QString account, QWidget *parent) :
+    QDialog(parent), account(account),
     ui(new Ui::FriendInfo)
 {
 
@@ -24,7 +24,8 @@ FriendInfo::FriendInfo(QWidget *parent) :
                this, SLOT(finishedSlot(QNetworkReply*)));
 
       QUrl url("http://182.92.69.19/ichat-server/public/user/get-info");
-      QByteArray append("account=66666");
+      QByteArray temp = account.toLocal8Bit();
+      QByteArray append("account="+temp);
 
       QNetworkReply* reply = manager->post(QNetworkRequest(url),append);
 
@@ -215,8 +216,16 @@ void FriendInfo::finishedSlot(QNetworkReply *reply)
    ui->MonthCombo->setCurrentIndex((birthlist[1].toInt())-1);
    ui->DateCombo->setCurrentIndex((birthlist[2].toInt())-1);
 }
+QString FriendInfo::getAccount(){
+    return this->account;
+}
 
 void FriendInfo::on_ConfirmButton_clicked()
 {
     this->close();
+}
+
+void FriendInfo::on_pushButton_clicked()
+{
+    this->account = "-1";
 }

@@ -10,8 +10,7 @@
 #include "QDebug"
 #include "newgroupdialog.h"
 
-
-
+QVector<FriendInfo*> MainPanel::fis;
 MainPanel::MainPanel(QString account, QWidget *parent) :
     QFrame(parent),myAccount(account),
     ui(new Ui::MainPanel)
@@ -249,6 +248,7 @@ void MainPanel::replyFinished(QNetworkReply *reply)
     QIcon myHead(":head.jpg");
 
     //修改个人信息
+    myself->setAccount(myAccount);
     myself->setName(myName);
     myself->setSignature(mySignature);
     myself->setHead(myHead);
@@ -576,6 +576,25 @@ void MainPanel::on_cAction_scanInfo()
     QModelIndex index = contactTreeView->currentIndex();
     QString account = contactModel->data(index).toString();
     //打开查看资料窗口*******************
+    bool flag = false;
+    int size = fis.size();
+    for(int i = 0; i < size; i++){
+        if(fis[i]->getAccount() == "-1"){
+            fis.remove(i);
+            size--;
+            continue;
+        }
+        if(fis[i]->getAccount() == account){
+            fis[i]->setAttribute(Qt::WA_KeyboardFocusChange);
+            flag = true;
+            break;
+        }
+    }
+    if(!flag){
+        fis.push_back(new FriendInfo(account));
+        fis[fis.size() - 1]->show();
+    }
+
 }
 //弹出修改备注名窗口
 void MainPanel::on_cAction_reName()

@@ -23,6 +23,9 @@ UserItem::~UserItem()
 {
     delete ui;
 }
+void UserItem::setAccount(QString myAccount){
+   this->myAccount = myAccount;
+}
 
 void UserItem::setName(QString name)
 {
@@ -43,6 +46,8 @@ void UserItem::setHead(QIcon head)
 void UserItem::on_headBtn_clicked()
 {
     //打开修改个人资料界面**************
+    self = new UserInfo(myAccount);
+    self->show();
 }
 
 void UserItem::on_comboBox_changed(const QString &text)
