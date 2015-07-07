@@ -48,7 +48,8 @@ HEADERS  += \
     useritem.h \
     renamedialog.h \
     deleteconfirmdialog.h \
-    newgroupdialog.h
+    newgroupdialog.h \
+    msgnode.h
 
 
 FORMS    += \

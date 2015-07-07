@@ -39,7 +39,7 @@
    </property>
    <property name="icon">
     <iconset resource="resource.qrc">
-     <normaloff>:/images/image/add.png</normaloff>:/images/image/add.png</iconset>
+     <normaloff>:/Image/add.png</normaloff>:/Image/add.png</iconset>
    </property>
    <property name="iconSize">
     <size>
@@ -71,7 +71,7 @@
    </property>
    <property name="icon">
     <iconset resource="resource.qrc">
-     <normaloff>:/images/image/friendBtn.png</normaloff>:/images/image/friendBtn.png</iconset>
+     <normaloff>:/Image/friendBtn.png</normaloff>:/Image/friendBtn.png</iconset>
    </property>
    <property name="iconSize">
     <size>
@@ -106,7 +106,7 @@
    </property>
    <property name="icon">
     <iconset resource="resource.qrc">
-     <normaloff>:/images/image/groupBtn.png</normaloff>:/images/image/groupBtn.png</iconset>
+     <normaloff>:/Image/groupBtn.png</normaloff>:/Image/groupBtn.png</iconset>
    </property>
    <property name="iconSize">
     <size>
@@ -137,7 +137,7 @@
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap resource="resource.qrc">:/images/image/main.png</pixmap>
+    <pixmap resource="resource.qrc">:/Image/main.png</pixmap>
    </property>
    <property name="scaledContents">
     <bool>true</bool>

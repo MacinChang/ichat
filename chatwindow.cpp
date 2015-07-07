@@ -3,18 +3,16 @@
 #include "userlistitem.h"
 #include <qdatetime.h>
 #include "QFileDialog"
-ChatWindow::ChatWindow(QWidget *parent) :
-    QFrame(parent),
+ChatWindow::ChatWindow(QString selfAccount, QString contactAccount, QWidget *parent) :
+    QFrame(parent), selfAccount(selfAccount), contactAccount(contactAccount),
     ui(new Ui::ChatWindow)
 {
     ui->setupUi(this);
     m_animation = new QPropertyAnimation(this,"pos");
     UserListItem *myitem = new UserListItem(this);
     myitem->move(5, 5);
-    //sender = new QUdpSocket(this);
-    //connect(sender, SIGNAL(readyRead()),this, SLOT(readBackData()));
-    receiveUdpSocket = new QUdpSocket(this);
-    connect(receiveUdpSocket, SIGNAL(readyRead()),this, SLOT(receiveData()));
+    sendUdpSocket = new QUdpSocket(this);
+    connect(sendUdpSocket, SIGNAL(readyRead()), this, SLOT(readBackData()));
 }
 
 ChatWindow::~ChatWindow()
@@ -22,28 +20,10 @@ ChatWindow::~ChatWindow()
     delete ui;
 }
 
-void ChatWindow::receiveData(){
-    QByteArray data;
-    //while(receiveUdp)
-    while(receiveUdpSocket->hasPendingDatagrams()){
-            data.resize(receiveUdpSocket->pendingDatagramSize());
-            QHostAddress addr;
-            quint16 port;
-            receiveUdpSocket->readDatagram(data.data(), data.size(), &addr, &port);
-        }
-    QString str = data.data();
-    ui->textBrowser_2->setText(str);
-    QByteArray self = "12345";
-    QByteArray datas("{\"user_id\":" + self + ",\"u\":\"receive\"}");
-    receiveUdpSocket->writeDatagram(datas.data(), datas .size(), QHostAddress::LocalHost, 10008);
-}
-
 void ChatWindow::on_pushButton_clicked()
 {
-    QByteArray self = "12345";
-    QByteArray data("{\"user_id\":" + self + ",\"u\":\"receive\"}");
-    receiveUdpSocket->writeDatagram(data.data(), data.size(), QHostAddress::LocalHost, 10008);
-    //获取系统现在的时间并设置显示格式
+
+   //获取系统现在的时间并设置显示格式
     QDateTime current_date_time = QDateTime::currentDateTime();
     QString current_date = current_date_time.toString("hh:mm:ss");
     //显示时间和聊天记录........
@@ -54,10 +34,46 @@ void ChatWindow::on_pushButton_clicked()
         ui->textBrowser->append(current_date);
         //ui->textBrowser->setAlignment(Qt::AlignRight); //发送的信息右对齐
         ui->textBrowser->append(c);
+        //ui->textBrowser_2->clear();
+        sendTextMessage(c);
+    }
+}
+
+void ChatWindow::sendTextMessage(QString content){
+    QDateTime current_date_time = QDateTime::currentDateTime();
+    //current_date_time.to
+    QString current_date = current_date_time.toString("yyyy-MM-dd hh:mm:ss");
+    QByteArray time = current_date.toLocal8Bit();
+    QByteArray from = selfAccount.toLocal8Bit();
+    QByteArray to = contactAccount.toLocal8Bit();
+    QByteArray text = content.toLocal8Bit();
+    QByteArray data("{\"user_id\":" + from + ", \"contact_id\":" + to +", \"time\":\"" + time +"\", \"content\":\"" + text + "\", \"u\":\"send\"}");
+    sendUdpSocket->writeDatagram(data.data(), data.size(), QHostAddress("182.92.69.19"), 10008);
+}
+
+void ChatWindow::readBackData(){
+    QByteArray data;
+    while(sendUdpSocket->hasPendingDatagrams()){
+            data.resize(sendUdpSocket->pendingDatagramSize());
+            QHostAddress addr;
+            quint16 port;
+            sendUdpSocket->readDatagram(data.data(), data.size(), &addr, &port);
+            //processTheDatagram
+            //processTheDatagram(data);
+        }
+    QString str = data.data();
+    if(str == "true"){
         ui->textBrowser_2->clear();
     }
 }
 
+void ChatWindow::receiveMessage(QVector<MsgNode> messages){
+    for(int i = 0; i < messages.size(); i++){
+        ui->textBrowser->append(messages[i].time);
+        //ui->textBrowser->setAlignment(Qt::AlignRight); //发送的信息右对齐
+        ui->textBrowser->append(messages[i].content);
+    }
+}
 //将图片路径转换为html
 void ChatWindow::imgPathToHtml(QString &path)
     {
@@ -109,4 +125,7 @@ void ChatWindow::ShakeAnimation()
     m_animation->setKeyValueAt(1.8,pos + QPoint(4,2));
     m_animation->setEndValue(pos);
     m_animation->start();
+}
+QString ChatWindow::getContactAccount(){
+    return contactAccount;
 }

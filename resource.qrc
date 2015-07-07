@@ -32,5 +32,8 @@
         <file>Images/叉 - 副本.png</file>
         <file>Images/叉.png</file>
         <file>Images/未标题-2.png</file>
+        <file>Image/friendBtn.png</file>
+        <file>Image/groupBtn.png</file>
+        <file>head.png</file>
     </qresource>
 </RCC>

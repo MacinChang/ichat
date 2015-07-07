@@ -25,6 +25,6 @@ void UserListItem::mousePressEvent(QMouseEvent *e){
 }
 
 void UserListItem::mousePressEventSlot(){
-    cw=new ChatWindow();
+    cw=new ChatWindow("66666", "12345");
     cw->show();
 }

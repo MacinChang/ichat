@@ -53,7 +53,7 @@ void LoginDialog::replyFinished(QNetworkReply *reply){
     else{
         MainPanel *mp = new MainPanel(account);
         mp->show();
-        this->hide();
+        this->close();
 
     }
 
