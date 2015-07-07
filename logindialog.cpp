@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QString>
 #include <QMessageBox>
+#include <QDesktopServices>
 
 LoginDialog::LoginDialog(QWidget *parent) :
     QDialog(parent),
@@ -59,7 +60,10 @@ void LoginDialog::replyFinished(QNetworkReply *reply){
 
 }
 
+void LoginDialog::on_pushButton_2_clicked()
+{
 
+}
 
 void LoginDialog::mouseReleaseEvent(QMouseEvent *event)
 {
