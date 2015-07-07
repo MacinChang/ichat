@@ -35,5 +35,7 @@
         <file>Image/friendBtn.png</file>
         <file>Image/groupBtn.png</file>
         <file>head.png</file>
+        <file>resource/wenjian.png</file>
+
     </qresource>
 </RCC>
