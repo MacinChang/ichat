@@ -9,7 +9,10 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     LoginDialog ld;
-    ld.show();
+    UserInfo usrInfo("29520");
+    FriendInfo frndInfo("23333");
+    usrInfo.show();
+    //ld.show();
     /*if (ld.exec() == QDialog::Accepted)
         {
            w = new MainPanel(account1);

@@ -116,7 +116,7 @@
    <property name="geometry">
     <rect>
      <x>60</x>
-     <y>110</y>
+     <y>100</y>
      <width>48</width>
      <height>16</height>
     </rect>
@@ -138,24 +138,11 @@
     <string>头像</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>61</x>
-     <y>68</y>
-     <width>36</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>群等级</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="GroupNum">
+  <widget class="QLabel" name="GroupAccount">
    <property name="geometry">
     <rect>
      <x>224</x>
-     <y>31</y>
+     <y>50</y>
      <width>60</width>
      <height>16</height>
     </rect>
@@ -167,43 +154,14 @@
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>61</x>
-     <y>31</y>
+     <x>60</x>
+     <y>50</y>
      <width>24</width>
      <height>16</height>
     </rect>
    </property>
    <property name="text">
     <string>群号</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_9">
-   <property name="geometry">
-    <rect>
-     <x>224</x>
-     <y>68</y>
-     <width>76</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="pixmap">
-    <pixmap resource="resource.qrc">:/Images/Level.png</pixmap>
-   </property>
-  </widget>
-  <widget class="QLabel" name="SetupTime">
-   <property name="geometry">
-    <rect>
-     <x>224</x>
-     <y>105</y>
-     <width>156</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>2015-6-30</string>
    </property>
   </widget>
   <widget class="QPushButton" name="GroupFaceBtn">
@@ -219,7 +177,7 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="resource.qrc">
+    <iconset>
      <normaloff>:/Images/12.png</normaloff>:/Images/12.png</iconset>
    </property>
    <property name="iconSize">
@@ -232,9 +190,20 @@
     <bool>true</bool>
    </property>
   </widget>
+  <widget class="QLabel" name="SetUpDate">
+   <property name="geometry">
+    <rect>
+     <x>224</x>
+     <y>100</y>
+     <width>54</width>
+     <height>12</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
  </widget>
- <resources>
-  <include location="resource.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

@@ -5,9 +5,10 @@
 
 //旗子判断资料是否被修改
 bool flag2=false;
+bool flagClose2 = false;
 
-GroupInfo::GroupInfo(QWidget *parent) :
-    QDialog(parent),
+GroupInfo::GroupInfo(QString groupaccount,QWidget *parent) :
+    QDialog(parent),groupAccount(groupaccount),
     ui(new Ui::GroupInfo)
 {
 
@@ -16,10 +17,23 @@ GroupInfo::GroupInfo(QWidget *parent) :
     setWindowFlags(windowFlags()& ~Qt::WindowMaximizeButtonHint);
     setFixedSize(this->width(), this->height());
 
-    //从服务端获取群资料并显示
-    ui->AnnounceEdit->setText(tr("明天上交数学作业"));
-    ui->IntroEdit->setText(tr("本群用于班内同学学习交流"));
-    ui->NameEdit->setText(tr("四年四班"));
+
+    manager1 = new QNetworkAccessManager(this);
+    manager2 = new QNetworkAccessManager(this);
+    manager3 = new QNetworkAccessManager(this);
+    QObject::connect(manager1, SIGNAL(finished(QNetworkReply*)),
+                       this, SLOT(finishedSlot(QNetworkReply*)));
+              QUrl url("http://182.92.69.19/ichat-server/public/user/get-info");
+              QByteArray GAccount = groupAccount.toLocal8Bit();
+              QByteArray append("account="+GAccount);
+
+              QNetworkReply* reply = manager1->post(QNetworkRequest(url),append);
+     //向服务器端发送改变后的用户信息
+              QObject::connect(manager2, SIGNAL(finished(QNetworkReply*)),
+                                this, SLOT(uploadfinishedSlot(QNetworkReply*)));
+      //向服务器端发送改变后的头像
+              QObject::connect(manager3, SIGNAL(finished(QNetworkReply*)),
+                                this, SLOT(faceuploadfinishedsolt(QNetworkReply*)));
 
     //设置为只读
     ui->AnnounceEdit->setReadOnly(true);
@@ -34,27 +48,22 @@ GroupInfo::~GroupInfo()
     delete ui;
 }
 
-void GroupInfo::SaveChange()
-{
-    //将保存的数据发送到服务器端
-   QString Name,Introduction,Announcement;
-   Name = ui->NameEdit->text();
-   Introduction = ui->IntroEdit->toPlainText();
-   Announcement = ui->AnnounceEdit->toPlainText();
-   flag2=true;
-}
+
 
 void GroupInfo::on_SaveButton_clicked()
 {
-    SaveChange();
-    QMessageBox::information(this, QObject::tr("提示"),
-                              QObject::tr("修改成功"),
-                              QMessageBox::Yes);
-    ui->AnnounceEdit->setReadOnly(true);
-    ui->IntroEdit->setReadOnly(true);
-    ui->NameEdit->setReadOnly(true);
-    ui->SaveButton->setEnabled(false);
+
+    QByteArray account,groupname,groupannounce,groupintroduce;
+            account = (ui->GroupAccount->text()).toLocal8Bit();
+            groupname = (ui->NameEdit->text()).toLocal8Bit();
+            groupannounce =(ui->AnnounceEdit->toPlainText()).toLocal8Bit();
+            groupintroduce = (ui->IntroEdit->toPlainText()).toLocal8Bit();
+
+          QUrl url("http://182.92.69.19/ichat-server/public/user/set-info");
+          QByteArray append();
+       //   QNetworkReply* reply = manager2->post(QNetworkRequest(url),append);
 }
+
 
 void GroupInfo::on_CloseButton_clicked()
 {
@@ -73,8 +82,8 @@ void GroupInfo::on_CloseButton_clicked()
                         QMessageBox::RejectRole);
        box.exec();
        if (box.clickedButton() == yesBtn){
-           SaveChange();
-           this->close();
+            on_SaveButton_clicked();
+            flagClose2 = true;
        }
        else if (box.clickedButton() == cancelBtn)
                 box.close();
@@ -89,16 +98,38 @@ void GroupInfo::on_CloseButton_clicked()
 }
 
 
-
+ //修改群头像
 void GroupInfo::on_GroupFaceBtn_clicked()
 {
-    //保存头像修改并上传到服务器
-    QString fileName = QFileDialog::getOpenFileName(this);
-    if(fileName!=NULL){
-      QPixmap qpx(fileName);
-      ui->GroupFaceBtn->setIcon(qpx);
-        }
+      QByteArray ba;
+      QBuffer   buf(&ba);
+      QByteArray GroupAccount = groupAccount.toLocal8Bit();
+      QString fileName = QFileDialog::getOpenFileName(this);
+      if(fileName!=NULL){
+      QImage img(fileName);
+      ui->GroupFaceBtn->setIcon(QPixmap::fromImage(img));
+      //将图片转成base64编码
+      img.save(&buf,"JPG");
+      QByteArray cc = qCompress(ba,1);
+      QByteArray hh = cc.toBase64();
+      QString faceCode(hh);
+      //上传到服务器时 +号会莫名其妙消失，先将它们都替换成- 获取的时候再转成 +
+      int j = faceCode.indexOf('+');
+      while(j!=-1){
+          faceCode[j] = '-';
+          j = faceCode.indexOf('+');
+      }
+
+      //qDebug()<<faceCode;
+      QByteArray head = faceCode.toLocal8Bit();
+      //qDebug()<<head;
+      //上传到服务器
+      QUrl url("http://182.92.69.19/ichat-server/public/user/set-head");
+      QByteArray append("account="+GroupAccount+"&head="+head);
+      QNetworkReply* reply = manager3->post(QNetworkRequest(url),append);
+         }
 }
+
 
 void GroupInfo::on_EditButton_clicked()
 {
@@ -106,5 +137,65 @@ void GroupInfo::on_EditButton_clicked()
   ui->AnnounceEdit->setReadOnly(false);
   ui->IntroEdit->setReadOnly(false);
   ui->NameEdit->setReadOnly(false);
-   ui->SaveButton->setEnabled(true);
+  ui->SaveButton->setEnabled(true);
+}
+
+    //服务器接收的槽函数
+void GroupInfo::finishedSlot(QNetworkReply *reply)
+{
+    int i=0;
+    QString groupInfo[10];
+    //从服务器端获取信息
+    QVariant vRes = reply->readAll();
+    QString res = vRes.toString();
+    QScriptValue sc;
+        QScriptEngine engine;
+        sc = engine.evaluate("value = " + res);
+        QScriptValueIterator it(sc);
+        while(it.hasNext()){
+            it.next();
+            QString id = it.name();
+            QString value = it.value().toString();
+            groupInfo[i]=value;
+            i++;
+     }
+
+        //显示在资料卡上
+
+    ui->GroupAccount->setText(groupInfo[1]);   //账号
+    ui->NameEdit->setText(groupInfo[2]);   //群名
+    ui->AnnounceEdit->setText(groupInfo[3]);  //群公告
+    ui->IntroEdit->setText(groupInfo[4]);   //群介绍
+    ui->SetUpDate->setText(groupInfo[11]);   //创建日期
+     //头像
+    QByteArray head,face;
+    QString str(groupInfo[6]);
+    int j = str.indexOf('-');
+    while(j!=-1){
+        str[j] = '+';
+        j = str.indexOf('-');
+    }
+    head = QByteArray::fromBase64(str.toLatin1());
+    face = qUncompress(head);
+    QImage img;
+    img.loadFromData(face);
+    ui->GroupFaceBtn->setIcon(QPixmap::fromImage(img));
+
+}
+
+   //向服务器发送的槽函数
+void GroupInfo::uploadfinishedSlot(QNetworkReply *reply)
+{
+    QMessageBox::information(this, QObject::tr("提示"),
+                              QObject::tr("修改成功"),
+                              QMessageBox::Yes);
+
+    ui->SaveButton->setEnabled(false);
+    ui->NameEdit->setReadOnly(true);
+    ui->AnnounceEdit->setReadOnly(true);
+    ui->IntroEdit->setReadOnly(true);
+    flag2=true;
+   if(flagClose2){
+       this->close();
+   }
 }

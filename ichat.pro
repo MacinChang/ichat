@@ -7,6 +7,7 @@
 QT       += core gui
 QT       += network
 QT       += script
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = ichat
@@ -25,7 +26,8 @@ SOURCES += main.cpp\
     addfinishedwindow.cpp \
     userinfo.cpp \
     groupinfo.cpp \
-    friendinfo.cpp
+    friendinfo.cpp \
+    Level.cpp
 
 HEADERS  += \
     logindialog.h \
@@ -39,7 +41,8 @@ HEADERS  += \
     addfinishedwindow.h \
     userinfo.h \
     groupinfo.h \
-    friendinfo.h
+    friendinfo.h \
+    Level.h
 
 FORMS    += \
     logindialog.ui \
@@ -59,3 +62,8 @@ RESOURCES += \
     resource.qrc
 QT  += network
 QT  += script
+
+DISTFILES += \
+    resource/moon.png \
+    resource/star.png \
+    resource/sun.png
