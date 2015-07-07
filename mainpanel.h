@@ -10,6 +10,7 @@
 #include "QNetworkRequest"
 #include "QNetworkReply"
 #include "QVector"
+#include "changegroupdialog.h"
 
 namespace Ui {
 class MainPanel;
@@ -35,6 +36,8 @@ private slots:
 
     void on_minBtn_clicked();
 
+    void on_closeBtn_clicked();
+
 public slots:
 
     void replyFinished(QNetworkReply *reply);
@@ -44,6 +47,8 @@ public slots:
     void renGroupReplyFinished(QNetworkReply *reply);
     void delGroupReplyFinished(QNetworkReply *reply);
     void newGroupReplyFinished(QNetworkReply *reply);
+    void changeGroupReplyFinished(QNetworkReply *reply);
+    void closeStateReplyFinished(QNetworkReply *reply);
 
     void on_contact_doubleClicked(const QModelIndex &index);
     void on_group_doubleClicked(const QModelIndex &index);
@@ -55,6 +60,7 @@ public slots:
     void receiveNewGroup(QString newGroup);
 
     void on_comboBox_changed(const QString & text);
+    void on_group_changed(QString classid);
 
     void on_Action_newGroup();
 
@@ -74,6 +80,7 @@ public slots:
 private:
     Ui::MainPanel *ui;
     AddWindow *addDlg;
+    ChangeGroupDialog *changeDlg;
     UserItem *myself;
     QPoint dragPosition;
     QStandardItemModel *contactModel,*groupModel;
@@ -82,6 +89,7 @@ private:
     QVector<QString> class_id;
 public:
     QString myAccount;
+    QIcon myHead;
     QString myName;
     QString mySignature;
     QString myState;

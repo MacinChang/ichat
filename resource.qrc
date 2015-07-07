@@ -1,7 +1,5 @@
 <RCC>
     <qresource prefix="/images">
-        <file>head.jpg</file>
-        <file>head.png</file>
         <file>image/add.png</file>
         <file>image/ai4572.png</file>
         <file>image/head.jpg</file>
@@ -15,5 +13,6 @@
         <file>image/groupBtn.png</file>
         <file>image/leave.png</file>
         <file>image/online.png</file>
+        <file>image/head.png</file>
     </qresource>
 </RCC>
