@@ -285,8 +285,8 @@
     <rect>
      <x>88</x>
      <y>410</y>
-     <width>275</width>
-     <height>22</height>
+     <width>518</width>
+     <height>32</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -376,8 +376,8 @@
     <rect>
      <x>88</x>
      <y>380</y>
-     <width>275</width>
-     <height>22</height>
+     <width>518</width>
+     <height>32</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -439,7 +439,7 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="resource.qrc">
+    <iconset>
      <normaloff>:/Images/叉 - 副本.png</normaloff>:/Images/叉 - 副本.png</iconset>
    </property>
    <property name="flat">
@@ -447,8 +447,6 @@
    </property>
   </widget>
  </widget>
- <resources>
-  <include location="resource.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

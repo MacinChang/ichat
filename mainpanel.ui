@@ -25,32 +25,6 @@
   <property name="frameShadow">
    <enum>QFrame::Raised</enum>
   </property>
-  <widget class="QPushButton" name="btnAddContacts">
-   <property name="geometry">
-    <rect>
-     <x>260</x>
-     <y>563</y>
-     <width>41</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="resource.qrc">
-     <normaloff>:/Image/add.png</normaloff>:/Image/add.png</iconset>
-   </property>
-   <property name="iconSize">
-    <size>
-     <width>40</width>
-     <height>40</height>
-    </size>
-   </property>
-   <property name="flat">
-    <bool>true</bool>
-   </property>
-  </widget>
   <widget class="QPushButton" name="btnContact">
    <property name="geometry">
     <rect>
@@ -71,7 +45,7 @@
    </property>
    <property name="icon">
     <iconset resource="resource.qrc">
-     <normaloff>:/Image/friendBtn.png</normaloff>:/Image/friendBtn.png</iconset>
+     <normaloff>:/images/image/friendBtn.png</normaloff>:/images/image/friendBtn.png</iconset>
    </property>
    <property name="iconSize">
     <size>
@@ -106,7 +80,7 @@
    </property>
    <property name="icon">
     <iconset resource="resource.qrc">
-     <normaloff>:/Image/groupBtn.png</normaloff>:/Image/groupBtn.png</iconset>
+     <normaloff>:/images/image/groupBtn.png</normaloff>:/images/image/groupBtn.png</iconset>
    </property>
    <property name="iconSize">
     <size>
@@ -137,7 +111,7 @@
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap resource="resource.qrc">:/Image/main.png</pixmap>
+    <pixmap resource="resource.qrc">:/images/image/main.png</pixmap>
    </property>
    <property name="scaledContents">
     <bool>true</bool>
@@ -175,12 +149,38 @@
     <bool>true</bool>
    </property>
   </widget>
+  <widget class="QPushButton" name="btnAddContacts">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>565</y>
+     <width>41</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/images/image/add.png</normaloff>:/images/image/add.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>40</width>
+     <height>40</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
   <zorder>label</zorder>
-  <zorder>btnAddContacts</zorder>
   <zorder>btnContact</zorder>
   <zorder>btnGroup</zorder>
   <zorder>closeBtn</zorder>
   <zorder>minBtn</zorder>
+  <zorder>btnAddContacts</zorder>
  </widget>
  <resources>
   <include location="resource.qrc"/>

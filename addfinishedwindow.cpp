@@ -6,6 +6,7 @@ AddFinishedWindow::AddFinishedWindow(QWidget *parent) :
     ui(new Ui::AddFinishedWindow)
 {
     ui->setupUi(this);
+    this->setWindowFlags(Qt::FramelessWindowHint);
 }
 
 AddFinishedWindow::~AddFinishedWindow()

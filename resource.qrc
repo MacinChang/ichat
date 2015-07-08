@@ -1,42 +1,4 @@
 <RCC>
-    <qresource prefix="/">
-        <file>head.jpg</file>
-        <file>Image/add.png</file>
-        <file>Image/head.jpg</file>
-        <file>Image/ichat.png</file>
-        <file>Image/iChatin.png</file>
-        <file>Image/LoginBtn.png</file>
-        <file>Image/main.png</file>
-        <file>resource/feeling.png</file>
-        <file>resource/head.jpg</file>
-        <file>resource/shake.png</file>
-        <file>resource/yuyin.png</file>
-        <file>resource/sepic.png</file>
-        <file>resource/Bg.png</file>
-        <file>resource/his.png</file>
-        <file>Images/11.png</file>
-        <file>Images/head.jpg</file>
-        <file>Images/12.png</file>
-        <file>Images/BtnBG.png</file>
-        <file>Images/Level.png</file>
-        <file>Images/add.png</file>
-        <file>Images/ai4572.png</file>
-        <file>Images/ichat.png</file>
-        <file>Images/iChatin.png</file>
-        <file>Images/LoginBtn.png</file>
-        <file>Images/main.png</file>
-        <file>Images/qqin.png</file>
-        <file>Images/t01eb0ee49bbc2a79ea.jpg</file>
-        <file>Images/t0186a6ffd0e897be4a - 副本.jpg</file>
-        <file>Images/t0186a6ffd0e897be4a.jpg</file>
-        <file>Images/叉 - 副本.png</file>
-        <file>Images/叉.png</file>
-        <file>Images/未标题-2.png</file>
-        <file>Image/friendBtn.png</file>
-        <file>Image/groupBtn.png</file>
-        <file>head.png</file>
-        <file>resource/wenjian.png</file>
-    </qresource>
     <qresource prefix="/images">
         <file>image/add.png</file>
         <file>image/ai4572.png</file>
@@ -52,5 +14,40 @@
         <file>image/leave.png</file>
         <file>image/online.png</file>
         <file>image/head.png</file>
+        <file>image/11.png</file>
+        <file>image/12.png</file>
+        <file>image/addfriends.png</file>
+        <file>image/addfriendsBtn.png</file>
+        <file>image/bg.png</file>
+        <file>image/BtnBG.png</file>
+        <file>image/cancelBtn.png</file>
+        <file>image/chatwindow.png</file>
+        <file>image/close.png</file>
+        <file>image/closeBtn.png</file>
+        <file>image/doneBtn.png</file>
+        <file>image/feeling.png</file>
+        <file>image/findBtn1.png</file>
+        <file>image/finishedBtn.png</file>
+        <file>image/his.png</file>
+        <file>image/Invisible.png</file>
+        <file>image/Level.png</file>
+        <file>image/logo.png</file>
+        <file>image/min.png</file>
+        <file>image/moon.png</file>
+        <file>image/myHead.png</file>
+        <file>image/next.png</file>
+        <file>image/sendBtn.png</file>
+        <file>image/sepic.png</file>
+        <file>image/shake.png</file>
+        <file>image/star.png</file>
+        <file>image/sun.png</file>
+        <file>image/t01eb0ee49bbc2a79ea.jpg</file>
+        <file>image/t0186a6ffd0e897be4a - 副本.jpg</file>
+        <file>image/t0186a6ffd0e897be4a.jpg</file>
+        <file>image/wenjian.png</file>
+        <file>image/whiteBack.png</file>
+        <file>image/yuyin.png</file>
+        <file>image/叉 - 副本.png</file>
+        <file>image/叉.png</file>
     </qresource>
 </RCC>
