@@ -114,7 +114,7 @@ MainPanel::MainPanel(QString account, QWidget *parent) :
     QUrl url("http://182.92.69.19/ichat-server/public/user/load-panel");
     QByteArray usr = myAccount.toLocal8Bit();
     QByteArray append("account="+usr);
-    QNetworkReply* reply = manager->post(QNetworkRequest(url), append);
+    manager->post(QNetworkRequest(url), append);
 }
 
 MainPanel::~MainPanel()
@@ -504,7 +504,7 @@ void MainPanel::closeStateReplyFinished(QNetworkReply *reply)
 //双击联系人开始聊天
 void MainPanel::on_contact_doubleClicked(const QModelIndex &index)
 {
-    QString contactAcc = contactModel->data(index).toString();
+    on_cAction_chat();
     //私聊窗口***********
 }
 
@@ -701,10 +701,17 @@ void MainPanel::on_cAction_chat()
     //打开私聊窗口******************
     bool flag = false;
     //判断是否已经打开
-    for(int i = 0; i < cws.size(); i++){
+    int size = cws.size();
+    for(int i = 0; i < size; i++){
+        ChatWindow *temp = cws[i];
         if(cws[i]->getContactAccount() == contactAccount){
             cws[i]->setAttribute(Qt::WA_KeyboardFocusChange);
             flag = true;
+        }else if(cws[i]->getContactAccount() == "-1"){
+            free(cws[i]);
+            cws.remove(i);
+            i--;
+            size--;
         }
     }
     if(!flag){
@@ -737,7 +744,8 @@ void MainPanel::on_cAction_scanInfo()
         fis.push_back(new FriendInfo(account));
         fis[fis.size() - 1]->show();
     }
-
+    FriendInfo *friInfo = new FriendInfo(account);
+    friInfo->show();
 }
 //弹出修改备注名窗口
 void MainPanel::on_cAction_reName()

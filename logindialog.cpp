@@ -16,6 +16,8 @@ LoginDialog::LoginDialog(QWidget *parent) :
     QObject::connect(nam, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
     this->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::SubWindow);
     this->setWindowFlags(Qt::FramelessWindowHint);
+    QIcon winIcon(":/images/image/ichat.png");
+    this->setWindowIcon(winIcon);
 }
 
 LoginDialog::~LoginDialog()
@@ -34,8 +36,7 @@ void LoginDialog::on_pushButton_clicked()
     QByteArray usr = account.toLocal8Bit();
     QByteArray pwd = password.toLocal8Bit();
     QByteArray append("account="+usr+"&password="+pwd);
-    QNetworkReply* reply = nam->post(QNetworkRequest(url), append);
-    QString s;
+    nam->post(QNetworkRequest(url), append);
 }
 
 void LoginDialog::replyFinished(QNetworkReply *reply){

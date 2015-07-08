@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>403</width>
-    <height>346</height>
+    <width>561</width>
+    <height>464</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,8 +24,8 @@
     <rect>
      <x>10</x>
      <y>60</y>
-     <width>381</width>
-     <height>141</height>
+     <width>541</width>
+     <height>251</height>
     </rect>
    </property>
   </widget>
@@ -33,9 +33,9 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>230</y>
-     <width>381</width>
-     <height>101</height>
+     <y>340</y>
+     <width>541</width>
+     <height>91</height>
     </rect>
    </property>
    <property name="readOnly">
@@ -49,63 +49,11 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
-  <widget class="QWidget" name="horizontalLayoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>270</x>
-     <y>311</y>
-     <width>121</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <layout class="QHBoxLayout" name="horizontalLayout">
-    <item>
-     <widget class="QPushButton" name="pushButton_2">
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset resource="resource.qrc">
-        <normaloff>:/images/image/closeBtn.png</normaloff>:/images/image/closeBtn.png</iconset>
-      </property>
-      <property name="iconSize">
-       <size>
-        <width>120</width>
-        <height>32</height>
-       </size>
-      </property>
-      <property name="flat">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="pushButton">
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset resource="resource.qrc">
-        <normaloff>:/images/image/sendBtn.png</normaloff>:/images/image/sendBtn.png</iconset>
-      </property>
-      <property name="iconSize">
-       <size>
-        <width>130</width>
-        <height>35</height>
-       </size>
-      </property>
-      <property name="flat">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
   <widget class="QPushButton" name="pushButton_3">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>200</y>
+     <y>310</y>
      <width>31</width>
      <height>31</height>
     </rect>
@@ -131,7 +79,7 @@ p, li { white-space: pre-wrap; }
    <property name="geometry">
     <rect>
      <x>41</x>
-     <y>200</y>
+     <y>310</y>
      <width>31</width>
      <height>31</height>
     </rect>
@@ -157,7 +105,7 @@ p, li { white-space: pre-wrap; }
    <property name="geometry">
     <rect>
      <x>72</x>
-     <y>200</y>
+     <y>310</y>
      <width>31</width>
      <height>31</height>
     </rect>
@@ -183,7 +131,7 @@ p, li { white-space: pre-wrap; }
    <property name="geometry">
     <rect>
      <x>103</x>
-     <y>200</y>
+     <y>310</y>
      <width>31</width>
      <height>31</height>
     </rect>
@@ -208,8 +156,8 @@ p, li { white-space: pre-wrap; }
   <widget class="QPushButton" name="pushButton_7">
    <property name="geometry">
     <rect>
-     <x>300</x>
-     <y>200</y>
+     <x>470</x>
+     <y>310</y>
      <width>81</width>
      <height>31</height>
     </rect>
@@ -234,8 +182,8 @@ p, li { white-space: pre-wrap; }
   <widget class="QTextEdit" name="textEdit">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>180</y>
+     <x>170</x>
+     <y>290</y>
      <width>381</width>
      <height>25</height>
     </rect>
@@ -254,8 +202,8 @@ p, li { white-space: pre-wrap; }
   <widget class="QPushButton" name="pushButton_8">
    <property name="geometry">
     <rect>
-     <x>270</x>
-     <y>180</y>
+     <x>430</x>
+     <y>290</y>
      <width>40</width>
      <height>23</height>
     </rect>
@@ -267,8 +215,8 @@ p, li { white-space: pre-wrap; }
   <widget class="QPushButton" name="pushButton_9">
    <property name="geometry">
     <rect>
-     <x>230</x>
-     <y>180</y>
+     <x>390</x>
+     <y>290</y>
      <width>40</width>
      <height>23</height>
     </rect>
@@ -280,8 +228,8 @@ p, li { white-space: pre-wrap; }
   <widget class="QPushButton" name="pushButton_10">
    <property name="geometry">
     <rect>
-     <x>310</x>
-     <y>180</y>
+     <x>470</x>
+     <y>290</y>
      <width>40</width>
      <height>23</height>
     </rect>
@@ -293,8 +241,8 @@ p, li { white-space: pre-wrap; }
   <widget class="QPushButton" name="pushButton_11">
    <property name="geometry">
     <rect>
-     <x>350</x>
-     <y>180</y>
+     <x>510</x>
+     <y>290</y>
      <width>40</width>
      <height>23</height>
     </rect>
@@ -307,7 +255,7 @@ p, li { white-space: pre-wrap; }
    <property name="geometry">
     <rect>
      <x>134</x>
-     <y>200</y>
+     <y>310</y>
      <width>31</width>
      <height>31</height>
     </rect>
@@ -335,8 +283,8 @@ p, li { white-space: pre-wrap; }
   <widget class="QTextEdit" name="textEdit_2">
    <property name="geometry">
     <rect>
-     <x>140</x>
-     <y>230</y>
+     <x>10</x>
+     <y>430</y>
      <width>201</width>
      <height>31</height>
     </rect>
@@ -348,8 +296,8 @@ p, li { white-space: pre-wrap; }
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>150</x>
-     <y>240</y>
+     <x>20</x>
+     <y>440</y>
      <width>61</width>
      <height>16</height>
     </rect>
@@ -361,8 +309,8 @@ p, li { white-space: pre-wrap; }
   <widget class="QProgressBar" name="progressBar">
    <property name="geometry">
     <rect>
-     <x>220</x>
-     <y>235</y>
+     <x>90</x>
+     <y>435</y>
      <width>118</width>
      <height>23</height>
     </rect>
@@ -398,7 +346,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>70</x>
      <y>5</y>
-     <width>121</width>
+     <width>181</width>
      <height>20</height>
     </rect>
    </property>
@@ -411,7 +359,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>70</x>
      <y>35</y>
-     <width>301</width>
+     <width>481</width>
      <height>20</height>
     </rect>
    </property>
@@ -422,7 +370,7 @@ p, li { white-space: pre-wrap; }
   <widget class="QPushButton" name="closeButton">
    <property name="geometry">
     <rect>
-     <x>370</x>
+     <x>530</x>
      <y>0</y>
      <width>30</width>
      <height>30</height>
@@ -448,7 +396,7 @@ p, li { white-space: pre-wrap; }
   <widget class="QPushButton" name="minButton">
    <property name="geometry">
     <rect>
-     <x>340</x>
+     <x>500</x>
      <y>0</y>
      <width>30</width>
      <height>30</height>
@@ -458,8 +406,8 @@ p, li { white-space: pre-wrap; }
     <string/>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>:/resource/min.png</normaloff>:/resource/min.png</iconset>
+    <iconset resource="resource.qrc">
+     <normaloff>:/images/image/small.png</normaloff>:/images/image/small.png</iconset>
    </property>
    <property name="iconSize">
     <size>
@@ -471,28 +419,12 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QLabel" name="label_2">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>411</width>
-     <height>351</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="pixmap">
-    <pixmap resource="resource.qrc">:/images/image/chatwindow.png</pixmap>
-   </property>
-  </widget>
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>200</y>
-     <width>381</width>
+     <y>310</y>
+     <width>541</width>
      <height>31</height>
     </rect>
    </property>
@@ -502,11 +434,87 @@ p, li { white-space: pre-wrap; }
    <property name="pixmap">
     <pixmap resource="resource.qrc">:/images/image/whiteBack.png</pixmap>
    </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
   </widget>
-  <zorder>label_2</zorder>
+  <widget class="QPushButton" name="downCloseBtn">
+   <property name="geometry">
+    <rect>
+     <x>420</x>
+     <y>430</y>
+     <width>61</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/images/image/closeBtn.png</normaloff>:/images/image/closeBtn.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>120</width>
+     <height>32</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="sendButton">
+   <property name="geometry">
+    <rect>
+     <x>490</x>
+     <y>430</y>
+     <width>61</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/images/image/sendBtn.png</normaloff>:/images/image/sendBtn.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>130</width>
+     <height>35</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="bgLabel">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>561</width>
+     <height>464</height>
+    </rect>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="resource.qrc">:/images/image/chatwindow.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <zorder>bgLabel</zorder>
   <zorder>label_3</zorder>
   <zorder>textBrowser_2</zorder>
-  <zorder>horizontalLayoutWidget</zorder>
   <zorder>pushButton_3</zorder>
   <zorder>pushButton_4</zorder>
   <zorder>pushButton_5</zorder>
@@ -527,8 +535,30 @@ p, li { white-space: pre-wrap; }
   <zorder>signalLabel</zorder>
   <zorder>closeButton</zorder>
   <zorder>minButton</zorder>
-  <zorder>pushButton_2</zorder>
+  <zorder>downCloseBtn</zorder>
+  <zorder>sendButton</zorder>
  </widget>
+ <tabstops>
+  <tabstop>pushButton_3</tabstop>
+  <tabstop>downCloseBtn</tabstop>
+  <tabstop>sendButton</tabstop>
+  <tabstop>pushButton_4</tabstop>
+  <tabstop>pushButton_5</tabstop>
+  <tabstop>pushButton_6</tabstop>
+  <tabstop>pushButton_7</tabstop>
+  <tabstop>textEdit</tabstop>
+  <tabstop>pushButton_8</tabstop>
+  <tabstop>pushButton_9</tabstop>
+  <tabstop>pushButton_10</tabstop>
+  <tabstop>pushButton_11</tabstop>
+  <tabstop>pushButton_12</tabstop>
+  <tabstop>textEdit_2</tabstop>
+  <tabstop>faceButton</tabstop>
+  <tabstop>closeButton</tabstop>
+  <tabstop>minButton</tabstop>
+  <tabstop>textBrowser_2</tabstop>
+  <tabstop>textBrowser</tabstop>
+ </tabstops>
  <resources>
   <include location="resource.qrc"/>
  </resources>

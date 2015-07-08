@@ -57,7 +57,7 @@ DivideWindow::DivideWindow(QString myAccount, QString verifyInfo, QString data,Q
     QUrl url("http://182.92.69.19/ichat-server/public/user/load-panel");
     QByteArray usr = myAccount.toLocal8Bit();
     QByteArray append("account="+usr);
-    QNetworkReply* reply = infoManager->post(QNetworkRequest(url), append);
+    infoManager->post(QNetworkRequest(url), append);
 }
 
 DivideWindow::~DivideWindow()

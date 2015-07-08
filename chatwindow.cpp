@@ -9,6 +9,12 @@
 #include "QScriptEngine"
 #include "QScriptValue"
 #include "QScriptValueIterator"
+#include "chatmsgdlg.h"
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QSqlQueryModel>
+#include <QTableView>
+
 ChatWindow::ChatWindow(QString selfAccount, QString contactAccount,QString myName, QWidget *parent) :
     QFrame(parent), selfAccount(selfAccount), contactAccount(contactAccount),myName(myName),
     ui(new Ui::ChatWindow)
@@ -26,7 +32,7 @@ ChatWindow::ChatWindow(QString selfAccount, QString contactAccount,QString myNam
     QUrl url("http://182.92.69.19/ichat-server/public/user/get-info");
     QByteArray MyAccount = contactAccount.toLocal8Bit();
     QByteArray append("account="+MyAccount);
-    QNetworkReply* reply = manager1->post(QNetworkRequest(url),append);
+    manager1->post(QNetworkRequest(url),append);
     //发送信息槽函数绑定
     sendUdpSocket = new QUdpSocket(this);
     connect(sendUdpSocket, SIGNAL(readyRead()), this, SLOT(readBackData()));
@@ -56,6 +62,18 @@ ChatWindow::ChatWindow(QString selfAccount, QString contactAccount,QString myNam
            SLOT(updateClientProgress(qint64)));
     connect(tcpClient,SIGNAL(error(QAbstractSocket::SocketError)),this,
            SLOT(displayError(QAbstractSocket::SocketError)));
+    //发送录音
+    tcpAudio=new QTcpSocket(this);
+    connect(tcpAudio,SIGNAL(connected()),this,SLOT(sendAudio()));
+    connect(tcpAudio,SIGNAL(error(QAbstractSocket::SocketError)),this,
+                   SLOT(sendError(QAbstractSocket::SocketError)));
+
+    //设置回车键
+    ui->sendButton->setFocus();
+    ui->sendButton->setShortcut(Qt::Key_Enter);
+    msgFlag = false;
+
+
 }
 
 ChatWindow::~ChatWindow()
@@ -113,25 +131,7 @@ void ChatWindow::displayError(QAbstractSocket::SocketError){
         tcpClient->close();
 }
 
-void ChatWindow::on_pushButton_clicked()
-{
 
-   //获取系统现在的时间并设置显示格式
-    QDateTime current_date_time = QDateTime::currentDateTime();
-    QString current_date = current_date_time.toString(" hh:mm:ss");
-    //显示时间和聊天记录........
-    QString c=ui->textBrowser_2->toPlainText();
-    if(c!=NULL)
-    {
-        //ui->textBrowser->setAlignment(Qt::AlignHCenter); //时间居中
-        ui->textBrowser->append(myName+current_date);
-        //ui->textBrowser->setAlignment(Qt::AlignRight); //发送的信息右对齐
-        //每条消息前查个头像
-        ui->textBrowser->append(c);
-        //ui->textBrowser_2->clear();
-        sendTextMessage(c);
-    }
-}
 
 void ChatWindow::sendTextMessage(QString content){
     QDateTime current_date_time = QDateTime::currentDateTime();
@@ -143,7 +143,11 @@ void ChatWindow::sendTextMessage(QString content){
     QByteArray textP = content.toLocal8Bit();
     QByteArray text = textP.toBase64(QByteArray::Base64UrlEncoding | QByteArray::OmitTrailingEquals);
     QByteArray data("{\"user_id\":" + from + ", \"contact_id\":" + to +", \"time\":\"" + time +"\", \"content\":\"" + text + "\", \"u\":\"send\"}");
+    //添加数据库语句
+    QSqlQuery query;
+    query.exec("insert into chatmsg values (NULL,\""+current_date+"\",\""+selfAccount+"\",\""+contactAccount+"\",\""+content+"\")");
     sendUdpSocket->writeDatagram(data.data(), data.size(), QHostAddress("182.92.69.19"), 10008);
+    ui->textBrowser_2->clear();
 }
 
 void ChatWindow::readBackData(){
@@ -179,7 +183,7 @@ void ChatWindow::finishedSlot(QNetworkReply *reply)
                 QString value = it.value().toString();
                 usrInfo[i]=value;
                 i++;
-         }
+            }
     QByteArray head,face;
         QString str(usrInfo[3]);
         int j = str.indexOf('-');
@@ -195,6 +199,8 @@ void ChatWindow::finishedSlot(QNetworkReply *reply)
         ui->nameLabel->setText(usrInfo[2]);
         friName=usrInfo[2];
         ui->signalLabel->setText(usrInfo[4]);
+        this->setWindowIcon(QPixmap::fromImage(img));
+        this->setWindowTitle(usrInfo[2]);
 }
 
 void ChatWindow::receiveMessage(QVector<MsgNode> messages){
@@ -203,6 +209,9 @@ void ChatWindow::receiveMessage(QVector<MsgNode> messages){
         //ui->textBrowser->setAlignment(Qt::AlignRight); //发送的信息右对齐
         QByteArray content = QByteArray::fromBase64(messages[i].content.toLocal8Bit(), QByteArray::Base64UrlEncoding | QByteArray::OmitTrailingEquals);
         ui->textBrowser->append(content);
+        //添加数据库语句
+        QSqlQuery query;
+        query.exec("insert into chatmsg values (NULL,\""+messages[i].time+"\",\""+contactAccount+"\",\""+selfAccount+"\",\""+messages[i].content+"\")");
     }
 }
 
@@ -367,7 +376,20 @@ void ChatWindow::on_pushButton_8_clicked()
 //发送录音
 void ChatWindow::on_pushButton_10_clicked()
 {
+    audioName = "test.raw";
+     if(!audioName.isEmpty())
+     {
+         tcpClient->connectToHost(friIp, friPort);
+     }
 
+    ui->textBrowser->append("audio has been send");
+    ui->pushButton_8->hide();
+    ui->pushButton_9->hide();
+    ui->pushButton_10->hide();
+    ui->pushButton_11->hide();
+    ui->textEdit->hide();
+    outputFile.close();
+    inputFile.close();
 }
 
 //取消录音
@@ -378,12 +400,8 @@ void ChatWindow::on_pushButton_11_clicked()
     ui->pushButton_10->hide();
     ui->pushButton_11->hide();
     ui->textEdit->hide();
-    audio->stop();
     outputFile.close();
-    delete audio;
-    audio2->stop();
     inputFile.close();
-    delete audio2;
 }
 
 void ChatWindow::finishedPlaying(QAudio::State state)
@@ -430,7 +448,7 @@ void ChatWindow::on_minButton_clicked()
 void ChatWindow::on_closeButton_clicked()
 {
     //
-
+    this->contactAccount = "-1";
     this->close();
 }
 
@@ -462,8 +480,86 @@ void ChatWindow::mouseReleaseEvent(QMouseEvent *e)
 }
 
 
-void ChatWindow::on_pushButton_2_clicked()
+
+void ChatWindow::sendAudio()
+{
+    audioFile = new QFile(audioName);
+   if(!audioFile->open(QFile::ReadOnly))
+   {
+      qDebug() << "open file error!";
+      return;
+   }
+
+   //文件总大小
+   totalAudio = audioFile->size();
+
+   QDataStream sendOut(&audioOutblock,QIODevice::WriteOnly);
+   sendOut.setVersion(QDataStream::Qt_5_4);
+   QString currentFileName = audioName.right(audioName.size()
+                                            - audioName.lastIndexOf('/') - 1);
+
+   //依次写入总大小信息空间，文件名大小信息空间，文件名
+   sendOut << qint64(0) << qint64(0) << currentFileName;
+
+   //这里的总大小是文件名大小等信息和实际文件大小的总和
+   totalAudio += audioOutblock.size();
+
+   sendOut.device()->seek(0);
+   //返回outBolock的开始，用实际的大小信息代替两个qint64(0)空间
+   sendOut<<totalAudio<<qint64((audioOutblock.size() - sizeof(qint64)*2));
+
+   //发送完头数据后剩余数据的大小
+   unfinished = totalAudio - tcpClient->write(audioOutblock);
+   outBlock.resize(0);
+}
+
+void ChatWindow::sendError(QAbstractSocket::SocketError){
+    qDebug() << tcpAudio->errorString();
+        tcpAudio->close();
+}
+
+void ChatWindow::on_downCloseBtn_clicked()
 {
     this->close();
 }
+
+void ChatWindow::on_sendButton_clicked()
+{
+    //获取系统现在的时间并设置显示格式
+     QDateTime current_date_time = QDateTime::currentDateTime();
+     QString current_date = current_date_time.toString(" hh:mm:ss");
+     //显示时间和聊天记录........
+     QString c=ui->textBrowser_2->toPlainText();
+     if(c!=NULL)
+     {
+         //ui->textBrowser->setAlignment(Qt::AlignHCenter); //时间居中
+         ui->textBrowser->append(myName+current_date);
+         //ui->textBrowser->setAlignment(Qt::AlignRight); //发送的信息右对齐
+         //每条消息前查个头像
+         ui->textBrowser->append(c);
+         ui->textBrowser->insertHtml(picbath);
+         //ui->textBrowser_2->clear();
+         sendTextMessage(c);
+     }
+}
+
+void ChatWindow::on_pushButton_7_clicked()
+{
+
+    if(msgFlag == false){
+        msgDlg = new chatMsgDlg(selfAccount,contactAccount);
+        msgDlg->setAttribute(Qt::WA_DeleteOnClose, true);
+        int x = this->geometry().x()+this->geometry().width();
+        int y = this->geometry().y();
+        msgDlg->setGeometry(x, y, 251,464);
+        msgDlg->show();
+        msgFlag = true;
+    }
+    else{
+        msgDlg->close();
+        msgDlg = NULL;
+        msgFlag = false;
+    }
+}
+
 
