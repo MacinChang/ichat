@@ -30,7 +30,8 @@ SOURCES += main.cpp\
     renamedialog.cpp \
     deleteconfirmdialog.cpp \
     newgroupdialog.cpp \
-    changegroupdialog.cpp
+    changegroupdialog.cpp \
+    Level.cpp
 
 HEADERS  += \
     logindialog.h \
@@ -49,7 +50,8 @@ HEADERS  += \
     deleteconfirmdialog.h \
     newgroupdialog.h \
     msgnode.h \
-    changegroupdialog.h
+    changegroupdialog.h \
+    Level.h
 
 FORMS    += \
     logindialog.ui \

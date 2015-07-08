@@ -63,6 +63,9 @@
    <property name="text">
     <string>MySignature</string>
    </property>
+   <property name="scaledContents">
+    <bool>false</bool>
+   </property>
   </widget>
   <widget class="QComboBox" name="comboBox">
    <property name="geometry">

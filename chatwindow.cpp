@@ -460,3 +460,10 @@ void ChatWindow::mouseReleaseEvent(QMouseEvent *e)
         e->accept();
     }
 }
+
+
+void ChatWindow::on_pushButton_2_clicked()
+{
+    this->close();
+}
+

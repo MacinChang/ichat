@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>859</width>
-    <height>657</height>
+    <width>488</width>
+    <height>292</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -42,10 +42,10 @@
   <widget class="QLineEdit" name="usrLineEdit">
    <property name="geometry">
     <rect>
-     <x>370</x>
-     <y>410</y>
-     <width>271</width>
-     <height>61</height>
+     <x>120</x>
+     <y>160</y>
+     <width>201</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="font">
@@ -95,10 +95,10 @@
   <widget class="QLineEdit" name="pwdLineEdit">
    <property name="geometry">
     <rect>
-     <x>370</x>
-     <y>470</y>
-     <width>271</width>
-     <height>61</height>
+     <x>120</x>
+     <y>190</y>
+     <width>201</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="font">
@@ -116,10 +116,10 @@
   <widget class="QPushButton" name="pushButton_2">
    <property name="geometry">
     <rect>
-     <x>670</x>
-     <y>450</y>
-     <width>150</width>
-     <height>46</height>
+     <x>360</x>
+     <y>180</y>
+     <width>91</width>
+     <height>21</height>
     </rect>
    </property>
    <property name="font">
@@ -169,15 +169,12 @@
   <zorder>label_3</zorder>
   <zorder>pushButton</zorder>
   <zorder>usrLineEdit</zorder>
-  <zorder>label</zorder>
   <zorder>label_2</zorder>
   <zorder>pwdLineEdit</zorder>
   <zorder>pushButton_2</zorder>
   <zorder>closeBtn</zorder>
  </widget>
- <resources>
-  <include location="resource.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>closeBtn</sender>

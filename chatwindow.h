@@ -74,6 +74,8 @@ private slots:
     void finishedSlot(QNetworkReply*);
     void on_minButton_clicked();
     void on_closeButton_clicked();
+    void on_pushButton_2_clicked();
+
 private:
     QTcpSocket *tcpClient;
     QFile *localFile;

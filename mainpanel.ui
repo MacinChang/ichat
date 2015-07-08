@@ -25,6 +25,32 @@
   <property name="frameShadow">
    <enum>QFrame::Raised</enum>
   </property>
+  <widget class="QPushButton" name="btnAddContacts">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>563</y>
+     <width>41</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/images/image/add.png</normaloff>:/images/image/add.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>40</width>
+     <height>40</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
   <widget class="QPushButton" name="btnContact">
    <property name="geometry">
     <rect>
@@ -176,8 +202,9 @@
    </property>
   </widget>
   <zorder>label</zorder>
-  <zorder>btnContact</zorder>
   <zorder>btnGroup</zorder>
+  <zorder>btnAddContacts</zorder>
+  <zorder>btnContact</zorder>
   <zorder>closeBtn</zorder>
   <zorder>minBtn</zorder>
   <zorder>btnAddContacts</zorder>
