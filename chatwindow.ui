@@ -49,58 +49,6 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
-  <widget class="QWidget" name="horizontalLayoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>230</x>
-     <y>290</y>
-     <width>350</width>
-     <height>61</height>
-    </rect>
-   </property>
-   <layout class="QHBoxLayout" name="horizontalLayout">
-    <item>
-     <widget class="QPushButton" name="pushButton_2">
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset resource="resource.qrc">
-        <normaloff>:/images/image/closeBtn.png</normaloff>:/images/image/closeBtn.png</iconset>
-      </property>
-      <property name="iconSize">
-       <size>
-        <width>120</width>
-        <height>32</height>
-       </size>
-      </property>
-      <property name="flat">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="pushButton">
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset resource="resource.qrc">
-        <normaloff>:/images/image/sendBtn.png</normaloff>:/images/image/sendBtn.png</iconset>
-      </property>
-      <property name="iconSize">
-       <size>
-        <width>130</width>
-        <height>35</height>
-       </size>
-      </property>
-      <property name="flat">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
   <widget class="QPushButton" name="pushButton_3">
    <property name="geometry">
     <rect>
@@ -503,10 +451,87 @@ p, li { white-space: pre-wrap; }
     <pixmap resource="resource.qrc">:/images/image/whiteBack.png</pixmap>
    </property>
   </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>300</y>
+     <width>121</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/images/image/sendBtn.png</normaloff>:/images/image/sendBtn.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>130</width>
+     <height>35</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_2">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>300</y>
+     <width>111</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/images/image/closeBtn.png</normaloff>:/images/image/closeBtn.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>120</width>
+     <height>32</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="listenButton">
+   <property name="geometry">
+    <rect>
+     <x>334</x>
+     <y>132</y>
+     <width>41</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/images/Image/earphone.png</normaloff>:/images/Image/earphone.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>41</width>
+     <height>31</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
   <zorder>label_2</zorder>
   <zorder>label_3</zorder>
   <zorder>textBrowser_2</zorder>
-  <zorder>horizontalLayoutWidget</zorder>
   <zorder>pushButton_3</zorder>
   <zorder>pushButton_4</zorder>
   <zorder>pushButton_5</zorder>
@@ -527,7 +552,9 @@ p, li { white-space: pre-wrap; }
   <zorder>signalLabel</zorder>
   <zorder>closeButton</zorder>
   <zorder>minButton</zorder>
+  <zorder>pushButton</zorder>
   <zorder>pushButton_2</zorder>
+  <zorder>listenButton</zorder>
  </widget>
  <resources>
   <include location="resource.qrc"/>

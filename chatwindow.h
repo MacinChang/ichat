@@ -46,16 +46,21 @@ private:
     QFile outputFile;
     QAudioInput *audio;
     QFile inputFile;
+    QFile *audioReceive;
+    QFile *fileReceive;
     QAudioOutput *audio2;
 private slots:
     void on_pushButton_clicked();
     void on_pushButton_5_clicked();
     void on_pushButton_4_clicked();
+    void on_listenButton_clicked();
     void readBackData();
 
 public:
     void sendTextMessage(QString content);
     void receiveMessage(QVector<MsgNode> messages);
+    void receiveAudio(QFile *file);
+    void receiveFile(QFile *file);
     void mousePressEvent(QMouseEvent *e);
     void mouseMoveEvent(QMouseEvent *e);
     void mouseReleaseEvent(QMouseEvent *e);

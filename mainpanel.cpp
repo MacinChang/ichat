@@ -35,9 +35,19 @@ MainPanel::MainPanel(QString account, QWidget *parent) :
     ui(new Ui::MainPanel)
 {
     ui->setupUi(this);
-
+    flag = false;
+    fileSize  = -1;
+    receiveSize = 0;
+    fileName = "";
     dragPosition = QPoint(-1,-1);
     this->setFixedSize(this->size());
+    fileClient = new QTcpSocket(this);
+    bool flag = connect(fileClient, SIGNAL(readyRead()),this, SLOT(receiveFile()));
+    flag = connect(fileClient,SIGNAL(error(QAbstractSocket::SocketError)),this,
+           SLOT(displayError(QAbstractSocket::SocketError)));
+    fileClient->connectToHost("182.92.69.19",6666);
+    QByteArray outBlock = "{\"user_id\":" + myAccount.toLocal8Bit()+ ", \"u\":\"receive\"}";
+    fileClient->write(outBlock);
     receiveUdpSocket = new QUdpSocket(this);
     connect(receiveUdpSocket, SIGNAL(readyRead()),this, SLOT(receiveData()));
     QByteArray self = myAccount.toLocal8Bit();
@@ -50,6 +60,7 @@ MainPanel::MainPanel(QString account, QWidget *parent) :
     QIcon winIcon(":/images/image/ichat.png");
     this->setWindowIcon(winIcon);
     this->setWindowTitle("iChat");
+    fileReceive = "";
 
     //添加self
     myself = new UserItem(this);
@@ -145,6 +156,7 @@ void MainPanel::mouseReleaseEvent(QMouseEvent *e)
         e->accept();
     }
 }
+
 void MainPanel::receiveData(){
     QByteArray data;
     //while(receiveUdp)
@@ -162,6 +174,95 @@ void MainPanel::receiveData(){
     receiveUdpSocket->writeDatagram(datas.data(), datas .size(), QHostAddress("182.92.69.19"), 10008);
 
 }
+
+void MainPanel::receiveFile(){
+    QByteArray data;
+    if(fileClient->bytesAvailable()){
+            QByteArray temp = fileClient->readAll();
+           if(receiveSize < fileSize || fileSize == -1){
+               if(!flag){
+                QJsonParseError error;
+                int p = temp.indexOf("}");
+                QByteArray json = temp.left(p + 1);
+                QByteArray data = temp.mid(p + 1);
+                QJsonDocument document = QJsonDocument::fromJson(json, &error);
+                if(error.error == QJsonParseError::NoError){
+                    QVariantMap map = document.toVariant().toMap();
+                    fileName = QByteArray::fromBase64(map["content"].toString().toLocal8Bit());
+                    fileSize = map["size"].toInt() + json.size();
+                    fileContact = map["user_id"].toString();
+                    localFile = new QFile(fileName);
+                    fileType = map["type"].toString();
+                    if(!localFile->open(QFile::WriteOnly)){
+                        qDebug() << "wrong";
+                    }
+                    localFile->write(data);
+                    receiveSize += temp.size();
+                }
+                flag = true;
+               }else{
+                   localFile->write(temp);
+                   receiveSize += temp.size();
+               }
+           }else{
+               localFile->close();
+               checkAudio(fileContact);
+               receiveSize = 0;
+               fileSize = -1;
+           }
+    }
+    if(receiveSize == fileSize){
+        localFile->close();
+        if(fileType == "audio"){
+            checkAudio(fileContact);
+        }else{
+            checkFile(fileContact);
+        }
+        receiveSize = 0;
+        fileSize = -1;
+        flag = false;
+    }
+}
+
+
+void MainPanel::displayError(QAbstractSocket::SocketError){
+    qDebug() << fileClient->errorString();
+}
+
+//接受语音
+void MainPanel::checkAudio(QString contact){
+    ChatWindow *cw = checkChatWindow(contact);
+    if(cw == NULL){
+        cws.push_back(new ChatWindow(myAccount, contact, myName));
+        cws[cws.size() - 1]->receiveAudio(localFile);
+        cws[cws.size() - 1]->show();
+    }else{
+        cw->receiveAudio(localFile);
+    }
+}
+//接收文件
+void MainPanel::checkFile(QString contact)
+{
+    ChatWindow *cw = checkChatWindow(contact);
+    if(cw == NULL){
+        cws.push_back(new ChatWindow(myAccount, contact, myName));
+        cws[cws.size() - 1]->receiveFile(localFile);
+        cws[cws.size() - 1]->show();
+    }else{
+        cw->receiveFile(localFile);
+    }
+}
+//检查聊天窗口
+ChatWindow* MainPanel::checkChatWindow(QString contact)
+{
+    for(int j = 0; j < cws.size(); j++){
+        if(cws[j]->getContactAccount() == contact){
+           return cws[j];
+        }
+    }
+   return NULL;
+}
+
 void MainPanel::checkMessage(QString msg){
     QVector<MsgNode> messages;
     QString x = "Nine pineapples";
@@ -207,23 +308,17 @@ void MainPanel::checkMessage(QString msg){
     }
     if(!temp.empty()){
         bool flag = false;
-        for(int j = 0; j < cws.size(); j++){
-            if(cws[j]->getContactAccount() == temp[0].contact){
-                cws[j]->receiveMessage(temp);
-                flag = true;
-                break;
-            }
-        }
-        if(!flag){
-         cws.push_back(new ChatWindow(myAccount, temp[0].contact,myName));
-         cws[cws.size() - 1]->receiveMessage(temp);
-         cws[cws.size() - 1]->show();
+        ChatWindow *cw = checkChatWindow(temp[0].contact);
+        if(cw == NULL){
+            cws.push_back(new ChatWindow(myAccount, temp[0].contact,myName));
+            cws[cws.size() - 1]->receiveMessage(temp);
+            cws[cws.size() - 1]->show();
+        }else{
+            cw->receiveMessage(temp);
         }
     }
 
 }
-
-
 //按下添加好友按钮
 void MainPanel::on_btnAddContacts_clicked()
 {

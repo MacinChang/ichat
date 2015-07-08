@@ -14,6 +14,8 @@ ChatWindow::ChatWindow(QString selfAccount, QString contactAccount,QString myNam
     ui(new Ui::ChatWindow)
 {
     ui->setupUi(this);
+    friIp = "127.0.0.1";
+    friPort = 6666;
     dragPosition=QPoint(-1,-1);
     m_animation = new QPropertyAnimation(this,"pos");
     setWindowFlags(windowFlags()& ~Qt::WindowMaximizeButtonHint);
@@ -37,6 +39,7 @@ ChatWindow::ChatWindow(QString selfAccount, QString contactAccount,QString myNam
     ui->pushButton_9->hide();
     ui->pushButton_10->hide();
     ui->pushButton_11->hide();
+    ui->listenButton->hide();
     //自己的头像和好友头像
     myHead="head";
     imgPathToHtml(myHead);
@@ -71,6 +74,8 @@ void ChatWindow::on_pushButton_12_clicked()
     //初始化已发送字节为0
      if(!fileName.isEmpty())
      {
+         friIp = "182.92.69.19";
+         friPort = 6666;
          tcpClient->connectToHost(friIp, friPort);
      }
 
@@ -88,20 +93,21 @@ void ChatWindow::startTransfer()
    //文件总大小
    totalBytes = localFile->size();
 
-   QDataStream sendOut(&outBlock,QIODevice::WriteOnly);
-   sendOut.setVersion(QDataStream::Qt_5_4);
+
+
    QString currentFileName = fileName.right(fileName.size()
                                             - fileName.lastIndexOf('/') - 1);
 
    //依次写入总大小信息空间，文件名大小信息空间，文件名
-   sendOut << qint64(0) << qint64(0) << currentFileName;
+
 
    //这里的总大小是文件名大小等信息和实际文件大小的总和
    totalBytes += outBlock.size();
 
-   sendOut.device()->seek(0);
-   //返回outBolock的开始，用实际的大小信息代替两个qint64(0)空间
-   sendOut<<totalBytes<<qint64((outBlock.size() - sizeof(qint64)*2));
+    QByteArray  user_id  = selfAccount.toLocal8Bit();
+    QByteArray contact_id = contactAccount.toLocal8Bit();
+    outBlock = "{\"user_id\":" + user_id + ", \"filename\":\"" + currentFileName.toLocal8Bit().toBase64()
+           + "\", \"contact_id\":" + contact_id + ", \"type\":\"audio\", \"u\":\"send\"}";
 
    //发送完头数据后剩余数据的大小
    bytesToWrite = totalBytes - tcpClient->write(outBlock);
@@ -195,6 +201,17 @@ void ChatWindow::finishedSlot(QNetworkReply *reply)
         ui->nameLabel->setText(usrInfo[2]);
         friName=usrInfo[2];
         ui->signalLabel->setText(usrInfo[4]);
+}
+
+void ChatWindow::receiveAudio(QFile *file){
+    ui->listenButton->show();
+    audioReceive = file;
+}
+
+void ChatWindow::receiveFile(QFile *file)
+{
+//    ui->fileButton->show();
+//    fileReceive = file;
 }
 
 void ChatWindow::receiveMessage(QVector<MsgNode> messages){
@@ -367,7 +384,8 @@ void ChatWindow::on_pushButton_8_clicked()
 //发送录音
 void ChatWindow::on_pushButton_10_clicked()
 {
-
+    fileName = "test.raw";
+    tcpClient->connectToHost(friIp, friPort);
 }
 
 //取消录音
@@ -467,3 +485,28 @@ void ChatWindow::on_pushButton_2_clicked()
     this->close();
 }
 
+void ChatWindow::on_listenButton_clicked()
+{
+    //inputFile.setFileName("test.raw");  //test.raw录音文件名
+    audioReceive->setFileName("test.raw");
+    if(!audioReceive->open(QIODevice::ReadOnly)){
+        qDebug() << "wrong";
+    }
+    QAudioFormat format;
+    format.setSampleRate(8000);
+    format.setChannelCount(1);
+    format.setSampleSize(8);
+    format.setCodec("audio/pcm");
+    format.setByteOrder(QAudioFormat::LittleEndian);
+    format.setSampleType(QAudioFormat::UnSignedInt);
+    QAudioDeviceInfo info = QAudioDeviceInfo::defaultInputDevice();
+    if(!info.isFormatSupported(format))
+    {
+        qDebug()<<"don't support and return";
+        return;
+    }
+    audio2 = new QAudioOutput(format,this);
+    connect(audio2,SIGNAL(stateChanged(QAudio::State)),this,SLOT(finishedPlaying(QAudio::State)));
+    audio2->start(audioReceive);
+    qDebug()<<"start play";
+}

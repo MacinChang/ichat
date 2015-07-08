@@ -19,7 +19,10 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include "changegroupdialog.h"
-
+#include <QTcpSocket>
+#include <QTcpServer>
+#include <QNetworkInterface>
+#include <QList>
 
 namespace Ui {
 class MainPanel;
@@ -36,6 +39,9 @@ public:
     void mouseMoveEvent(QMouseEvent *e);
     void mouseReleaseEvent(QMouseEvent *e);
     void checkMessage(QString msg);
+    void checkAudio(QString contact);
+    void checkFile(QString contact);
+    ChatWindow* checkChatWindow(QString contact);
 
 private slots:
     void on_btnAddContacts_clicked();
@@ -49,6 +55,7 @@ private slots:
     void on_closeBtn_clicked();
 
 public slots:
+    void displayError(QAbstractSocket::SocketError);
 
     void replyFinished(QNetworkReply *reply);
     void delReplyFinished(QNetworkReply *reply);
@@ -87,7 +94,9 @@ public slots:
     void on_gAction_modify();
     void on_gAction_quit();
 
-    void  receiveData();
+    void receiveData();
+    void receiveFile();
+
 
 private:
     Ui::MainPanel *ui;
@@ -104,14 +113,25 @@ private:
     QUdpSocket *receiveUdpSocket;
     FriendInfo *selfFI;
 
-public:
+    QTcpSocket *fileClient;
+    QByteArray fileReceive;
+
     QString myAccount;
     QIcon myHead;
     QString myName;
     QString mySignature;
     QString myState;
+    int flag;
+    int fileSize;
+    int receiveSize;
+    QString fileName;
+    QFile *localFile;
+    QString fileType;
+    QString fileContact = "";
+
 public:
     static QVector<FriendInfo*> fis;
 };
+
 
 #endif // MAINPANEL_H
