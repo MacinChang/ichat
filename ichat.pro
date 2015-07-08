@@ -6,6 +6,7 @@
 
 QT       += core gui
 QT       += network
+QT       += sql
 QT       += script
 QT       += multimedia
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -31,7 +32,8 @@ SOURCES += main.cpp\
     deleteconfirmdialog.cpp \
     newgroupdialog.cpp \
     changegroupdialog.cpp \
-    Level.cpp
+    Level.cpp \
+    chatmsgdlg.cpp
 
 HEADERS  += \
     logindialog.h \
@@ -51,7 +53,9 @@ HEADERS  += \
     newgroupdialog.h \
     msgnode.h \
     changegroupdialog.h \
-    Level.h
+    Level.h \
+    connect.h \
+    chatmsgdlg.h
 
 FORMS    += \
     logindialog.ui \
@@ -69,7 +73,8 @@ FORMS    += \
     renamedialog.ui \
     deleteconfirmdialog.ui \
     newgroupdialog.ui \
-    changegroupdialog.ui
+    changegroupdialog.ui \
+    chatmsgdlg.ui
 
 RESOURCES += \
     resource.qrc

@@ -8,7 +8,7 @@ AddWindow::AddWindow(QString myAccount, QWidget *parent) :
     ui(new Ui::AddWindow)
 {
     ui->setupUi(this);
-    connect(this, SIGNAL(clicked()), this, SLOT(headPressEventSlot()));
+    //connect(this, SIGNAL(clicked()), this, SLOT(headPressEventSlot()));
     ui->label->setText("<font color=white>请输入ichat号：</font>");
     ui->label_2->hide();
     ui->faceButton->hide();
@@ -20,6 +20,7 @@ AddWindow::AddWindow(QString myAccount, QWidget *parent) :
     connect(manager, SIGNAL(finished(QNetworkReply*)),
     this,SLOT(replyFinished(QNetworkReply*)));
     this->setWindowFlags(Qt::FramelessWindowHint);
+    dragPosition = QPoint(-1,-1);
 }
 
 AddWindow::~AddWindow()
@@ -120,5 +121,43 @@ void AddWindow::on_faceButton_clicked()
 void AddWindow::on_pushButton_2_clicked()
 {
     cw=new confirmWindow(str, myAccount);
+    connect(cw,SIGNAL(addFinished()),this,SLOT(on_addContactFinished()));
     cw->show();
+}
+
+
+void AddWindow::on_closeBtn_clicked()
+{
+    this->hide();
+}
+
+void AddWindow::on_addContactFinished()
+{
+    emit addFinished();
+}
+
+void AddWindow::mousePressEvent(QMouseEvent *e)
+{
+    if(e->button() == Qt::LeftButton){
+        dragPosition = e->globalPos()-frameGeometry().topLeft();
+        QPoint p = e->pos();
+        e->accept();
+    }
+    else dragPosition = QPoint(-1,-1);
+}
+
+void AddWindow::mouseMoveEvent(QMouseEvent *e)
+{
+    if(dragPosition != QPoint(-1,-1)){
+        move(e->globalPos()-dragPosition);
+    }
+    e->accept();
+
+}
+void AddWindow::mouseReleaseEvent(QMouseEvent *e)
+{
+    if(e->button() == Qt::LeftButton){
+        dragPosition = QPoint(-1,-1);
+        e->accept();
+    }
 }

@@ -20,6 +20,8 @@ UserInfo::UserInfo(QString account, QWidget *parent) :
 {
 
     ui->setupUi(this);
+    QIcon winIcon(":/images/image/ichat.png");
+    this->setWindowIcon(winIcon);
     //设置窗口不可拉伸
     this->setWindowFlags(Qt::FramelessWindowHint);
     setWindowFlags(windowFlags()& ~Qt::WindowMaximizeButtonHint);
@@ -36,7 +38,7 @@ UserInfo::UserInfo(QString account, QWidget *parent) :
           QByteArray append("account="+MyAccount);
 
 
-          QNetworkReply* reply = manager1->post(QNetworkRequest(url),append);
+          manager1->post(QNetworkRequest(url),append);
      //向服务器端发送改变后的用户信息
           QObject::connect(manager2, SIGNAL(finished(QNetworkReply*)),
                     this, SLOT(uploadfinishedSlot(QNetworkReply*)));
@@ -150,7 +152,7 @@ void UserInfo::on_FaceButton_clicked(){
    //上传到服务器
    QUrl url("http://182.92.69.19/ichat-server/public/user/set-head");
    QByteArray append("account="+MyAccount+"&head="+head);
-   QNetworkReply* reply = manager3->post(QNetworkRequest(url),append);
+   manager3->post(QNetworkRequest(url),append);
       }
   }
 
@@ -185,7 +187,8 @@ void UserInfo::on_SaveButton_clicked(){
       QByteArray append("account="+account+"&nickname="+nickname+"&signature="+signature+
                       "&gender="+gender+"&age="+age+"&phone="+phone+
                         "&home="+hometown+"&location="+location+"&birth="+birth);
-      QNetworkReply* reply = manager2->post(QNetworkRequest(url),append);
+      manager2->post(QNetworkRequest(url),append);
+
 
 }
 
@@ -229,8 +232,11 @@ void UserInfo::on_CloseButton_clicked(){
              }
                     }
            else {    //保存了资料或者未编辑 直接退出
+      emit userInfoChanged();
        this->close();
+
          }
+
 }
 
 
@@ -297,30 +303,49 @@ void UserInfo::finishedSlot(QNetworkReply *reply){
     ui->FaceButton->setIcon(QPixmap::fromImage(img));
 
     //签名
+    if(ui->SignEdit->text() == "null"){
+      ui->SignEdit->setText(" ");
+    }
     ui->SignEdit->setText(usrInfo[4]);
 
     //等级
-    Level lv;        //等级
-    lv.LoadLevel(usrInfo[5]);
-    int sunN,moonN,starN;
-     sunN = lv.sun;
-     moonN = lv.moon;
-     starN = lv.star;
-    QListWidgetItem *sun[3],*moon[3],*star[3];
-    for(int i=0;i<3;i++){
-        sun[i] = new QListWidgetItem(QIcon(":/images/image/sun.png"),"");
-        moon[i] = new QListWidgetItem(QIcon(":/images/image/moon.png"),"");
-        star[i] = new QListWidgetItem(QIcon(":/images/image/star.png"),"");
-    }
-    for(int i=0;i<sunN;i++){
-        ui->LvList->addItem(sun[i]);
-    }
-    for(int i=0;i<moonN;i++){
-       ui->LvList->addItem(moon[i]);
-    }
-    for(int i=0;i<starN;i++){
-        ui->LvList->addItem(star[i]);
-    }
+    Level lv;
+        lv.LoadLevel(usrInfo[5]);
+        int sunN,moonN,starN;
+        int windowX = 90;
+        QImage Sun(":/images/image/sun.png"),
+               Moon(":/images/image/moon.png"),
+               Star(":/images/image/star.png");
+         sunN = lv.sun;
+         moonN = lv.moon;
+         starN = lv.star;
+         QLabel *sun[3],*moon[3],*star[3];
+         for(int i=0;i<3;i++){
+             sun[i] = new QLabel();
+             sun[i]->setPixmap(QPixmap::fromImage(Sun));
+             sun[i]->setParent(this);
+             moon[i] = new QLabel();
+             moon[i]->setPixmap(QPixmap::fromImage(Moon));
+             moon[i]->setParent(this);
+             star[i] = new QLabel();
+             star[i]->setPixmap(QPixmap::fromImage(Star));
+             star[i]->setParent(this);
+         }
+         for(int i=0;i<sunN;i++){
+             sun[i]->setGeometry(windowX,100,24,16);
+             sun[i]->show();
+             windowX += 24;
+         }
+         for(int i=0;i<moonN;i++){
+             moon[i]->setGeometry(windowX,100,24,16);
+             moon[i]->show();
+             windowX += 24;
+         }
+         for(int i=0;i<starN;i++){
+             star[i]->setGeometry(windowX,100,24,16);
+             star[i]->show();
+             windowX += 24;
+         }
 
    //性别
     ui->SexCombo->setCurrentIndex(usrInfo[6].toInt());
@@ -408,10 +433,18 @@ void UserInfo::finishedSlot(QNetworkReply *reply){
        }
     }
     //生日
-   QStringList birthlist = usrInfo[11].split("-");
-   ui->YearCombo->setCurrentIndex(birthlist[0].toInt()-1900);
-   ui->MonthCombo->setCurrentIndex((birthlist[1].toInt())-1);
-   ui->DateCombo->setCurrentIndex((birthlist[2].toInt())-1);
+   if(usrInfo[11] == "null"){
+       ui->YearCombo->setCurrentIndex(0);
+       ui->MonthCombo->setCurrentIndex(0);
+       ui->DateCombo->setCurrentIndex(0);
+   }
+   else{
+       QStringList birthlist = usrInfo[11].split("-");
+       ui->YearCombo->setCurrentIndex(birthlist[0].toInt()-1900);
+       ui->MonthCombo->setCurrentIndex((birthlist[1].toInt())-1);
+       ui->DateCombo->setCurrentIndex((birthlist[2].toInt())-1);
+   }
+
 
    //获取目前的生日和所在地信息用于判断关闭窗口时提示是否保存
    preY = ui->YearCombo->currentText();
@@ -456,12 +489,12 @@ void UserInfo::finishedSlot(QNetworkReply *reply){
  }
 
  //头像修改成功后的槽函数
- void UserInfo::faceuploadfinishedsolt(QNetworkReply *)
- {
+void UserInfo::faceuploadfinishedsolt(QNetworkReply *)
+{
      QMessageBox::information(this, QObject::tr("提示"),
                                QObject::tr("修改头像成功"),
                                QMessageBox::Yes);
- }
+}
 
 
 //移动窗口

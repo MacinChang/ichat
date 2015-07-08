@@ -23,6 +23,8 @@
 #include <QTcpServer>
 #include <QNetworkInterface>
 #include <QList>
+#include "userinfo.h"
+
 
 namespace Ui {
 class MainPanel;
@@ -54,6 +56,7 @@ private slots:
 
     void on_closeBtn_clicked();
 
+
 public slots:
     void displayError(QAbstractSocket::SocketError);
 
@@ -78,6 +81,8 @@ public slots:
 
     void on_comboBox_changed(const QString & text);
     void on_group_changed(QString classid);
+    void on_userInfoChanged();
+    void on_addContact_finished();
 
     void on_Action_newGroup();
 
@@ -103,6 +108,7 @@ private:
     AddWindow *addDlg;
     ChangeGroupDialog *changeDlg;
     UserItem *myself;
+    //UserInfo self;
     QPoint dragPosition;
     QStandardItemModel *contactModel,*groupModel;
     QTreeView *contactTreeView,*groupTreeView;

@@ -16,8 +16,8 @@
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>70</y>
+     <x>70</x>
+     <y>110</y>
      <width>24</width>
      <height>16</height>
     </rect>
@@ -29,8 +29,8 @@
   <widget class="QLabel" name="label_12">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>150</y>
+     <x>70</x>
+     <y>190</y>
      <width>24</width>
      <height>16</height>
     </rect>
@@ -42,8 +42,8 @@
   <widget class="QLabel" name="label_14">
    <property name="geometry">
     <rect>
-     <x>164</x>
-     <y>301</y>
+     <x>207</x>
+     <y>341</y>
      <width>16</width>
      <height>16</height>
     </rect>
@@ -52,21 +52,11 @@
     <string>年</string>
    </property>
   </widget>
-  <widget class="QComboBox" name="DateCombo">
-   <property name="geometry">
-    <rect>
-     <x>275</x>
-     <y>301</y>
-     <width>69</width>
-     <height>20</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QLabel" name="label_4">
    <property name="geometry">
     <rect>
-     <x>49</x>
-     <y>271</y>
+     <x>70</x>
+     <y>311</y>
      <width>24</width>
      <height>16</height>
     </rect>
@@ -78,8 +68,8 @@
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>240</y>
+     <x>70</x>
+     <y>280</y>
      <width>48</width>
      <height>16</height>
     </rect>
@@ -88,41 +78,11 @@
     <string>个性签名</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="AgeEdit">
-   <property name="geometry">
-    <rect>
-     <x>91</x>
-     <y>327</y>
-     <width>133</width>
-     <height>20</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QComboBox" name="SexCombo">
-   <property name="geometry">
-    <rect>
-     <x>90</x>
-     <y>270</y>
-     <width>69</width>
-     <height>22</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="NameEdit">
-   <property name="geometry">
-    <rect>
-     <x>90</x>
-     <y>200</y>
-     <width>133</width>
-     <height>20</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QPushButton" name="FaceButton">
    <property name="geometry">
     <rect>
-     <x>90</x>
-     <y>130</y>
+     <x>150</x>
+     <y>170</y>
      <width>61</width>
      <height>61</height>
     </rect>
@@ -143,8 +103,8 @@
   <widget class="QLabel" name="label_16">
    <property name="geometry">
     <rect>
-     <x>350</x>
-     <y>301</y>
+     <x>393</x>
+     <y>341</y>
      <width>16</width>
      <height>16</height>
     </rect>
@@ -153,21 +113,11 @@
     <string>日</string>
    </property>
   </widget>
-  <widget class="QComboBox" name="MonthCombo">
-   <property name="geometry">
-    <rect>
-     <x>182</x>
-     <y>301</y>
-     <width>69</width>
-     <height>20</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>100</y>
+     <x>70</x>
+     <y>140</y>
      <width>24</width>
      <height>16</height>
     </rect>
@@ -176,24 +126,11 @@
     <string>等级</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="SignEdit">
-   <property name="geometry">
-    <rect>
-     <x>90</x>
-     <y>240</y>
-     <width>311</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
   <widget class="QLabel" name="AccountList">
    <property name="geometry">
     <rect>
-     <x>90</x>
-     <y>70</y>
+     <x>150</x>
+     <y>110</y>
      <width>60</width>
      <height>16</height>
     </rect>
@@ -205,8 +142,8 @@
   <widget class="QLabel" name="label_15">
    <property name="geometry">
     <rect>
-     <x>257</x>
-     <y>301</y>
+     <x>300</x>
+     <y>341</y>
      <width>16</width>
      <height>16</height>
     </rect>
@@ -218,8 +155,8 @@
   <widget class="QLabel" name="label_9">
    <property name="geometry">
     <rect>
-     <x>49</x>
-     <y>411</y>
+     <x>70</x>
+     <y>451</y>
      <width>36</width>
      <height>16</height>
     </rect>
@@ -231,8 +168,8 @@
   <widget class="QLabel" name="label_5">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>300</y>
+     <x>70</x>
+     <y>340</y>
      <width>24</width>
      <height>16</height>
     </rect>
@@ -244,8 +181,8 @@
   <widget class="QLabel" name="label_6">
    <property name="geometry">
     <rect>
-     <x>49</x>
-     <y>327</y>
+     <x>70</x>
+     <y>367</y>
      <width>24</width>
      <height>16</height>
     </rect>
@@ -257,8 +194,8 @@
   <widget class="QLabel" name="label_8">
    <property name="geometry">
     <rect>
-     <x>49</x>
-     <y>383</y>
+     <x>70</x>
+     <y>423</y>
      <width>24</width>
      <height>16</height>
     </rect>
@@ -267,63 +204,11 @@
     <string>故乡</string>
    </property>
   </widget>
-  <widget class="QWidget" name="layoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>88</x>
-     <y>410</y>
-     <width>518</width>
-     <height>32</height>
-    </rect>
-   </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_3">
-    <item>
-     <widget class="QComboBox" name="LocalP"/>
-    </item>
-    <item>
-     <widget class="QLabel" name="label_21">
-      <property name="text">
-       <string>省</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QComboBox" name="LocalC"/>
-    </item>
-    <item>
-     <widget class="QLabel" name="label_22">
-      <property name="text">
-       <string>市</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QComboBox" name="LocalL"/>
-    </item>
-    <item>
-     <widget class="QLabel" name="label_23">
-      <property name="text">
-       <string>区</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QComboBox" name="YearCombo">
-   <property name="geometry">
-    <rect>
-     <x>89</x>
-     <y>301</y>
-     <width>69</width>
-     <height>20</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QLabel" name="label_7">
    <property name="geometry">
     <rect>
-     <x>49</x>
-     <y>355</y>
+     <x>70</x>
+     <y>395</y>
      <width>36</width>
      <height>16</height>
     </rect>
@@ -332,63 +217,11 @@
     <string>手机号</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="PhoneEdit">
-   <property name="geometry">
-    <rect>
-     <x>91</x>
-     <y>355</y>
-     <width>133</width>
-     <height>20</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QWidget" name="layoutWidget_2">
-   <property name="geometry">
-    <rect>
-     <x>88</x>
-     <y>380</y>
-     <width>518</width>
-     <height>32</height>
-    </rect>
-   </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_2">
-    <item>
-     <widget class="QComboBox" name="HomeP"/>
-    </item>
-    <item>
-     <widget class="QLabel" name="label_18">
-      <property name="text">
-       <string>省</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QComboBox" name="HomeC"/>
-    </item>
-    <item>
-     <widget class="QLabel" name="label_19">
-      <property name="text">
-       <string>市</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QComboBox" name="HomeL"/>
-    </item>
-    <item>
-     <widget class="QLabel" name="label_20">
-      <property name="text">
-       <string>区</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
   <widget class="QLabel" name="label_13">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>200</y>
+     <x>70</x>
+     <y>240</y>
      <width>24</width>
      <height>16</height>
     </rect>
@@ -468,50 +301,290 @@
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QListWidget" name="LvList">
+  <widget class="QLabel" name="NameEdit">
    <property name="geometry">
     <rect>
-     <x>90</x>
-     <y>98</y>
-     <width>131</width>
-     <height>21</height>
+     <x>150</x>
+     <y>240</y>
+     <width>133</width>
+     <height>20</height>
     </rect>
    </property>
-   <property name="flow">
-    <enum>QListView::LeftToRight</enum>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="SignEdit">
+   <property name="geometry">
+    <rect>
+     <x>150</x>
+     <y>280</y>
+     <width>311</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="AgeEdit">
+   <property name="geometry">
+    <rect>
+     <x>150</x>
+     <y>367</y>
+     <width>133</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="PhoneEdit">
+   <property name="geometry">
+    <rect>
+     <x>150</x>
+     <y>395</y>
+     <width>133</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="SexLabel">
+   <property name="geometry">
+    <rect>
+     <x>150</x>
+     <y>310</y>
+     <width>69</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="YearLabel">
+   <property name="geometry">
+    <rect>
+     <x>150</x>
+     <y>341</y>
+     <width>45</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="MonthLabel">
+   <property name="geometry">
+    <rect>
+     <x>243</x>
+     <y>341</y>
+     <width>30</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="DateLabel">
+   <property name="geometry">
+    <rect>
+     <x>343</x>
+     <y>341</y>
+     <width>30</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="HomeP">
+   <property name="geometry">
+    <rect>
+     <x>150</x>
+     <y>423</y>
+     <width>69</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="LocalP">
+   <property name="geometry">
+    <rect>
+     <x>150</x>
+     <y>450</y>
+     <width>69</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="LocalL">
+   <property name="geometry">
+    <rect>
+     <x>336</x>
+     <y>450</y>
+     <width>69</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="LocalC">
+   <property name="geometry">
+    <rect>
+     <x>243</x>
+     <y>450</y>
+     <width>69</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_19">
+   <property name="geometry">
+    <rect>
+     <x>318</x>
+     <y>423</y>
+     <width>16</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>市</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_18">
+   <property name="geometry">
+    <rect>
+     <x>225</x>
+     <y>423</y>
+     <width>16</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>省</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_22">
+   <property name="geometry">
+    <rect>
+     <x>318</x>
+     <y>451</y>
+     <width>16</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>市</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="HomeL">
+   <property name="geometry">
+    <rect>
+     <x>336</x>
+     <y>423</y>
+     <width>69</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_20">
+   <property name="geometry">
+    <rect>
+     <x>411</x>
+     <y>423</y>
+     <width>16</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>区</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_23">
+   <property name="geometry">
+    <rect>
+     <x>411</x>
+     <y>451</y>
+     <width>16</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>区</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_21">
+   <property name="geometry">
+    <rect>
+     <x>225</x>
+     <y>451</y>
+     <width>16</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>省</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="HomeC">
+   <property name="geometry">
+    <rect>
+     <x>243</x>
+     <y>423</y>
+     <width>69</width>
+     <height>20</height>
+    </rect>
    </property>
   </widget>
   <zorder>label_10</zorder>
   <zorder>label_3</zorder>
   <zorder>label_12</zorder>
   <zorder>label_14</zorder>
-  <zorder>DateCombo</zorder>
   <zorder>label_4</zorder>
   <zorder>label_2</zorder>
-  <zorder>AgeEdit</zorder>
-  <zorder>SexCombo</zorder>
-  <zorder>NameEdit</zorder>
   <zorder>FaceButton</zorder>
   <zorder>label_16</zorder>
-  <zorder>MonthCombo</zorder>
   <zorder>label</zorder>
-  <zorder>SignEdit</zorder>
   <zorder>AccountList</zorder>
   <zorder>label_15</zorder>
   <zorder>label_9</zorder>
   <zorder>label_5</zorder>
   <zorder>label_6</zorder>
   <zorder>label_8</zorder>
-  <zorder>layoutWidget</zorder>
-  <zorder>YearCombo</zorder>
   <zorder>label_7</zorder>
-  <zorder>PhoneEdit</zorder>
-  <zorder>layoutWidget_2</zorder>
   <zorder>label_13</zorder>
   <zorder>ConfirmButton</zorder>
   <zorder>smallButton</zorder>
-  <zorder>LvList</zorder>
+  <zorder>HomeP</zorder>
+  <zorder>LocalP</zorder>
+  <zorder>LocalL</zorder>
+  <zorder>LocalC</zorder>
+  <zorder>label_19</zorder>
+  <zorder>label_18</zorder>
+  <zorder>label_22</zorder>
+  <zorder>HomeL</zorder>
+  <zorder>label_20</zorder>
+  <zorder>label_23</zorder>
+  <zorder>label_21</zorder>
+  <zorder>HomeC</zorder>
+  <zorder>NameEdit</zorder>
+  <zorder>SignEdit</zorder>
+  <zorder>AgeEdit</zorder>
+  <zorder>PhoneEdit</zorder>
+  <zorder>SexLabel</zorder>
+  <zorder>YearLabel</zorder>
+  <zorder>MonthLabel</zorder>
+  <zorder>DateLabel</zorder>
  </widget>
- <resources/>
+ <resources>
+  <include location="resource.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -9,7 +9,7 @@
 #include "deleteconfirmdialog.h"
 #include "QDebug"
 #include "newgroupdialog.h"
-
+#include "QString"
 
 QVector<FriendInfo*> MainPanel::fis;
 QPixmap convertToGray(QImage image){
@@ -63,14 +63,17 @@ MainPanel::MainPanel(QString account, QWidget *parent) :
     fileReceive = "";
 
     //添加self
-    myself = new UserItem(this);
+    myself = new UserItem(myAccount,this);
     myself->setGeometry(33,54,240,70);
     myself->show();
     myState = "online";
     connect(myself,SIGNAL(comboBoxCurrentIndexChanged(const QString)),this,SLOT(on_comboBox_changed(const QString)));
+    connect(myself,SIGNAL(userInfoChangedToPanel()),SLOT(on_userInfoChanged()));
+
 
     //添加好友窗口初始化
     addDlg = new AddWindow(myAccount);
+    connect(addDlg,SIGNAL(addFinished()),SLOT(on_addContact_finished()));
     //修改分组窗口初始化
     changeDlg = new ChangeGroupDialog(this);
     changeDlg->hide();
@@ -122,7 +125,7 @@ MainPanel::MainPanel(QString account, QWidget *parent) :
     QUrl url("http://182.92.69.19/ichat-server/public/user/load-panel");
     QByteArray usr = myAccount.toLocal8Bit();
     QByteArray append("account="+usr);
-    QNetworkReply* reply = manager->post(QNetworkRequest(url), append);
+    manager->post(QNetworkRequest(url), append);
 }
 
 MainPanel::~MainPanel()
@@ -394,6 +397,7 @@ void MainPanel::replyFinished(QNetworkReply *reply)
    // myHead = QIcon(head);
 
     //修改个人信息
+
     myself->setAccount(myAccount);
     myself->setName(myName);
     myself->setSignature(mySignature);
@@ -509,6 +513,7 @@ void MainPanel::replyFinished(QNetworkReply *reply)
         }
     }
     //群***********
+
 }
 
 //删除好友reply
@@ -526,7 +531,12 @@ void MainPanel::delReplyFinished(QNetworkReply *reply)
 //修改备注reply
 void MainPanel::remarkReplyFinished(QNetworkReply *reply)
 {
-
+    QVariant vRes = reply->readAll();
+    QString res = vRes.toString();
+    QUrl url("http://182.92.69.19/ichat-server/public/user/load-panel");
+    QByteArray usr = myAccount.toLocal8Bit();
+    QByteArray append("account="+usr);
+    manager->post(QNetworkRequest(url), append);
 }
 
 //修改状态reply
@@ -589,7 +599,7 @@ void MainPanel::closeStateReplyFinished(QNetworkReply *reply)
 //双击联系人开始聊天
 void MainPanel::on_contact_doubleClicked(const QModelIndex &index)
 {
-    QString contactAcc = contactModel->data(index).toString();
+    on_cAction_chat();
     //私聊窗口***********
 }
 
@@ -728,6 +738,22 @@ void MainPanel::on_group_changed(QString classid)
     changeGroupManager->post(QNetworkRequest(url), append);
 }
 
+void MainPanel::on_userInfoChanged()
+{
+    QUrl url("http://182.92.69.19/ichat-server/public/user/load-panel");
+    QByteArray usr = myAccount.toLocal8Bit();
+    QByteArray append("account="+usr);
+    manager->post(QNetworkRequest(url), append);
+}
+
+void MainPanel::on_addContact_finished()
+{
+    QUrl url("http://182.92.69.19/ichat-server/public/user/load-panel");
+    QByteArray usr = myAccount.toLocal8Bit();
+    QByteArray append("account="+usr);
+    manager->post(QNetworkRequest(url), append);
+}
+
 //新建分组
 void MainPanel::on_Action_newGroup()
 {
@@ -770,10 +796,17 @@ void MainPanel::on_cAction_chat()
     //打开私聊窗口******************
     bool flag = false;
     //判断是否已经打开
-    for(int i = 0; i < cws.size(); i++){
+    int size = cws.size();
+    for(int i = 0; i < size; i++){
+        ChatWindow *temp = cws[i];
         if(cws[i]->getContactAccount() == contactAccount){
             cws[i]->setAttribute(Qt::WA_KeyboardFocusChange);
             flag = true;
+        }else if(cws[i]->getContactAccount() == "-1"){
+            free(cws[i]);
+            cws.remove(i);
+            i--;
+            size--;
         }
     }
     if(!flag){
@@ -806,7 +839,8 @@ void MainPanel::on_cAction_scanInfo()
         fis.push_back(new FriendInfo(account));
         fis[fis.size() - 1]->show();
     }
-
+    FriendInfo *friInfo = new FriendInfo(account);
+    friInfo->show();
 }
 //弹出修改备注名窗口
 void MainPanel::on_cAction_reName()
@@ -888,3 +922,4 @@ void MainPanel::on_closeBtn_clicked()
     QByteArray append("account="+usr+"&state="+sta);
     closeStateManager->post(QNetworkRequest(url), append);
 }
+

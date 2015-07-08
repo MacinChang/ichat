@@ -60,6 +60,7 @@ void confirmWindow::on_pushButton_clicked()
 {
     QString info =ui->textBrowser->toPlainText();//获取验证信息
     dw=new DivideWindow(myAccount, info, receivedData);
+    connect(dw,SIGNAL(addContactFinished()),this,SLOT(on_addFinished()));
     dw->show();
     this->close();
 }
@@ -70,3 +71,13 @@ void confirmWindow::on_pushButton_2_clicked()
     this->close();
 }
 
+
+void confirmWindow::on_pushButton_3_clicked()
+{
+    this->close();
+}
+
+void confirmWindow::on_addFinished()
+{
+    emit addFinished();
+}

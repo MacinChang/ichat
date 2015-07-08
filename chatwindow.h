@@ -15,6 +15,7 @@
 #include "QTcpSocket"
 #include "QNetworkReply"
 #include "QNetworkRequest"
+#include "chatmsgdlg.h"
 
 namespace Ui {
 class ChatWindow;
@@ -50,7 +51,6 @@ private:
     QFile *fileReceive;
     QAudioOutput *audio2;
 private slots:
-    void on_pushButton_clicked();
     void on_pushButton_5_clicked();
     void on_pushButton_4_clicked();
     void on_listenButton_clicked();
@@ -79,7 +79,15 @@ private slots:
     void finishedSlot(QNetworkReply*);
     void on_minButton_clicked();
     void on_closeButton_clicked();
-    void on_pushButton_2_clicked();
+    void sendAudio();
+    void sendError(QAbstractSocket::SocketError);
+
+    void on_downCloseBtn_clicked();
+
+    void on_sendButton_clicked();
+
+    void on_pushButton_7_clicked();
+
 
 private:
     QTcpSocket *tcpClient;
@@ -94,6 +102,15 @@ private:
     int friPort;        //存放端口
     QNetworkAccessManager *manager1;
     QPoint dragPosition;
+    QTcpSocket *tcpAudio;
+    QString audioName;
+    QFile *audioFile;
+    qint64 totalAudio;  //录音数据总大小
+    qint64 unfinished;  //剩余数据
+    QByteArray audioOutblock;
+    bool msgFlag;
+public:
+    chatMsgDlg *msgDlg;
 };
 
 #endif // CHATWINDOW_H
