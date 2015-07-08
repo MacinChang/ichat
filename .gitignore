@@ -1,7 +1,7 @@
 debug/
 x64/
+*.user
 *.opensdf
 *.suo
 *.sdf
-*.pro.user
 
