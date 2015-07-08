@@ -19,6 +19,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include "changegroupdialog.h"
+#include "userinfo.h"
 
 
 namespace Ui {
@@ -48,6 +49,7 @@ private slots:
 
     void on_closeBtn_clicked();
 
+
 public slots:
 
     void replyFinished(QNetworkReply *reply);
@@ -71,6 +73,8 @@ public slots:
 
     void on_comboBox_changed(const QString & text);
     void on_group_changed(QString classid);
+    void on_userInfoChanged();
+    void on_addContact_finished();
 
     void on_Action_newGroup();
 
@@ -94,6 +98,7 @@ private:
     AddWindow *addDlg;
     ChangeGroupDialog *changeDlg;
     UserItem *myself;
+    //UserInfo self;
     QPoint dragPosition;
     QStandardItemModel *contactModel,*groupModel;
     QTreeView *contactTreeView,*groupTreeView;

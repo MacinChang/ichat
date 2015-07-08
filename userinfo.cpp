@@ -187,6 +187,7 @@ void UserInfo::on_SaveButton_clicked(){
                         "&home="+hometown+"&location="+location+"&birth="+birth);
       QNetworkReply* reply = manager2->post(QNetworkRequest(url),append);
 
+
 }
 
 
@@ -229,8 +230,11 @@ void UserInfo::on_CloseButton_clicked(){
              }
                     }
            else {    //保存了资料或者未编辑 直接退出
+      emit userInfoChanged();
        this->close();
+
          }
+
 }
 
 
@@ -408,10 +412,18 @@ void UserInfo::finishedSlot(QNetworkReply *reply){
        }
     }
     //生日
-   QStringList birthlist = usrInfo[11].split("-");
-   ui->YearCombo->setCurrentIndex(birthlist[0].toInt()-1900);
-   ui->MonthCombo->setCurrentIndex((birthlist[1].toInt())-1);
-   ui->DateCombo->setCurrentIndex((birthlist[2].toInt())-1);
+   if(usrInfo[11] == "null"){
+       ui->YearCombo->setCurrentIndex(0);
+       ui->MonthCombo->setCurrentIndex(0);
+       ui->DateCombo->setCurrentIndex(0);
+   }
+   else{
+       QStringList birthlist = usrInfo[11].split("-");
+       ui->YearCombo->setCurrentIndex(birthlist[0].toInt()-1900);
+       ui->MonthCombo->setCurrentIndex((birthlist[1].toInt())-1);
+       ui->DateCombo->setCurrentIndex((birthlist[2].toInt())-1);
+   }
+
 
    //获取目前的生日和所在地信息用于判断关闭窗口时提示是否保存
    preY = ui->YearCombo->currentText();
@@ -456,12 +468,12 @@ void UserInfo::finishedSlot(QNetworkReply *reply){
  }
 
  //头像修改成功后的槽函数
- void UserInfo::faceuploadfinishedsolt(QNetworkReply *)
- {
+void UserInfo::faceuploadfinishedsolt(QNetworkReply *)
+{
      QMessageBox::information(this, QObject::tr("提示"),
                                QObject::tr("修改头像成功"),
                                QMessageBox::Yes);
- }
+}
 
 
 //移动窗口

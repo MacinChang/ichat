@@ -101,41 +101,6 @@
     </rect>
    </property>
   </widget>
-  <widget class="QComboBox" name="comboBox">
-   <property name="geometry">
-    <rect>
-     <x>190</x>
-     <y>105</y>
-     <width>151</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <item>
-    <property name="text">
-     <string>新建项目</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>新建项目</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>新建项目</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>新建项目</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>新建项目</string>
-    </property>
-   </item>
-  </widget>
   <widget class="QLabel" name="label_5">
    <property name="geometry">
     <rect>
@@ -258,6 +223,36 @@
     <bool>true</bool>
    </property>
   </widget>
+  <widget class="QPushButton" name="closeBtn">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>0</y>
+     <width>31</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/images/image/close.png</normaloff>:/images/image/close.png</iconset>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="groupBox">
+   <property name="geometry">
+    <rect>
+     <x>190</x>
+     <y>105</y>
+     <width>151</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
   <zorder>label_9</zorder>
   <zorder>label_10</zorder>
   <zorder>pushButton</zorder>
@@ -265,13 +260,14 @@
   <zorder>label</zorder>
   <zorder>label_4</zorder>
   <zorder>lineEdit</zorder>
-  <zorder>comboBox</zorder>
   <zorder>label_5</zorder>
   <zorder>label_6</zorder>
   <zorder>label_2</zorder>
   <zorder>label_7</zorder>
   <zorder>label_8</zorder>
   <zorder>faceButton</zorder>
+  <zorder>closeBtn</zorder>
+  <zorder>groupBox</zorder>
  </widget>
  <resources>
   <include location="resource.qrc"/>

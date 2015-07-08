@@ -9,7 +9,7 @@
 #include "deleteconfirmdialog.h"
 #include "QDebug"
 #include "newgroupdialog.h"
-
+#include "QString"
 
 QVector<FriendInfo*> MainPanel::fis;
 QPixmap convertToGray(QImage image){
@@ -52,14 +52,17 @@ MainPanel::MainPanel(QString account, QWidget *parent) :
     this->setWindowTitle("iChat");
 
     //添加self
-    myself = new UserItem(this);
+    myself = new UserItem(myAccount,this);
     myself->setGeometry(33,54,240,70);
     myself->show();
     myState = "online";
     connect(myself,SIGNAL(comboBoxCurrentIndexChanged(const QString)),this,SLOT(on_comboBox_changed(const QString)));
+    connect(myself,SIGNAL(userInfoChangedToPanel()),SLOT(on_userInfoChanged()));
+
 
     //添加好友窗口初始化
     addDlg = new AddWindow(myAccount);
+    connect(addDlg,SIGNAL(addFinished()),SLOT(on_addContact_finished()));
     //修改分组窗口初始化
     changeDlg = new ChangeGroupDialog(this);
     changeDlg->hide();
@@ -299,6 +302,7 @@ void MainPanel::replyFinished(QNetworkReply *reply)
    // myHead = QIcon(head);
 
     //修改个人信息
+
     myself->setAccount(myAccount);
     myself->setName(myName);
     myself->setSignature(mySignature);
@@ -414,6 +418,7 @@ void MainPanel::replyFinished(QNetworkReply *reply)
         }
     }
     //群***********
+
 }
 
 //删除好友reply
@@ -431,7 +436,12 @@ void MainPanel::delReplyFinished(QNetworkReply *reply)
 //修改备注reply
 void MainPanel::remarkReplyFinished(QNetworkReply *reply)
 {
-
+    QVariant vRes = reply->readAll();
+    QString res = vRes.toString();
+    QUrl url("http://182.92.69.19/ichat-server/public/user/load-panel");
+    QByteArray usr = myAccount.toLocal8Bit();
+    QByteArray append("account="+usr);
+    manager->post(QNetworkRequest(url), append);
 }
 
 //修改状态reply
@@ -633,6 +643,22 @@ void MainPanel::on_group_changed(QString classid)
     changeGroupManager->post(QNetworkRequest(url), append);
 }
 
+void MainPanel::on_userInfoChanged()
+{
+    QUrl url("http://182.92.69.19/ichat-server/public/user/load-panel");
+    QByteArray usr = myAccount.toLocal8Bit();
+    QByteArray append("account="+usr);
+    manager->post(QNetworkRequest(url), append);
+}
+
+void MainPanel::on_addContact_finished()
+{
+    QUrl url("http://182.92.69.19/ichat-server/public/user/load-panel");
+    QByteArray usr = myAccount.toLocal8Bit();
+    QByteArray append("account="+usr);
+    manager->post(QNetworkRequest(url), append);
+}
+
 //新建分组
 void MainPanel::on_Action_newGroup()
 {
@@ -793,3 +819,4 @@ void MainPanel::on_closeBtn_clicked()
     QByteArray append("account="+usr+"&state="+sta);
     closeStateManager->post(QNetworkRequest(url), append);
 }
+

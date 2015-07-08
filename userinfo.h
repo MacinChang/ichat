@@ -59,6 +59,9 @@ private:
     QString myaccount;
     QNetworkAccessManager *manager1,*manager2,*manager3;
 
+signals:
+    void userInfoChanged();
+
 };
 
 #endif // USERINFO_H

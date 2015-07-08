@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QString>
 #include <QMessageBox>
+#include <QDesktopServices>
 
 LoginDialog::LoginDialog(QWidget *parent) :
     QDialog(parent),
@@ -87,4 +88,14 @@ void LoginDialog::mouseMoveEvent(QMouseEvent *event)
             move(event->globalPos() - dragPosition);
         event->accept();
     }
+}
+
+void LoginDialog::on_pushButton_2_clicked()
+{
+    QDesktopServices::openUrl(QUrl(QLatin1String("http://182.92.69.19/ichat-server/public/user/register")));
+}
+
+void LoginDialog::on_closeBtn_clicked()
+{
+    accept();
 }

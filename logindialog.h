@@ -35,6 +35,8 @@ private slots:
     void on_pushButton_clicked();
     void replyFinished(QNetworkReply *);
 
+    void on_pushButton_2_clicked();
+    void on_closeBtn_clicked();
 };
 
 #endif // LOGINDIALOG_H

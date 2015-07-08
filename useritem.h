@@ -12,7 +12,7 @@ class UserItem : public QWidget
     Q_OBJECT
 
 public:
-    explicit UserItem(QWidget *parent = 0);
+    explicit UserItem(QString acc,QWidget *parent = 0);
     ~UserItem();
     void setName(QString name);
     void setSignature(QString sign);
@@ -23,9 +23,11 @@ public:
 private slots:
     void on_headBtn_clicked();
     void on_comboBox_changed(const QString & text);
+    void on_userInfoChanged();
 
 signals:
     void comboBoxCurrentIndexChanged(const QString & text);
+    void userInfoChangedToPanel();
 
 private:
     Ui::UserItem *ui;

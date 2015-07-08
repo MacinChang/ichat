@@ -279,10 +279,18 @@ void FriendInfo::finishedSlot(QNetworkReply *reply)
        }
     }
 
-   QStringList birthlist = usrInfo[11].split("-"); //生日
-   ui->YearCombo->setCurrentIndex(birthlist[0].toInt()-1900);
-   ui->MonthCombo->setCurrentIndex((birthlist[1].toInt())-1);
-   ui->DateCombo->setCurrentIndex((birthlist[2].toInt())-1);
+   if(usrInfo[11] == "null"){
+       ui->YearCombo->setCurrentIndex(0);
+       ui->MonthCombo->setCurrentIndex(0);
+       ui->DateCombo->setCurrentIndex(0);
+   }
+   else{
+       QStringList birthlist = usrInfo[11].split("-"); //生日
+       ui->YearCombo->setCurrentIndex(birthlist[0].toInt()-1900);
+       ui->MonthCombo->setCurrentIndex((birthlist[1].toInt())-1);
+       ui->DateCombo->setCurrentIndex((birthlist[2].toInt())-1);
+   }
+
 }
 
 void FriendInfo::on_ConfirmButton_clicked()

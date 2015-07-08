@@ -52,10 +52,10 @@ p, li { white-space: pre-wrap; }
   <widget class="QWidget" name="horizontalLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>230</x>
-     <y>290</y>
-     <width>350</width>
-     <height>61</height>
+     <x>270</x>
+     <y>311</y>
+     <width>121</width>
+     <height>20</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
@@ -432,8 +432,8 @@ p, li { white-space: pre-wrap; }
     <string/>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>:/Images/叉.png</normaloff>:/Images/叉.png</iconset>
+    <iconset resource="resource.qrc">
+     <normaloff>:/images/image/叉.png</normaloff>:/images/image/叉.png</iconset>
    </property>
    <property name="iconSize">
     <size>
