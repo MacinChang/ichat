@@ -47,7 +47,7 @@ MainPanel::MainPanel(QString account, QWidget *parent) :
     QRect deskRect = QApplication::desktop()->availableGeometry();
     this->move(deskRect.right()-350,30);
     this->setWindowFlags(Qt::FramelessWindowHint);
-    QIcon winIcon("\\Image\\ichat.png");
+    QIcon winIcon(":/images/image/ichat.png");
     this->setWindowIcon(winIcon);
     this->setWindowTitle("iChat");
 
@@ -138,7 +138,13 @@ void MainPanel::mouseMoveEvent(QMouseEvent *e)
     e->accept();
 
 }
-
+void MainPanel::mouseReleaseEvent(QMouseEvent *e)
+{
+    if(e->button() == Qt::LeftButton){
+        dragPosition = QPoint(-1,-1);
+        e->accept();
+    }
+}
 void MainPanel::receiveData(){
     QByteArray data;
     //while(receiveUdp)
@@ -190,7 +196,7 @@ void MainPanel::checkMessage(QString msg){
                 }
             }
             if(!flag){
-             cws.push_back(new ChatWindow(myAccount, temp[0].contact));
+             cws.push_back(new ChatWindow(myAccount, temp[0].contact,myName));
              cws[cws.size() - 1]->show();
             }
             temp.clear();
@@ -209,19 +215,12 @@ void MainPanel::checkMessage(QString msg){
             }
         }
         if(!flag){
-         cws.push_back(new ChatWindow(myAccount, temp[0].contact));
+         cws.push_back(new ChatWindow(myAccount, temp[0].contact,myName));
          cws[cws.size() - 1]->receiveMessage(temp);
          cws[cws.size() - 1]->show();
         }
     }
 
-}
-void MainPanel::mouseReleaseEvent(QMouseEvent *e)
-{
-    if(e->button() == Qt::LeftButton){
-        dragPosition = QPoint(-1,-1);
-        e->accept();
-    }
 }
 
 
@@ -683,7 +682,7 @@ void MainPanel::on_cAction_chat()
         }
     }
     if(!flag){
-        cws.push_back(new ChatWindow(myAccount, contactAccount));
+        cws.push_back(new ChatWindow(myAccount, contactAccount,myName));
         cws[cws.size() - 1]->show();
     }
 

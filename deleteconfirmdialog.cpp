@@ -7,6 +7,7 @@ DeleteConfirmDialog::DeleteConfirmDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowTitle("确认窗口");
+    this->setWindowFlags(Qt::FramelessWindowHint);
 }
 
 DeleteConfirmDialog::~DeleteConfirmDialog()

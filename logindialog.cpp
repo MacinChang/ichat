@@ -10,7 +10,7 @@ LoginDialog::LoginDialog(QWidget *parent) :
     ui(new Ui::LoginDialog)
 {
     ui->setupUi(this);
-    this->setFixedSize(860, 670);
+    //this->setFixedSize(860, 670);
     nam = new QNetworkAccessManager(this);
     QObject::connect(nam, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
     this->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::SubWindow);

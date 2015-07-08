@@ -23,8 +23,6 @@ public:
     ~AddWindow();
     void imgPathToHtml(QString &path);
     QString str;
-protected:
-    void mousePressEvent(QMouseEvent *);
 private:
     Ui::AddWindow *ui;
     confirmWindow *cw;
@@ -32,7 +30,7 @@ private:
 private slots:
     void on_pushButton_clicked();
     void replyFinished(QNetworkReply *);
-    virtual void headPressEventSlot();
+    void on_faceButton_clicked();
     void on_pushButton_2_clicked();
 signals:
     void clicked();

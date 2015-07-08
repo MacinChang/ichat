@@ -13,6 +13,8 @@
 #include <QTimer>
 #include <QAudioOutput>
 #include "QTcpSocket"
+#include "QNetworkReply"
+#include "QNetworkRequest"
 
 namespace Ui {
 class ChatWindow;
@@ -25,10 +27,12 @@ private:
      QUdpSocket *sendUdpSocket;
      QString selfAccount;
      QString contactAccount;
+     QString myName;     //自己昵称
+     QString friName;    //好友昵称
     //QTcpServer *tcpServer;
 public:
     QString getContactAccount();
-    explicit ChatWindow(QString selfAccount, QString contactAccount, QWidget *parent = 0);
+    explicit ChatWindow(QString selfAccount, QString contactAccount,QString myName, QWidget *parent = 0);
     ~ChatWindow();
     QPropertyAnimation *m_animation;
     void imgPathToHtml(QString &path);
@@ -52,6 +56,9 @@ private slots:
 public:
     void sendTextMessage(QString content);
     void receiveMessage(QVector<MsgNode> messages);
+    void mousePressEvent(QMouseEvent *e);
+    void mouseMoveEvent(QMouseEvent *e);
+    void mouseReleaseEvent(QMouseEvent *e);
 private slots:
     void on_pushButton_6_clicked();
     void on_pushButton_8_clicked();
@@ -63,6 +70,10 @@ private slots:
     void startTransfer();
     void updateClientProgress(qint64); //发送数据，更新进度条
     void displayError(QAbstractSocket::SocketError); //显示错误
+    void on_faceButton_clicked();
+    void finishedSlot(QNetworkReply*);
+    void on_minButton_clicked();
+    void on_closeButton_clicked();
     void on_pushButton_2_clicked();
 
 private:
@@ -76,7 +87,8 @@ private:
     QByteArray outBlock;
     QString friIp;      //存放好友ip
     int friPort;        //存放端口
-
+    QNetworkAccessManager *manager1;
+    QPoint dragPosition;
 };
 
 #endif // CHATWINDOW_H

@@ -17,7 +17,6 @@ TEMPLATE = app
 SOURCES += main.cpp\
     logindialog.cpp \
     mainpanel.cpp \
-    userlistitem.cpp \
     chatwindow.cpp \
     addwindow.cpp \
     additems.cpp \
@@ -31,12 +30,12 @@ SOURCES += main.cpp\
     renamedialog.cpp \
     deleteconfirmdialog.cpp \
     newgroupdialog.cpp \
-    changegroupdialog.cpp
+    changegroupdialog.cpp \
+    Level.cpp
 
 HEADERS  += \
     logindialog.h \
     mainpanel.h \
-    userlistitem.h \
     chatwindow.h \
     addwindow.h \
     additems.h \
@@ -51,12 +50,12 @@ HEADERS  += \
     deleteconfirmdialog.h \
     newgroupdialog.h \
     msgnode.h \
-    changegroupdialog.h
+    changegroupdialog.h \
+    Level.h
 
 FORMS    += \
     logindialog.ui \
     mainpanel.ui \
-    userlistitem.ui \
     chatwindow.ui \
     addwindow.ui \
     additems.ui \

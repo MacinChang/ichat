@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>451</width>
-    <height>486</height>
+    <width>471</width>
+    <height>571</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,8 +16,8 @@
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>51</x>
-     <y>31</y>
+     <x>50</x>
+     <y>70</y>
      <width>24</width>
      <height>16</height>
     </rect>
@@ -30,7 +30,7 @@
    <property name="geometry">
     <rect>
      <x>50</x>
-     <y>140</y>
+     <y>150</y>
      <width>24</width>
      <height>16</height>
     </rect>
@@ -108,19 +108,6 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLabel" name="lvLabel">
-   <property name="geometry">
-    <rect>
-     <x>120</x>
-     <y>70</y>
-     <width>76</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
   <widget class="QLineEdit" name="NameEdit">
    <property name="geometry">
     <rect>
@@ -134,10 +121,10 @@
   <widget class="QPushButton" name="FaceButton">
    <property name="geometry">
     <rect>
-     <x>110</x>
-     <y>120</y>
-     <width>72</width>
-     <height>68</height>
+     <x>90</x>
+     <y>130</y>
+     <width>61</width>
+     <height>61</height>
     </rect>
    </property>
    <property name="text">
@@ -179,8 +166,8 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>51</x>
-     <y>73</y>
+     <x>50</x>
+     <y>100</y>
      <width>24</width>
      <height>16</height>
     </rect>
@@ -205,8 +192,8 @@
   <widget class="QLabel" name="AccountList">
    <property name="geometry">
     <rect>
-     <x>120</x>
-     <y>30</y>
+     <x>90</x>
+     <y>70</y>
      <width>60</width>
      <height>16</height>
     </rect>
@@ -285,8 +272,8 @@
     <rect>
      <x>88</x>
      <y>410</y>
-     <width>275</width>
-     <height>22</height>
+     <width>518</width>
+     <height>32</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -321,22 +308,6 @@
      </widget>
     </item>
    </layout>
-  </widget>
-  <widget class="QLabel" name="label_11">
-   <property name="geometry">
-    <rect>
-     <x>89</x>
-     <y>371</y>
-     <width>16</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="pixmap">
-    <pixmap>:/C:/Users/Wang/Desktop/Image/t01eb0ee49bbc2a79ea.jpg</pixmap>
-   </property>
   </widget>
   <widget class="QComboBox" name="YearCombo">
    <property name="geometry">
@@ -376,8 +347,8 @@
     <rect>
      <x>88</x>
      <y>380</y>
-     <width>275</width>
-     <height>22</height>
+     <width>518</width>
+     <height>32</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -426,7 +397,7 @@
     <string>昵称</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="ConfirmButton">
    <property name="geometry">
     <rect>
      <x>420</x>
@@ -440,15 +411,107 @@
    </property>
    <property name="icon">
     <iconset resource="resource.qrc">
-     <normaloff>:/Images/叉 - 副本.png</normaloff>:/Images/叉 - 副本.png</iconset>
+     <normaloff>:/images/image/叉 - 副本.png</normaloff>:/images/image/叉 - 副本.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>23</width>
+     <height>23</height>
+    </size>
    </property>
    <property name="flat">
     <bool>true</bool>
    </property>
   </widget>
+  <widget class="QPushButton" name="smallButton">
+   <property name="geometry">
+    <rect>
+     <x>394</x>
+     <y>0</y>
+     <width>31</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/images/image/small.png</normaloff>:/images/image/small.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>23</width>
+     <height>23</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_10">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>471</width>
+     <height>571</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="resource.qrc">:/images/image/friendInfor.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="LvList">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>98</y>
+     <width>131</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="flow">
+    <enum>QListView::LeftToRight</enum>
+   </property>
+  </widget>
+  <zorder>label_10</zorder>
+  <zorder>label_3</zorder>
+  <zorder>label_12</zorder>
+  <zorder>label_14</zorder>
+  <zorder>DateCombo</zorder>
+  <zorder>label_4</zorder>
+  <zorder>label_2</zorder>
+  <zorder>AgeEdit</zorder>
+  <zorder>SexCombo</zorder>
+  <zorder>NameEdit</zorder>
+  <zorder>FaceButton</zorder>
+  <zorder>label_16</zorder>
+  <zorder>MonthCombo</zorder>
+  <zorder>label</zorder>
+  <zorder>SignEdit</zorder>
+  <zorder>AccountList</zorder>
+  <zorder>label_15</zorder>
+  <zorder>label_9</zorder>
+  <zorder>label_5</zorder>
+  <zorder>label_6</zorder>
+  <zorder>label_8</zorder>
+  <zorder>layoutWidget</zorder>
+  <zorder>YearCombo</zorder>
+  <zorder>label_7</zorder>
+  <zorder>PhoneEdit</zorder>
+  <zorder>layoutWidget_2</zorder>
+  <zorder>label_13</zorder>
+  <zorder>ConfirmButton</zorder>
+  <zorder>smallButton</zorder>
+  <zorder>LvList</zorder>
  </widget>
- <resources>
-  <include location="resource.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

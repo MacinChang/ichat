@@ -1,22 +1,32 @@
 #include "chatwindow.h"
 #include "ui_chatwindow.h"
-#include "userlistitem.h"
 #include <qdatetime.h>
 #include "QFileDialog"
 #include "QPixmap"
 #include "QBitmap"
 #include "QLabel"
 #include "QDebug"
-
-ChatWindow::ChatWindow(QString selfAccount, QString contactAccount, QWidget *parent) :
-    QFrame(parent), selfAccount(selfAccount), contactAccount(contactAccount),
+#include "QScriptEngine"
+#include "QScriptValue"
+#include "QScriptValueIterator"
+ChatWindow::ChatWindow(QString selfAccount, QString contactAccount,QString myName, QWidget *parent) :
+    QFrame(parent), selfAccount(selfAccount), contactAccount(contactAccount),myName(myName),
     ui(new Ui::ChatWindow)
 {
     ui->setupUi(this);
+    dragPosition=QPoint(-1,-1);
     m_animation = new QPropertyAnimation(this,"pos");
+    setWindowFlags(windowFlags()& ~Qt::WindowMaximizeButtonHint);
+    setFixedSize(this->width(), this->height());
+    this->setWindowFlags(Qt::FramelessWindowHint);
     //添加好友头像，昵称和个性签名
-    UserListItem *myitem = new UserListItem(this);
-    myitem->move(5, 5);
+    manager1=new QNetworkAccessManager(this);
+    QObject::connect(manager1, SIGNAL(finished(QNetworkReply*)),
+                       this, SLOT(finishedSlot(QNetworkReply*)));
+    QUrl url("http://182.92.69.19/ichat-server/public/user/get-info");
+    QByteArray MyAccount = contactAccount.toLocal8Bit();
+    QByteArray append("account="+MyAccount);
+    QNetworkReply* reply = manager1->post(QNetworkRequest(url),append);
     //发送信息槽函数绑定
     sendUdpSocket = new QUdpSocket(this);
     connect(sendUdpSocket, SIGNAL(readyRead()), this, SLOT(readBackData()));
@@ -28,7 +38,7 @@ ChatWindow::ChatWindow(QString selfAccount, QString contactAccount, QWidget *par
     ui->pushButton_10->hide();
     ui->pushButton_11->hide();
     //自己的头像和好友头像
-    myHead="F:/qiyi/banben2/resource/myHead.png";
+    myHead="head";
     imgPathToHtml(myHead);
     //初始化传输文件相关数据
     ui->textEdit_2->hide();
@@ -108,16 +118,15 @@ void ChatWindow::on_pushButton_clicked()
 
    //获取系统现在的时间并设置显示格式
     QDateTime current_date_time = QDateTime::currentDateTime();
-    QString current_date = current_date_time.toString("hh:mm:ss");
+    QString current_date = current_date_time.toString(" hh:mm:ss");
     //显示时间和聊天记录........
     QString c=ui->textBrowser_2->toPlainText();
     if(c!=NULL)
     {
         //ui->textBrowser->setAlignment(Qt::AlignHCenter); //时间居中
-        ui->textBrowser->append(current_date);
+        ui->textBrowser->append(myName+current_date);
         //ui->textBrowser->setAlignment(Qt::AlignRight); //发送的信息右对齐
         //每条消息前查个头像
-        ui->textBrowser->insertHtml(myHead);
         ui->textBrowser->append(c);
         //ui->textBrowser_2->clear();
         sendTextMessage(c);
@@ -131,7 +140,8 @@ void ChatWindow::sendTextMessage(QString content){
     QByteArray time = current_date.toLocal8Bit();
     QByteArray from = selfAccount.toLocal8Bit();
     QByteArray to = contactAccount.toLocal8Bit();
-    QByteArray text = content.toLocal8Bit();
+    QByteArray textP = content.toLocal8Bit();
+    QByteArray text = textP.toBase64(QByteArray::Base64UrlEncoding | QByteArray::OmitTrailingEquals);
     QByteArray data("{\"user_id\":" + from + ", \"contact_id\":" + to +", \"time\":\"" + time +"\", \"content\":\"" + text + "\", \"u\":\"send\"}");
     sendUdpSocket->writeDatagram(data.data(), data.size(), QHostAddress("182.92.69.19"), 10008);
 }
@@ -152,12 +162,47 @@ void ChatWindow::readBackData(){
     }
 }
 
+void ChatWindow::finishedSlot(QNetworkReply *reply)
+{
+    int i=0;
+        QString usrInfo[20];
+        //从服务器端获取信息
+        QVariant vRes = reply->readAll();
+        QString res = vRes.toString();
+        QScriptValue sc;
+            QScriptEngine engine;
+            sc = engine.evaluate("value = " + res);
+            QScriptValueIterator it(sc);
+            while(it.hasNext()){
+                it.next();
+                QString id = it.name();
+                QString value = it.value().toString();
+                usrInfo[i]=value;
+                i++;
+         }
+    QByteArray head,face;
+        QString str(usrInfo[3]);
+        int j = str.indexOf('-');
+        while(j!=-1){
+            str[j] = '+';
+            j = str.indexOf('-');
+        }
+        head = QByteArray::fromBase64(str.toLatin1());
+        face = qUncompress(head);
+        QImage img;
+        img.loadFromData(face);
+        ui->faceButton->setIcon(QPixmap::fromImage(img));
+        ui->nameLabel->setText(usrInfo[2]);
+        friName=usrInfo[2];
+        ui->signalLabel->setText(usrInfo[4]);
+}
 
 void ChatWindow::receiveMessage(QVector<MsgNode> messages){
     for(int i = 0; i < messages.size(); i++){
         ui->textBrowser->append(messages[i].time);
         //ui->textBrowser->setAlignment(Qt::AlignRight); //发送的信息右对齐
-        ui->textBrowser->append(messages[i].content);
+        QByteArray content = QByteArray::fromBase64(messages[i].content.toLocal8Bit(), QByteArray::Base64UrlEncoding | QByteArray::OmitTrailingEquals);
+        ui->textBrowser->append(content);
     }
 }
 
@@ -333,6 +378,9 @@ void ChatWindow::on_pushButton_11_clicked()
     ui->pushButton_10->hide();
     ui->pushButton_11->hide();
     ui->textEdit->hide();
+    audio->stop();
+    outputFile.close();
+    delete audio;
     audio2->stop();
     inputFile.close();
     delete audio2;
@@ -367,8 +415,55 @@ QPushButton *ChatWindow::custButton(QString str)
     return pushButton;
 }
 
+//点击好友头像，显示好友资料
+void ChatWindow::on_faceButton_clicked()
+{
+
+}
+
+void ChatWindow::on_minButton_clicked()
+{
+    this->showMinimized();
+}
+
+//关闭窗口按钮
+void ChatWindow::on_closeButton_clicked()
+{
+    //
+
+    this->close();
+}
+
+
+void ChatWindow::mousePressEvent(QMouseEvent *e)
+{
+    if(e->button() == Qt::LeftButton){
+        dragPosition = e->globalPos()-frameGeometry().topLeft();
+        QPoint p = e->pos();
+        e->accept();
+    }
+    else dragPosition = QPoint(-1,-1);
+}
+
+void ChatWindow::mouseMoveEvent(QMouseEvent *e)
+{
+    if(dragPosition != QPoint(-1,-1)){
+        move(e->globalPos()-dragPosition);
+    }
+    e->accept();
+
+}
+void ChatWindow::mouseReleaseEvent(QMouseEvent *e)
+{
+    if(e->button() == Qt::LeftButton){
+        dragPosition = QPoint(-1,-1);
+        e->accept();
+    }
+}
+
 
 void ChatWindow::on_pushButton_2_clicked()
 {
     this->close();
 }
+

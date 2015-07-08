@@ -1,5 +1,6 @@
 debug/
 x64/
+*.user
 *.opensdf
 *.suo
 *.sdf
@@ -7,4 +8,5 @@ x64/
 Makefile
 *.Debug
 *.Release
+
 
