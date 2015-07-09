@@ -452,7 +452,7 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="icon">
     <iconset resource="resource.qrc">
-     <normaloff>:/images/image/closeBtn.png</normaloff>:/images/image/closeBtn.png</iconset>
+     <normaloff>:/images/Image/chatcloseBtn.png</normaloff>:/images/Image/chatcloseBtn.png</iconset>
    </property>
    <property name="iconSize">
     <size>
@@ -478,7 +478,7 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="icon">
     <iconset resource="resource.qrc">
-     <normaloff>:/images/image/sendBtn.png</normaloff>:/images/image/sendBtn.png</iconset>
+     <normaloff>:/images/Image/chatsendBtn.png</normaloff>:/images/Image/chatsendBtn.png</iconset>
    </property>
    <property name="iconSize">
     <size>

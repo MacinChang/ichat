@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>264</width>
-    <height>128</height>
+    <width>330</width>
+    <height>210</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,8 +16,8 @@
   <widget class="QLineEdit" name="remarkNameEdit">
    <property name="geometry">
     <rect>
-     <x>110</x>
-     <y>30</y>
+     <x>150</x>
+     <y>90</y>
      <width>113</width>
      <height>20</height>
     </rect>
@@ -26,44 +26,96 @@
   <widget class="QPushButton" name="yesBtn">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>70</y>
+     <x>60</x>
+     <y>140</y>
      <width>75</width>
-     <height>23</height>
+     <height>30</height>
     </rect>
    </property>
    <property name="text">
-    <string>确定</string>
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/images/image/doneBtn.png</normaloff>:/images/image/doneBtn.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>75</width>
+     <height>30</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QPushButton" name="noBtn">
    <property name="geometry">
     <rect>
-     <x>150</x>
-     <y>70</y>
+     <x>210</x>
+     <y>140</y>
      <width>75</width>
-     <height>23</height>
+     <height>30</height>
     </rect>
    </property>
    <property name="text">
-    <string>取消</string>
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/images/image/cancelBtn.png</normaloff>:/images/image/cancelBtn.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>75</width>
+     <height>30</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>30</y>
+     <x>80</x>
+     <y>90</y>
      <width>54</width>
      <height>21</height>
     </rect>
    </property>
    <property name="text">
-    <string>NewName：</string>
+    <string/>
    </property>
   </widget>
+  <widget class="QLabel" name="bgLabel">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>330</width>
+     <height>210</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="resource.qrc">:/images/Image/changePanel.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <zorder>bgLabel</zorder>
+  <zorder>remarkNameEdit</zorder>
+  <zorder>yesBtn</zorder>
+  <zorder>noBtn</zorder>
+  <zorder>label</zorder>
  </widget>
- <resources/>
+ <resources>
+  <include location="resource.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>noBtn</sender>

@@ -57,6 +57,8 @@ private slots:
     void on_closeBtn_clicked();
 
 
+    void on_updateBtn_clicked();
+
 public slots:
     void displayError(QAbstractSocket::SocketError);
 
