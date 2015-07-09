@@ -89,6 +89,8 @@ private slots:
     void on_pushButton_7_clicked();
 
 
+    void on_fileButton_clicked();
+
 private:
     QTcpSocket *tcpClient;
     QFile *localFile;

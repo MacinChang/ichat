@@ -216,8 +216,8 @@ void ChatWindow::receiveAudio(QFile *file){
 
 void ChatWindow::receiveFile(QFile *file)
 {
-//    ui->fileButton->show();
-//    fileReceive = file;
+        ui->fileButton->show();
+        fileReceive = file;
 }
 
 void ChatWindow::receiveMessage(QVector<MsgNode> messages){
@@ -610,3 +610,8 @@ void ChatWindow::on_pushButton_7_clicked()
     }
 }
 
+
+void ChatWindow::on_fileButton_clicked()
+{
+    ui->fileButton->hide();
+}

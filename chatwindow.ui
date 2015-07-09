@@ -512,63 +512,11 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
-   <property name="geometry">
-    <rect>
-     <x>270</x>
-     <y>300</y>
-     <width>121</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="resource.qrc">
-     <normaloff>:/images/image/sendBtn.png</normaloff>:/images/image/sendBtn.png</iconset>
-   </property>
-   <property name="iconSize">
-    <size>
-     <width>130</width>
-     <height>35</height>
-    </size>
-   </property>
-   <property name="flat">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton_2">
-   <property name="geometry">
-    <rect>
-     <x>160</x>
-     <y>300</y>
-     <width>111</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="resource.qrc">
-     <normaloff>:/images/image/closeBtn.png</normaloff>:/images/image/closeBtn.png</iconset>
-   </property>
-   <property name="iconSize">
-    <size>
-     <width>120</width>
-     <height>32</height>
-    </size>
-   </property>
-   <property name="flat">
-    <bool>true</bool>
-   </property>
-  </widget>
   <widget class="QPushButton" name="listenButton">
    <property name="geometry">
     <rect>
-     <x>334</x>
-     <y>132</y>
+     <x>410</x>
+     <y>240</y>
      <width>41</width>
      <height>31</height>
     </rect>
@@ -590,7 +538,19 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
   </widget>
-  <zorder>label_2</zorder>
+  <widget class="QPushButton" name="fileButton">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>232</y>
+     <width>75</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>PushButton</string>
+   </property>
+  </widget>
   <zorder>bgLabel</zorder>
   <zorder>label_3</zorder>
   <zorder>textBrowser_2</zorder>
@@ -614,12 +574,10 @@ p, li { white-space: pre-wrap; }
   <zorder>signalLabel</zorder>
   <zorder>closeButton</zorder>
   <zorder>minButton</zorder>
-  <zorder>pushButton</zorder>
-  <zorder>pushButton_2</zorder>
   <zorder>listenButton</zorder>
   <zorder>downCloseBtn</zorder>
   <zorder>sendButton</zorder>
-
+  <zorder>fileButton</zorder>
  </widget>
  <tabstops>
   <tabstop>pushButton_3</tabstop>
