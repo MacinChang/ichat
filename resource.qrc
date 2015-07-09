@@ -72,5 +72,6 @@
         <file>Image/refreshBtn.png</file>
         <file>Image/deletePanel.png</file>
         <file>Image/changePanel.png</file>
+        <file>Image/fileBtn.png</file>
     </qresource>
 </RCC>

@@ -252,7 +252,7 @@ void MainPanel::checkFile(QString contact)
         cws[cws.size() - 1]->receiveFile(localFile);
         cws[cws.size() - 1]->show();
     }else{
-        cw->receiveFile(localFile);
+        cw->receiveFile(fileName);
     }
 }
 //检查聊天窗口

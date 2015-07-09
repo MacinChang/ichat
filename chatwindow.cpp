@@ -46,6 +46,7 @@ ChatWindow::ChatWindow(QString selfAccount, QString contactAccount,QString myNam
     ui->pushButton_10->hide();
     ui->pushButton_11->hide();
     ui->listenButton->hide();
+    ui->fileButton->hide();
     //自己的头像和好友头像
     myHead="head";
     imgPathToHtml(myHead);
@@ -87,6 +88,7 @@ ChatWindow::~ChatWindow()
 //发送文件
 void ChatWindow::on_pushButton_12_clicked()
 {
+    fileType = "file";
     fileName = QFileDialog::getOpenFileName(this);
     bytesWritten = 0;
     //初始化已发送字节为0
@@ -125,7 +127,7 @@ void ChatWindow::startTransfer()
     QByteArray  user_id  = selfAccount.toLocal8Bit();
     QByteArray contact_id = contactAccount.toLocal8Bit();
     outBlock = "{\"user_id\":" + user_id + ", \"filename\":\"" + currentFileName.toLocal8Bit().toBase64()
-           + "\", \"contact_id\":" + contact_id + ", \"type\":\"audio\", \"u\":\"send\"}";
+           + "\", \"contact_id\":" + contact_id + ", \"type\":\"" + fileType + "\", \"u\":\"send\"}";
 
    //发送完头数据后剩余数据的大小
    bytesToWrite = totalBytes - tcpClient->write(outBlock);
@@ -214,7 +216,7 @@ void ChatWindow::receiveAudio(QFile *file){
     audioReceive = file;
 }
 
-void ChatWindow::receiveFile(QFile *file)
+void ChatWindow::receiveFile(QString filename)
 {
         ui->fileButton->show();
         fileReceive = file;
@@ -222,7 +224,7 @@ void ChatWindow::receiveFile(QFile *file)
 
 void ChatWindow::receiveMessage(QVector<MsgNode> messages){
     for(int i = 0; i < messages.size(); i++){
-        ui->textBrowser->append(friName.toLocal8Bit() + messages[i].time);
+        ui->textBrowser->append(friName.toLocal8Bit() + " " + messages[i].time);
         //ui->textBrowser->setAlignment(Qt::AlignRight); //发送的信息右对齐
         QByteArray content = QByteArray::fromBase64(messages[i].content.toLocal8Bit(), QByteArray::Base64UrlEncoding | QByteArray::OmitTrailingEquals);
         ui->textBrowser->append(content);
@@ -395,6 +397,7 @@ void ChatWindow::on_pushButton_10_clicked()
 {
 
     fileName = "test.raw";
+    fileType = "audio";
     tcpClient->connectToHost(friIp, friPort);
 
      if(!audioName.isEmpty())
@@ -541,6 +544,7 @@ void ChatWindow::sendError(QAbstractSocket::SocketError){
 
 void ChatWindow::on_downCloseBtn_clicked()
 {
+    this->contactAccount = "-1";
     this->close();
 }
 
@@ -613,5 +617,6 @@ void ChatWindow::on_pushButton_7_clicked()
 
 void ChatWindow::on_fileButton_clicked()
 {
-    ui->fileButton->hide();
+
+   // ui->fileButton->hide();
 }

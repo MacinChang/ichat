@@ -48,7 +48,7 @@ private:
     QAudioInput *audio;
     QFile inputFile;
     QFile *audioReceive;
-    QFile *fileReceive;
+    QString fileReceive;
     QAudioOutput *audio2;
 private slots:
     void on_pushButton_5_clicked();
@@ -60,7 +60,7 @@ public:
     void sendTextMessage(QString content);
     void receiveMessage(QVector<MsgNode> messages);
     void receiveAudio(QFile *file);
-    void receiveFile(QFile *file);
+    void receiveFile(QString filename);
     void mousePressEvent(QMouseEvent *e);
     void mouseMoveEvent(QMouseEvent *e);
     void mouseReleaseEvent(QMouseEvent *e);
@@ -99,6 +99,7 @@ private:
     qint64 bytesToWrite;   //剩余数据大小
     qint64 loadSize;   //每次发送数据的大小
     QString fileName;  //保存文件路径
+    QByteArray fileType;
     QByteArray outBlock;
     QString friIp;      //存放好友ip
     int friPort;        //存放端口
