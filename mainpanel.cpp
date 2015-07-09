@@ -249,7 +249,7 @@ void MainPanel::checkFile(QString contact)
     ChatWindow *cw = checkChatWindow(contact);
     if(cw == NULL){
         cws.push_back(new ChatWindow(myAccount, contact, myName));
-        cws[cws.size() - 1]->receiveFile(localFile);
+        cws[cws.size() - 1]->receiveFile(fileName);
         cws[cws.size() - 1]->show();
     }else{
         cw->receiveFile(fileName);

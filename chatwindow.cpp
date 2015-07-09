@@ -14,6 +14,8 @@
 #include <QSqlQuery>
 #include <QSqlQueryModel>
 #include <QTableView>
+#include <QDesktopServices>
+#include <QUrl>
 
 ChatWindow::ChatWindow(QString selfAccount, QString contactAccount,QString myName, QWidget *parent) :
     QFrame(parent), selfAccount(selfAccount), contactAccount(contactAccount),myName(myName),
@@ -219,7 +221,7 @@ void ChatWindow::receiveAudio(QFile *file){
 void ChatWindow::receiveFile(QString filename)
 {
         ui->fileButton->show();
-        fileReceive = file;
+        fileReceive = filename;
 }
 
 void ChatWindow::receiveMessage(QVector<MsgNode> messages){
@@ -619,4 +621,6 @@ void ChatWindow::on_fileButton_clicked()
 {
 
    // ui->fileButton->hide();
+    QDesktopServices::openUrl(QUrl("file:///C:/Users/Administrator/Desktop/build-ichat-Desktop_Qt_5_4_2_MSVC2013_OpenGL_64bit-Debug/"+fileReceive, QUrl::TolerantMode));
+
 }
