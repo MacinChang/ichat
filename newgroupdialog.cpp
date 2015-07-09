@@ -7,6 +7,8 @@ NewGroupDialog::NewGroupDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowTitle("新建分组");
+    this->setWindowFlags(Qt::FramelessWindowHint);
+    QIcon icon(":/images/image/ichat.png");
 }
 
 NewGroupDialog::~NewGroupDialog()

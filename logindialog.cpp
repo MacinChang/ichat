@@ -16,6 +16,7 @@ LoginDialog::LoginDialog(QWidget *parent) :
     QObject::connect(nam, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
     this->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::SubWindow);
     this->setWindowFlags(Qt::FramelessWindowHint);
+    this->setWindowTitle("iChat");
     QIcon winIcon(":/images/image/ichat.png");
     this->setWindowIcon(winIcon);
 }

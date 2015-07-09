@@ -312,6 +312,7 @@ void FriendInfo::finishedSlot(QNetworkReply *reply)
 void FriendInfo::on_ConfirmButton_clicked()
 {
     this->close();
+    friendaccount = -1;
 }
 
 void FriendInfo::on_smallButton_clicked()

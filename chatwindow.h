@@ -33,7 +33,7 @@ private:
     //QTcpServer *tcpServer;
 public:
     QString getContactAccount();
-    explicit ChatWindow(QString selfAccount, QString contactAccount,QString myName, QWidget *parent = 0);
+    explicit ChatWindow(QString selfAccount, QString contactAccount,QString myName, QString contactName,QWidget *parent = 0);
     ~ChatWindow();
     QPropertyAnimation *m_animation;
     void imgPathToHtml(QString &path);

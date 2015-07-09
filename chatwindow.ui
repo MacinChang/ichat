@@ -303,7 +303,7 @@ p, li { white-space: pre-wrap; }
     </rect>
    </property>
    <property name="text">
-    <string>正在发送...</string>
+    <string>sending...</string>
    </property>
   </widget>
   <widget class="QProgressBar" name="progressBar">

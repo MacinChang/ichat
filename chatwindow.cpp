@@ -17,8 +17,8 @@
 #include <QDesktopServices>
 #include <QUrl>
 
-ChatWindow::ChatWindow(QString selfAccount, QString contactAccount,QString myName, QWidget *parent) :
-    QFrame(parent), selfAccount(selfAccount), contactAccount(contactAccount),myName(myName),
+ChatWindow::ChatWindow(QString selfAccount, QString contactAccount, QString myName, QString contactName, QWidget *parent) :
+    QFrame(parent), selfAccount(selfAccount), contactAccount(contactAccount),myName(myName),friName(contactName),
     ui(new Ui::ChatWindow)
 {
     ui->setupUi(this);
@@ -152,7 +152,7 @@ void ChatWindow::sendTextMessage(QString content){
     QByteArray to = contactAccount.toLocal8Bit();
     QByteArray textP = content.toLocal8Bit();
     QByteArray text = textP.toBase64(QByteArray::Base64UrlEncoding | QByteArray::OmitTrailingEquals);
-    QByteArray data("{\"user_id\":" + from + ", \"contact_id\":" + to +", \"time\":\"" + time +"\", \"content\":\"" + text + "\", \"u\":\"send\"}");
+    QByteArray data("{\"user_id\":" + from + ", \"contact_id\":" + to +", \"time\":\"" + time + "\",\"contact_name\":\"" + myName.toLocal8Bit() + "\", \"content\":\"" + text + "\", \"u\":\"send\"}");
     //添加数据库语句
     QSqlQuery query;
     query.exec("insert into chatmsg values (NULL,\""+current_date+"\",\""+selfAccount+"\",\""+contactAccount+"\",\""+content+"\")");
@@ -226,9 +226,14 @@ void ChatWindow::receiveFile(QString filename)
 
 void ChatWindow::receiveMessage(QVector<MsgNode> messages){
     for(int i = 0; i < messages.size(); i++){
+        QByteArray content = QByteArray::fromBase64(messages[i].content.toLocal8Bit(), QByteArray::Base64UrlEncoding | QByteArray::OmitTrailingEquals);
+        if(content == "/duang"){
+            this->ShakeAnimation();
+            continue;
+        }
         ui->textBrowser->append(friName.toLocal8Bit() + " " + messages[i].time);
         //ui->textBrowser->setAlignment(Qt::AlignRight); //发送的信息右对齐
-        QByteArray content = QByteArray::fromBase64(messages[i].content.toLocal8Bit(), QByteArray::Base64UrlEncoding | QByteArray::OmitTrailingEquals);
+
         ui->textBrowser->append(content);
         //添加数据库语句
         QSqlQuery query;
@@ -268,6 +273,8 @@ void ChatWindow::updateClientProgress(qint64 numBytes)
     {
        localFile->close();
        tcpClient->close();
+       //ui->progressBar->hide();
+       ui->label->setText("success");
     }
 }
 
@@ -293,6 +300,7 @@ void ChatWindow::on_pushButton_5_clicked()
 void ChatWindow::on_pushButton_4_clicked()
 {
     ShakeAnimation();
+    sendTextMessage("/duang");
 }
 
 //窗口抖动实现
@@ -398,6 +406,7 @@ void ChatWindow::on_pushButton_8_clicked()
 void ChatWindow::on_pushButton_10_clicked()
 {
 
+    ui->label->setText("sending...");
     fileName = "test.raw";
     fileType = "audio";
     tcpClient->connectToHost(friIp, friPort);

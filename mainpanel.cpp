@@ -236,7 +236,7 @@ void MainPanel::displayError(QAbstractSocket::SocketError){
 void MainPanel::checkAudio(QString contact){
     ChatWindow *cw = checkChatWindow(contact);
     if(cw == NULL){
-        cws.push_back(new ChatWindow(myAccount, contact, myName));
+        cws.push_back(new ChatWindow(myAccount, contact, myName,""));
         cws[cws.size() - 1]->receiveAudio(localFile);
         cws[cws.size() - 1]->show();
     }else{
@@ -248,7 +248,7 @@ void MainPanel::checkFile(QString contact)
 {
     ChatWindow *cw = checkChatWindow(contact);
     if(cw == NULL){
-        cws.push_back(new ChatWindow(myAccount, contact, myName));
+        cws.push_back(new ChatWindow(myAccount, contact, myName,""));
         cws[cws.size() - 1]->receiveFile(fileName);
         cws[cws.size() - 1]->show();
     }else{
@@ -268,9 +268,6 @@ ChatWindow* MainPanel::checkChatWindow(QString contact)
 
 void MainPanel::checkMessage(QString msg){
     QVector<MsgNode> messages;
-    QString x = "Nine pineapples";
-    QString y = x.mid(5, 4);            // y == "pine"
-    QString z = x.mid(5);               // z == "pineapples"
     int p = msg.indexOf("{", 0);
     while(p != -1){
         int q = msg.indexOf("}", p + 1);
@@ -283,6 +280,7 @@ void MainPanel::checkMessage(QString msg){
             temp.contact = map["user_id"].toString();
             temp.time = map["time"].toString();
             temp.content = map["content"].toString();
+            temp.contactName = map["contact_name"].toString();
             messages.push_back(temp);
         }
         p = msg.indexOf("{", q);
@@ -300,7 +298,7 @@ void MainPanel::checkMessage(QString msg){
                 }
             }
             if(!flag){
-             cws.push_back(new ChatWindow(myAccount, temp[0].contact,myName));
+             cws.push_back(new ChatWindow(myAccount, temp[0].contact,myName,temp[0].contactName));
              cws[cws.size() - 1]->show();
             }
             temp.clear();
@@ -313,7 +311,7 @@ void MainPanel::checkMessage(QString msg){
         bool flag = false;
         ChatWindow *cw = checkChatWindow(temp[0].contact);
         if(cw == NULL){
-            cws.push_back(new ChatWindow(myAccount, temp[0].contact,myName));
+            cws.push_back(new ChatWindow(myAccount, temp[0].contact,myName,temp[0].contactName));
             cws[cws.size() - 1]->receiveMessage(temp);
             cws[cws.size() - 1]->show();
         }else{
@@ -686,6 +684,9 @@ void MainPanel::receiveContactRename(QString name)
     QByteArray usr = myAccount.toLocal8Bit();
     QByteArray con = index.data().toString().toLocal8Bit();
     QByteArray rem = name.toLocal8Bit();
+    if(rem == ""){
+        rem = "null";
+    }
     QByteArray append("user_id="+usr+"&contact_id="+con+"&remark="+rem);
     renameManager->post(QNetworkRequest(url), append);
 
@@ -793,7 +794,7 @@ void MainPanel::on_cAction_chat()
 {
     QModelIndex index = contactTreeView->currentIndex();
     QString contactAccount = contactModel->data(index).toString();
-    //打开私聊窗口******************
+    //打开私聊窗口
     bool flag = false;
     //判断是否已经打开
     int size = cws.size();
@@ -803,14 +804,14 @@ void MainPanel::on_cAction_chat()
             cws[i]->setAttribute(Qt::WA_KeyboardFocusChange);
             flag = true;
         }else if(cws[i]->getContactAccount() == "-1"){
-            free(cws[i]);
+            //free(cws[i]);
             cws.remove(i);
             i--;
             size--;
         }
     }
     if(!flag){
-        cws.push_back(new ChatWindow(myAccount, contactAccount,myName));
+        cws.push_back(new ChatWindow(myAccount, contactAccount,myName,index.sibling(index.row(),1).data().toString()));
         cws[cws.size() - 1]->show();
     }
 
@@ -839,8 +840,8 @@ void MainPanel::on_cAction_scanInfo()
         fis.push_back(new FriendInfo(account));
         fis[fis.size() - 1]->show();
     }
-    FriendInfo *friInfo = new FriendInfo(account);
-    friInfo->show();
+    //FriendInfo *friInfo = new FriendInfo(account);
+    //friInfo->show();
 }
 //弹出修改备注名窗口
 void MainPanel::on_cAction_reName()
