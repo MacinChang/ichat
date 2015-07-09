@@ -75,7 +75,7 @@ MainPanel::MainPanel(QString account, QWidget *parent) :
     addDlg = new AddWindow(myAccount);
     connect(addDlg,SIGNAL(addFinished()),SLOT(on_addContact_finished()));
     //修改分组窗口初始化
-    changeDlg = new ChangeGroupDialog(this);
+    changeDlg = new ChangeGroupDialog();
     changeDlg->hide();
     connect(changeDlg,SIGNAL(changeBtn_clicked(QString)),this,SLOT(on_group_changed(QString)));
 
@@ -853,7 +853,7 @@ void MainPanel::on_cAction_reName()
 void MainPanel::on_cAction_reGroup()
 {
     QModelIndex index = contactTreeView->currentIndex();
-    changeDlg->exec();
+    changeDlg->show();
 }
 //删除好友
 void MainPanel::on_cAction_delete()
@@ -923,3 +923,11 @@ void MainPanel::on_closeBtn_clicked()
     closeStateManager->post(QNetworkRequest(url), append);
 }
 
+
+void MainPanel::on_updateBtn_clicked()
+{
+    QUrl url("http://182.92.69.19/ichat-server/public/user/load-panel");
+    QByteArray usr = myAccount.toLocal8Bit();
+    QByteArray append("account="+usr);
+    manager->post(QNetworkRequest(url), append);
+}

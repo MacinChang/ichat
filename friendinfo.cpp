@@ -156,6 +156,8 @@ void FriendInfo::finishedSlot(QNetworkReply *reply)
          QImage img;
          img.loadFromData(face);
          ui->FaceButton->setIcon(QPixmap::fromImage(img));
+         this->setWindowIcon(QPixmap::fromImage(img));
+         this->setWindowTitle(usrInfo[2]);
          if(usrInfo[4] == "null"){
              ui->SignEdit->setText(" ");
          }

@@ -67,5 +67,10 @@
         <file>image/叉 - 副本.png</file>
         <file>image/叉.png</file>
         <file>Image/earphone.png</file>
+        <file>Image/chatcloseBtn.png</file>
+        <file>Image/chatsendBtn.png</file>
+        <file>Image/refreshBtn.png</file>
+        <file>Image/deletePanel.png</file>
+        <file>Image/changePanel.png</file>
     </qresource>
 </RCC>

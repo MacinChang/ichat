@@ -6,7 +6,9 @@ RenameDialog::RenameDialog(QWidget *parent) :
     ui(new Ui::RenameDialog)
 {
     ui->setupUi(this);
-    this->setWindowTitle("修改备注");
+    this->setWindowTitle("New Name");
+    this->setWindowFlags(Qt::FramelessWindowHint);
+    ui->label->setText("New Name:");
 }
 
 RenameDialog::~RenameDialog()

@@ -6,6 +6,7 @@ ChangeGroupDialog::ChangeGroupDialog(QWidget *parent) :
     ui(new Ui::ChangeGroupDialog)
 {
     ui->setupUi(this);
+    this->setWindowFlags(Qt::FramelessWindowHint);
 }
 
 ChangeGroupDialog::~ChangeGroupDialog()
