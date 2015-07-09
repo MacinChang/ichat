@@ -20,7 +20,7 @@ ChatWindow::ChatWindow(QString selfAccount, QString contactAccount,QString myNam
     ui(new Ui::ChatWindow)
 {
     ui->setupUi(this);
-    friIp = "127.0.0.1";
+    friIp = "182.92.69.19";
     friPort = 6666;
     dragPosition=QPoint(-1,-1);
     m_animation = new QPropertyAnimation(this,"pos");
@@ -222,7 +222,7 @@ void ChatWindow::receiveFile(QFile *file)
 
 void ChatWindow::receiveMessage(QVector<MsgNode> messages){
     for(int i = 0; i < messages.size(); i++){
-        ui->textBrowser->append(messages[i].time);
+        ui->textBrowser->append(friName.toLocal8Bit() + messages[i].time);
         //ui->textBrowser->setAlignment(Qt::AlignRight); //发送的信息右对齐
         QByteArray content = QByteArray::fromBase64(messages[i].content.toLocal8Bit(), QByteArray::Base64UrlEncoding | QByteArray::OmitTrailingEquals);
         ui->textBrowser->append(content);
